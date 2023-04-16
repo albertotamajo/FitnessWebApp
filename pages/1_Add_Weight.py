@@ -1,15 +1,17 @@
 import streamlit as st
 import pickle
-import os
+import pytz
 import s3fs
-import Home
+from datetime import datetime
 
 st.set_page_config(
     page_title="Add weight",
     page_icon="❚█══█❚",
 )
+AWS_BUCKET="fitnessmanagement/"
 
 fs = s3fs.S3FileSystem(anon=False)
+print(fs.ls("fitnessmanagement/"))
 
 
 st.write("# Add weight! ❚█══█❚")
@@ -37,15 +39,18 @@ if st.button('Add weight'):
         if exercise == '<select>':
             st.error('You need to select an exercise')
     else:
-        d = {exercise: weight}
-        file = "{0}AddWeight{1}-{2}.pickle".format(Home.AWS_BUCKET, user, repetitions)
-        if os.path.exists(file):
-            with open(file, 'rb') as f:
+        datetime = datetime.now(pytz.timezone("Europe/Rome"))
+        date = "{0}-{1}-{2}".format(datetime.year, datetime.month, datetime.day)
+        d = {exercise: [(date, weight)]}
+        file = "{0}AddWeight{1}-{2}.pickle".format(AWS_BUCKET, user, repetitions)
+        if fs.exists(file):
+            with fs.open(file, 'rb') as f:
                 d = pickle.load(f)
                 if exercise in d.keys():
-                    d[exercise].append(weight)
+                    d[exercise].append((date, weight))
                 else:
-                    d[exercise] = [weight]
-        with open(file, 'wb') as f:
+                    d[exercise] = [(date, weight)]
+        fs.touch(file)
+        with fs.open(file, 'wb') as f:
             pickle.dump(d, f)
         st.success('Weight added successfully!')
