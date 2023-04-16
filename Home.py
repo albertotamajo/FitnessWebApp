@@ -1,11 +1,12 @@
 import streamlit as st
 
-AWS_BUCKET="fitnessmanagement/"
-
 st.set_page_config(
     page_title="Hello",
     page_icon="👋",
 )
+
+AWS_BUCKET="fitnessmanagement/"
+
 
 st.write("# Welcome to the Fitness Management Web App! 👋")
 

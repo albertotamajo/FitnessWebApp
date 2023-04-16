@@ -4,12 +4,13 @@ import os
 import s3fs
 import Home
 
-fs = s3fs.S3FileSystem(anon=False)
-
 st.set_page_config(
     page_title="Add weight",
     page_icon="❚█══█❚",
 )
+
+fs = s3fs.S3FileSystem(anon=False)
+
 
 st.write("# Add weight! ❚█══█❚")
 
