@@ -16,9 +16,9 @@ print(fs.ls("fitnessmanagement/"))
 
 st.write("# Add weight! ❚█══█❚")
 
-EXERCISE_LIST_PATH = "exercises.pickle"
+EXERCISE_LIST_PATH = "exercises.txt"
 with open(EXERCISE_LIST_PATH, 'rb') as f:
-    exercise_list = pickle.load(f)
+    exercise_list = [str(e, 'utf-8') for e in f.readlines()]
     exercise_list.sort()
     exercise_list = ['<select>'] + exercise_list
 
