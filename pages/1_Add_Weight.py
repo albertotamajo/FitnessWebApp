@@ -1,6 +1,10 @@
 import streamlit as st
 import pickle
 import os
+import s3fs
+import Home
+
+fs = s3fs.S3FileSystem(anon=False)
 
 st.set_page_config(
     page_title="Add weight",
@@ -33,7 +37,7 @@ if st.button('Add weight'):
             st.error('You need to select an exercise')
     else:
         d = {exercise: weight}
-        file = "{0}-{1}.pickle".format(user, repetitions)
+        file = "{0}AddWeight{1}-{2}.pickle".format(Home.AWS_BUCKET, user, repetitions)
         if os.path.exists(file):
             with open(file, 'rb') as f:
                 d = pickle.load(f)

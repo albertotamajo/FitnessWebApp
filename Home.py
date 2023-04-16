@@ -1,5 +1,7 @@
 import streamlit as st
 
+AWS_BUCKET="fitnessmanagement/"
+
 st.set_page_config(
     page_title="Hello",
     page_icon="👋",
