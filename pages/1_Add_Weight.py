@@ -8,6 +8,15 @@ st.set_page_config(
     page_title="Add weight",
     page_icon="❚█══█❚",
 )
+
+hide_st_style = """
+<style>
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+</style>
+"""
+st.markdown(hide_st_style, unsafe_allow_html=True)
+
 AWS_BUCKET="fitnessmanagement/"
 
 fs = s3fs.S3FileSystem(anon=False)
