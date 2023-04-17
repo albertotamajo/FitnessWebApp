@@ -23,7 +23,7 @@ fs = s3fs.S3FileSystem(anon=False)
 print(fs.ls("fitnessmanagement/"))
 
 
-st.write("# Add weight! ❚█══█❚")
+st.write("# Add weight! 🏋️")
 
 EXERCISE_LIST_PATH = "exercises.txt"
 with open(EXERCISE_LIST_PATH, 'rb') as f:
