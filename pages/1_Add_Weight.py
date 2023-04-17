@@ -54,7 +54,8 @@ if st.button('Add weight'):
                     d[exercise].append((date, weight))
                 else:
                     d[exercise] = [(date, weight)]
-        fs.touch(file)
+        else:
+            fs.touch(file)
         with fs.open(file, 'wb') as f:
             pickle.dump(d, f)
         st.success('Weight added successfully!')
