@@ -6,7 +6,7 @@ from datetime import datetime
 
 st.set_page_config(
     page_title="Add weight",
-    page_icon="❚█══█❚",
+    page_icon="🏋️",
 )
 
 hide_st_style = """
