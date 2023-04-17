@@ -45,15 +45,18 @@ if st.button('Add weight'):
     else:
         datetime = datetime.now(pytz.timezone("Europe/Rome"))
         date = "{0}-{1}-{2}".format(datetime.year, datetime.month, datetime.day)
-        d = {exercise: [(date, weight)]}
-        file = "{0}AddWeight{1}-{2}.pickle".format(AWS_BUCKET, user, repetitions)
+        d = {repetitions: {exercise: [(date, weight)]}}
+        file = "{0}Weights{1}.pickle".format(AWS_BUCKET, user)
         if fs.exists(file):
             with fs.open(file, 'rb') as f:
                 d = pickle.load(f)
-                if exercise in d.keys():
-                    d[exercise].append((date, weight))
+                if repetitions in d.keys():
+                    if exercise in d[repetitions].keys():
+                        d[repetitions][exercise].append((date, weight))
+                    else:
+                        d[repetitions][exercise] = [(date, weight)]
                 else:
-                    d[exercise] = [(date, weight)]
+                    d[repetitions] = {exercise: [(date, weight)]}
         else:
             fs.touch(file)
         with fs.open(file, 'wb') as f:
