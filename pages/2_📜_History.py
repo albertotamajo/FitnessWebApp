@@ -53,12 +53,13 @@ if st.button('Check'):
                 new_d = {}
                 for repetition in d.keys():
                     if exercise in d[repetition].keys():
-                        new_d[repetition] = d[repetition][exercise][::-1]
+                        new_d[str(repetition) + " reps"] = [str(weight) + " Kg" for time, weight in d[repetition][exercise][::-1]]
                 if len(new_d) != 0:
                     df = pd.DataFrame(new_d)
                     cols = df.columns.tolist()
                     cols.sort()
                     df = df[cols]
+                    print(df)
                     st.dataframe(df)
                 else:
                     st.error("Sorry, no results found!")
