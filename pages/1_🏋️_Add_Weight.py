@@ -17,15 +17,21 @@ footer {visibility: hidden;}
 """
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
-AWS_BUCKET="fitnessmanagement/"
+AWS_BUCKET = "fitnessmanagement/"
 
-fs = s3fs.S3FileSystem(anon=False)
-print(fs.ls("fitnessmanagement/"))
 
+@st.cache_resource
+def s3fs_file_system():
+    return s3fs.S3FileSystem(anon=False)
+
+
+fs = s3fs_file_system()
+fs.clear_instance_cache()
 
 st.write("# Add weight! 🏋️")
 
 EXERCISE_LIST_PATH = "exercises.txt"
+
 with open(EXERCISE_LIST_PATH, 'rb') as f:
     exercise_list = [str(e, 'utf-8').strip() for e in f.readlines()]
     exercise_list.sort()
@@ -37,11 +43,28 @@ st.markdown(
     """
 )
 
-user = st.selectbox('Who is the user?', ('<select>', 'Alberto', 'Giuseppe'))
-exercise = st.selectbox('What is the exercise?', exercise_list)
-repetitions = st.slider('How many reps did you do?', 1, 20, value=8)
-weight = st.number_input('What weight did you use (kg)?', min_value=0.0, max_value=200.0, value=50.0, step=0.25)
-password = st.text_input('Password')
+USER_KEY = "ADD_WEIGHT_USER_SELECTION"
+EXERCISE_KEY = "ADD_WEIGHT_EXERCISE_SELECTION"
+REPETITION_KEY = "ADD_WEIGHT_REPETITION_SELECTION"
+WEIGHT_KEY = "ADD_WEIGHT_WEIGHT_SELECTION"
+PASSWORD_KEY = "ADD_WEIGHT_PASSWORD_SELECTION"
+repetition_default = 8
+weight_default = 50.0
+
+
+def reset_selections():
+    st.session_state[USER_KEY] = '<select>'
+    st.session_state[EXERCISE_KEY] = '<select>'
+    st.session_state[REPETITION_KEY] = repetition_default
+    st.session_state[WEIGHT_KEY] = weight_default
+    st.session_state[PASSWORD_KEY] = ""
+
+
+user = st.selectbox('Who is the user?', ('<select>', 'Alberto', 'Giuseppe'), key=USER_KEY)
+exercise = st.selectbox('What is the exercise?', exercise_list, key=EXERCISE_KEY)
+repetitions = st.slider('How many reps did you do?', 1, 20, value=repetition_default, key=REPETITION_KEY)
+weight = st.number_input('What weight did you use (kg)?', min_value=0.0, max_value=200.0, value=weight_default, step=0.25, key=WEIGHT_KEY)
+password = st.text_input('Password', key=PASSWORD_KEY)
 if st.button('Add weight'):
     if user == '<select>' or exercise == '<select>' or password != st.secrets["PASSWORD"]:
         if user == '<select>':
@@ -50,7 +73,6 @@ if st.button('Add weight'):
             st.error('You need to select an exercise')
         if password != st.secrets["PASSWORD"]:
             st.error('You need to type a correct password')
-
     else:
         datetime = datetime.now(pytz.timezone("Europe/Rome"))
         date = "{0}-{1}-{2}".format(datetime.year, datetime.month, datetime.day)
