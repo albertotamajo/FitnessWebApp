@@ -75,7 +75,7 @@ if st.button('Remove weight'):
                         st.error("Sorry, the exercise {0} does not have any entry for index {1}".format(exercise, index))
                 else:
                     st.error("Sorry, there is no entry for repetition {0}".format(repetitions))
-        if d is not None:
-            with fs.open(file, 'wb') as f:
-                pickle.dump(d, f)
-            st.success('Weight removed successfully!')
+            if d is not None:
+                with fs.open(file, 'wb') as f:
+                    pickle.dump(d, f)
+                st.success('Weight removed successfully!')
