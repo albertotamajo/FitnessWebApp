@@ -1,7 +1,7 @@
 import streamlit as st
 import pickle
 import pandas as pd
-import s3fs
+import utils
 
 st.set_page_config(
     page_title="History",
@@ -18,9 +18,8 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 
 AWS_BUCKET="fitnessmanagement/"
 
-fs = s3fs.S3FileSystem(anon=False)
-print(fs.ls("fitnessmanagement/"))
-
+fs = utils.s3fs_file_system()
+fs.clear_instance_cache()
 
 st.write("# History! 📜")
 

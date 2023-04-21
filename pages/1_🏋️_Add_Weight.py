@@ -3,6 +3,7 @@ import pickle
 import pytz
 import s3fs
 from datetime import datetime
+import utils
 
 st.set_page_config(
     page_title="Add weight",
@@ -19,13 +20,7 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 
 AWS_BUCKET = "fitnessmanagement/"
 
-
-@st.cache_resource
-def s3fs_file_system():
-    return s3fs.S3FileSystem(anon=False)
-
-
-fs = s3fs_file_system()
+fs = utils.s3fs_file_system()
 fs.clear_instance_cache()
 
 st.write("# Add weight! 🏋️")

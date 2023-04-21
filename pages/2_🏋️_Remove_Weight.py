@@ -1,6 +1,6 @@
 import streamlit as st
 import pickle
-import s3fs
+import utils
 
 st.set_page_config(
     page_title="Remove weight",
@@ -17,13 +17,7 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 
 AWS_BUCKET = "fitnessmanagement/"
 
-
-@st.cache_resource
-def s3fs_file_system():
-    return s3fs.S3FileSystem(anon=False)
-
-
-fs = s3fs_file_system()
+fs = utils.s3fs_file_system()
 fs.clear_instance_cache()
 
 st.write("# Remove weight! 🏋️")
