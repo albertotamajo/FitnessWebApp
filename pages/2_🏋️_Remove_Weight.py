@@ -69,6 +69,10 @@ if st.button('Remove weight'):
                         index_rev = len(l) - 1 - index
                         if len(l) > index_rev:
                             l.pop(index_rev)
+                            if len(l) == 0:
+                                del d[repetitions][exercise]
+                            if len(d[repetitions]) == 0:
+                                del d[repetitions]
                             remove = True
                         else:
                             st.error("Sorry, the provided index does not exists!")
