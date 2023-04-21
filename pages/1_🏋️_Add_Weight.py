@@ -1,7 +1,6 @@
 import streamlit as st
 import pickle
 import pytz
-import s3fs
 from datetime import datetime
 import utils
 
@@ -86,5 +85,11 @@ if st.button('Add weight'):
         else:
             fs.touch(file)
         with fs.open(file, 'wb') as f:
+            pickle.dump(d, f)
+
+        filecopy = "{0}Weights{1}(Copy).pickle".format(AWS_BUCKET, user)
+        if not fs.exists(filecopy):
+            fs.touch(filecopy)
+        with fs.open(filecopy, 'wb') as f:
             pickle.dump(d, f)
         st.success('Weight added successfully!')
