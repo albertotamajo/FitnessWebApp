@@ -66,7 +66,7 @@ if st.button('Remove weight'):
     else:
         file = "{0}Weights{1}.pickle".format(AWS_BUCKET, user)
         if fs.exists(file):
-            with fs.open(file, 'wb') as f:
+            with fs.open(file, 'r+b') as f:
                 d = pickle.load(f)
                 if repetitions in d.keys():
                     if exercise in d[repetitions].keys():
