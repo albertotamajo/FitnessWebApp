@@ -38,6 +38,7 @@ if st.button('Analyse food'):
             st.error('You need to write some food')
     else:
         food_list = []
+        quantity_list = []
         cals_list = []
         fats_list = []
         protiens_list = []
@@ -45,12 +46,13 @@ if st.button('Analyse food'):
         for f in food.replace(" ", "%20").splitlines():
             nutrition_dict = requests.get(endpoint.format(f)).json()
             food_list.append(nutrition_dict["ingredients"][0]["parsed"][0]["food"])
+            quantity_list.append(nutrition_dict["ingredients"][0]["parsed"][0]["quantity"])
             nutrition_dict = nutrition_dict["totalNutrients"]
             cals_list.append(nutrition_dict["ENERC_KCAL"]["quantity"])
             fats_list.append(nutrition_dict["FAT"]["quantity"])
             protiens_list.append(nutrition_dict["PROCNT"]["quantity"])
             carbs_list.append(nutrition_dict["CHOCDF"]["quantity"])
-        df = pd.DataFrame({"Food": food_list, "Calories": cals_list, "Carbs": carbs_list, "Fats": fats_list,
+        df = pd.DataFrame({"Food": food_list, "Quantity(gr)": quantity_list, "Calories": cals_list, "Carbs": carbs_list, "Fats": fats_list,
                                    "Proteins": protiens_list})
         df = df.append(df.sum(numeric_only=True), ignore_index=True).fillna("")
         st.dataframe(df)
