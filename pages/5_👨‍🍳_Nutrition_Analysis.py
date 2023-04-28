@@ -54,5 +54,5 @@ if st.button('Analyse food'):
             carbs_list.append(nutrition_dict["CHOCDF"]["quantity"])
         df = pd.DataFrame({"Food": food_list, "Quantity(gr)": quantity_list, "Calories": cals_list, "Carbs": carbs_list, "Fats": fats_list,
                                    "Proteins": protiens_list})
-        df = df.append(df.sum(numeric_only=True), ignore_index=True).fillna("")
+        df = df.append(df.sum(numeric_only=True), ignore_index=True).fillna("").rename({df.index[-1]: "Total"})
         st.dataframe(df)
