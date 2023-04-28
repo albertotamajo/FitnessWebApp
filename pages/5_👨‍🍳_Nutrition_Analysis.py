@@ -50,5 +50,7 @@ if st.button('Analyse food'):
             fats_list.append(nutrition_dict["FAT"]["quantity"])
             protiens_list.append(nutrition_dict["PROCNT"]["quantity"])
             carbs_list.append(nutrition_dict["CHOCDF"]["quantity"])
-        st.dataframe(pd.DataFrame({"Food": food_list, "Calories": cals_list, "Carbs": carbs_list, "Fats": fats_list,
-                                   "Proteins": protiens_list}))
+        df = pd.DataFrame({"Food": food_list, "Calories": cals_list, "Carbs": carbs_list, "Fats": fats_list,
+                                   "Proteins": protiens_list})
+        df = df.append(pd.DataFrame(df.sum(), index=["Total"]))
+        st.dataframe(df)
