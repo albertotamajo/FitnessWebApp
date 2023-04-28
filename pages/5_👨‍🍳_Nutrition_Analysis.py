@@ -31,7 +31,7 @@ food = st.text_area("Write your food here. One food per line.", value="")
 password = st.text_input('Password')
 
 if st.button('Analyse food'):
-    if password != st.secrets["PASSWORD"] or food == "":
+    if password != st.secrets["PASSWORD"] or food != "":
         if password != st.secrets["PASSWORD"]:
             st.error('You need to type a correct password')
         if food != "":
