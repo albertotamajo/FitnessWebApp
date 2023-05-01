@@ -1,6 +1,10 @@
 import streamlit as st
 import pandas as pd
 import requests
+from PIL import Image
+from io import BytesIO
+import openfoodfacts
+from streamlit_image_select import image_select
 
 st.set_page_config(
     page_title="Nutrition analysis",
@@ -23,36 +27,28 @@ st.markdown(
     Analyse the nutritional values of your food.
     """
 )
-edamam_app_id = st.secrets["EDAMAM_APP_ID"]
-edamam_app_key = st.secrets["EDAMAM_APP_KEY"]
-endpoint = "https://api.edamam.com/api/nutrition-data?app_id={0}&app_key={1}&nutrition-type=cooking&ingr={2}"\
-    .format(edamam_app_id, edamam_app_key, "{0}")
-food = st.text_area("Write your food here. One food per line.", value="")
-password = st.text_input('Password')
 
-if st.button('Analyse food'):
-    if password != st.secrets["PASSWORD"] or food == "":
+query = st.text_input("Write your food here. One food per line.", value="")
+count = st.number_input('Number of items searched', min_value=1, max_value=100, value=5, step=1)
+password = st.text_input('Password')
+if st.button('Find food'):
+    if password != st.secrets["PASSWORD"] or query == "":
         if password != st.secrets["PASSWORD"]:
             st.error('You need to type a correct password')
-        if food != "":
+        if query != "":
             st.error('You need to write some food')
     else:
-        food_list = []
-        quantity_list = []
-        cals_list = []
-        fats_list = []
-        protiens_list = []
-        carbs_list = []
-        for f in food.replace(" ", "%20").splitlines():
-            nutrition_dict = requests.get(endpoint.format(f)).json()
-            food_list.append(nutrition_dict["ingredients"][0]["parsed"][0]["food"])
-            quantity_list.append(nutrition_dict["ingredients"][0]["parsed"][0]["quantity"])
-            nutrition_dict = nutrition_dict["totalNutrients"]
-            cals_list.append(nutrition_dict["ENERC_KCAL"]["quantity"])
-            fats_list.append(nutrition_dict["FAT"]["quantity"])
-            protiens_list.append(nutrition_dict["PROCNT"]["quantity"])
-            carbs_list.append(nutrition_dict["CHOCDF"]["quantity"])
-        df = pd.DataFrame({"Food": food_list, "Quantity(gr)": quantity_list, "Calories": cals_list, "Carbs": carbs_list, "Fats": fats_list,
-                                   "Proteins": protiens_list})
-        df = df.append(df.sum(numeric_only=True), ignore_index=True).fillna("")
-        st.dataframe(df)
+        search_result = openfoodfacts.products.search(query, page_size=count, locale="it")
+        products = search_result['products']
+        print("Done1")
+        images = []
+        urls = []
+        for p in products:
+            if "image_front_url" in p.keys():
+                response = requests.get(p["image_front_url"])
+                images.append(Image.open(BytesIO(response.content)))
+            else:
+                images.append(Image.new("RGB", (28, 28)))
+        print("Done")
+        index = image_select("Select food", images, return_value="index", use_container_width=False)
+
