@@ -38,13 +38,9 @@ st.markdown(
 
 query = st.text_input("Write your food here. One food per line.", value="")
 count = st.number_input('Number of items searched', min_value=1, max_value=100, value=5, step=1)
-password = st.text_input('Password')
 if st.button('Find food'):
-    if password != st.secrets["PASSWORD"] or query == "":
-        if password != st.secrets["PASSWORD"]:
-            st.error('You need to type a correct password')
-        if query != "":
-            st.error('You need to write some food')
+    if query == "":
+        st.error('You need to write some food')
     else:
         query = "+".join(query.split())
         url = "https://it.openfoodfacts.org/cgi/search.pl?search_terms={0}&search_simple=1&json=1&action=process"
