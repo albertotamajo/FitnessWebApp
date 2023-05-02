@@ -22,8 +22,8 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 
 def fetch_image(product, id):
     image = Image.new("RGB", (28, 28))
-    if "image_front_small_url" in product.keys():
-        response = requests.get(product["image_front_small_url"])
+    if "image_front_thumb_url" in product.keys():
+        response = requests.get(product["image_front_thumb_url"])
         image = Image.open(BytesIO(response.content))
     return id, image
 
