@@ -3,8 +3,8 @@ import pandas as pd
 import requests
 from PIL import Image
 from io import BytesIO
-import openfoodfacts
 from streamlit_image_select import image_select
+import concurrent.futures
 
 st.set_page_config(
     page_title="Nutrition analysis",
@@ -18,6 +18,14 @@ footer {visibility: hidden;}
 </style>
 """
 st.markdown(hide_st_style, unsafe_allow_html=True)
+
+
+def fetch_image(product, id):
+    image = Image.new("RGB", (28, 28))
+    if "image_front_small_url" in product.keys():
+        response = requests.get(product["image_front_small_url"])
+        image = Image.open(BytesIO(response.content))
+    return id, image
 
 
 st.write("# Nutrition analysis! 👨‍🍳")
@@ -38,17 +46,22 @@ if st.button('Find food'):
         if query != "":
             st.error('You need to write some food')
     else:
-        search_result = openfoodfacts.products.search(query, page_size=count, locale="it")
-        products = search_result['products']
-        print("Done1")
+        query = "+".join(query.split())
+        url = "https://it.openfoodfacts.org/cgi/search.pl?search_terms={0}&search_simple=1&json=1&action=process"
+        search_result = requests.get(url.format(query)).json()
+        products = search_result['products'][:count]
+        print(len(products))
         images = []
-        urls = []
-        for p in products:
-            if "image_front_url" in p.keys():
-                response = requests.get(p["image_front_url"])
-                images.append(Image.open(BytesIO(response.content)))
-            else:
-                images.append(Image.new("RGB", (28, 28)))
-        print("Done")
+        with concurrent.futures.ThreadPoolExecutor(max_workers=len(products)) as executor:
+            future_to_url = (executor.submit(fetch_image, p, i) for i, p in enumerate(products))
+            for future in concurrent.futures.as_completed(future_to_url):
+                try:
+                    data = future.result()
+                except Exception as exc:
+                    data = str(type(exc))
+                finally:
+                    images.append(data)
+        images.sort()
+        images = [img for id, img in images]
         index = image_select("Select food", images, return_value="index", use_container_width=False)
 
