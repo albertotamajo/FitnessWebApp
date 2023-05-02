@@ -37,7 +37,7 @@ st.markdown(
 )
 
 query = st.text_input("Write your food here. One food per line.", value="")
-count = st.number_input('Number of items searched', min_value=1, max_value=100, value=30, step=1)
+count = st.number_input('Number of items searched', min_value=1, max_value=100, value=10, step=1)
 if st.button('Find food'):
     if query == "":
         st.error('You need to write some food')
