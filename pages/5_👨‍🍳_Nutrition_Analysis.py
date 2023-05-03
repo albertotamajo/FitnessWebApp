@@ -1,11 +1,7 @@
 import streamlit as st
-import pandas as pd
 import requests
-from PIL import Image
-from io import BytesIO
 from streamlit_image_select import image_select
-from st_clickable_images import clickable_images
-import concurrent.futures
+
 
 st.set_page_config(
     page_title="Nutrition analysis",
