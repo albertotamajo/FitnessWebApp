@@ -54,7 +54,7 @@ if st.button('Check'):
                     if exercise in d[repetition].keys():
                         new_d[str(repetition) + " reps"] = [str(weight) + " Kg" for time, weight in d[repetition][exercise][::-1]]
                 if len(new_d) != 0:
-                    df = pd.DataFrame(new_d)
+                    df = pd.DataFrame(dict([ (k,pd.Series(v)) for k,v in new_d.items() ]))
                     cols = df.columns.tolist()
                     cols.sort()
                     df = df[cols]
