@@ -30,13 +30,13 @@ with cals:
 
 with carbs:
    st.header("Carbs")
-   st.number_input('Min')
-   st.number_input('Max')
+   st.number_input('Mit')
+   st.number_input('Mat')
 
 with proteins:
    st.header("Proteins")
-   st.number_input('Mal')
-   st.number_input('Mat')
+   st.number_input('Min')
+   st.number_input('Max')
 
 with fats:
    st.header("Fats")
