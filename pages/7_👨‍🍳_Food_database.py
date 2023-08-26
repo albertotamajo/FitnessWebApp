@@ -48,7 +48,7 @@ with st.expander("""### Add food from openfoodfacts"""):
             proteins = product["nutriments"]['proteins_100g']
             fats = product["nutriments"]['fat_100g']
             st.markdown(f"""## Food name """)
-            food_name = st.text_input("""##Write the name of the food""", value=product_name)
+            food_name = st.text_input("", value=product_name)
             st.markdown(
                 f"""
                 ## Nutritional values
@@ -58,7 +58,6 @@ with st.expander("""### Add food from openfoodfacts"""):
                 - Fats (100gr): :green[{fats}] gr
                 """
             )
-            food_name = st.text_input("Write the name of the food", value=product_name)
             if st.button('Add food', key="OpenFoodButton"):
                 save = True
                 if fs.exists(file):
