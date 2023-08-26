@@ -56,41 +56,41 @@ st.markdown(
 
 st.divider()
 
-col1, col2, col3, col4 = st.columns(4)
-
-with col1:
-    with st.expander("""### Food 1"""):
-        st.selectbox("Food 1", ["pollo conad conad conad", "aiò maiala"], label_visibility="hidden")
-        food1Min = st.number_input('Min', key="food1Min")
-        food1Max = st.number_input('Min', key="food1Max")
-    with st.expander("""### Food 5"""):
-        st.write("hello")
-    with st.expander("""### Food 9"""):
-        st.write("hello")
-
-with col2:
-    with st.expander("""### Food 2"""):
-        st.write("hello")
-    with st.expander("""### Food 6"""):
-        st.write("hello")
-    with st.expander("""### Food 10"""):
-        st.write("hello")
-
-with col3:
-    with st.expander("""### Food 3"""):
-        st.write("hello")
-    with st.expander("""### Food 7"""):
-        st.write("hello")
-    with st.expander("""### Food 11"""):
-        st.write("hello")
-
-with col4:
-    with st.expander("""### Food 4"""):
-        st.write("hello")
-    with st.expander("""### Food 8"""):
-        st.write("hello")
-    with st.expander("""### Food 12"""):
-        st.write("hello")
+# col1, col2, col3, col4 = st.columns(4)
+#
+# with col1:
+#     with st.expander("""### Food 1"""):
+#         st.selectbox("Food 1", ["pollo conad conad conad", "aiò maiala"], label_visibility="hidden")
+#         food1Min = st.number_input('Min', key="food1Min")
+#         food1Max = st.number_input('Min', key="food1Max")
+#     with st.expander("""### Food 5"""):
+#         st.write("hello")
+#     with st.expander("""### Food 9"""):
+#         st.write("hello")
+#
+# with col2:
+#     with st.expander("""### Food 2"""):
+#         st.write("hello")
+#     with st.expander("""### Food 6"""):
+#         st.write("hello")
+#     with st.expander("""### Food 10"""):
+#         st.write("hello")
+#
+# with col3:
+#     with st.expander("""### Food 3"""):
+#         st.write("hello")
+#     with st.expander("""### Food 7"""):
+#         st.write("hello")
+#     with st.expander("""### Food 11"""):
+#         st.write("hello")
+#
+# with col4:
+#     with st.expander("""### Food 4"""):
+#         st.write("hello")
+#     with st.expander("""### Food 8"""):
+#         st.write("hello")
+#     with st.expander("""### Food 12"""):
+#         st.write("hello")
 
 data_df = pd.DataFrame(
     {
