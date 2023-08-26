@@ -1,11 +1,28 @@
 import pandas as pd
 import streamlit as st
 import pandas as pd
+import utils
+import pickle
 
 st.set_page_config(
     page_title="Meal planner",
     page_icon="🍳",
 )
+
+AWS_BUCKET = "fitnessmanagement/"
+file = "{0}Food.pickle".format(AWS_BUCKET)
+fs = utils.s3fs_file_system()
+fs.clear_instance_cache()
+
+@st.cache_data
+def fetch_food():
+    # Fetch data from URL here, and then clean it up.
+    if fs.exists(file):
+        with fs.open(file, 'rb') as f:
+            d = pickle.load(f)
+        return d
+    else:
+        return {}
 
 hide_st_style = """
 <style>
@@ -114,11 +131,7 @@ food_table = st.data_editor(
         "Food": st.column_config.SelectboxColumn(
             "Food",
             width="large",
-            options=[
-                "📊 Data Exploration",
-                "📈 Data Visualization",
-                "🤖 LLM",
-            ],
+            options=list(fetch_food.keys()),
             required=True,
         ),
         "Min(gr)":st.column_config.NumberColumn("Min(gr)", width="small", required=True, default=0, format=None,
