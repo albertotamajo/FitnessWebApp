@@ -101,12 +101,25 @@ with st.expander("""### Visualise food database"""):
     if fs.exists(file):
         with fs.open(file, 'rb') as f:
             d = pickle.load(f)
-            df = pd.DataFrame({"Food": [i for i in d.keys()],
-                          "Calories": [d[i]["Cals"] * 100 for i in d.keys()],
-                          "Carbs": [d[i]["Carbs"] * 100 for i in d.keys()],
-                          "Proteins": [d[i]["Proteins"] * 100 for i in d.keys()],
-                          "Fats": [d[i]["Proteins"] * 100 for i in d.keys()]
-                          })
-            st.dataframe(df)
+        df = pd.DataFrame({"Food": [i for i in d.keys()],
+                      "Calories": [d[i]["Cals"] * 100 for i in d.keys()],
+                      "Carbs": [d[i]["Carbs"] * 100 for i in d.keys()],
+                      "Proteins": [d[i]["Proteins"] * 100 for i in d.keys()],
+                      "Fats": [d[i]["Proteins"] * 100 for i in d.keys()]
+                      })
+        st.dataframe(df)
+    else:
+        st.error("There is no food database at the moment")
+
+with st.expander("""### Remove food"""):
+    if fs.exists(file):
+        with fs.open(file, 'rb') as f:
+            d = pickle.load(f)
+        food = st.selectbox("Select the food to be removed", ["<select>"] + list(d.keys()))
+        if food is not "<select>":
+            d.pop(food)
+            with fs.open(file, 'wb') as f:
+                pickle.dump(d, f)
+                st.success("Food removed successfully!")
     else:
         st.error("There is no food database at the moment")
