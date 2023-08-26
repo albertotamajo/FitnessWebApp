@@ -36,7 +36,7 @@ with carbs:
 with proteins:
    st.header("Proteins")
    st.number_input('Mal')
-   st.number_input('Max')
+   st.number_input('Mat')
 
 with fats:
    st.header("Fats")
