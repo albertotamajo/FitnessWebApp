@@ -104,7 +104,6 @@ st.data_editor(
     column_config={
         "Food": st.column_config.SelectboxColumn(
             "Food",
-            help="The category of the app",
             width="large",
             options=[
                 "📊 Data Exploration",
@@ -112,7 +111,9 @@ st.data_editor(
                 "🤖 LLM",
             ],
             required=True,
-        )
+        ),
+        "Min" : st.column_config.NumberColumn("Min",width="small", required=True, default=None, format=None,
+                                              min_value=0, max_value=1000, step=10)
     },
     hide_index=True,
 )
