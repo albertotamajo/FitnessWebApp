@@ -99,8 +99,11 @@ data_df = pd.DataFrame(
         "Max":[2]
     }
 )
+
 st.data_editor(
     data_df,
+    use_container_width=True,
+    num_rows="dynamic",
     column_config={
         "Food": st.column_config.SelectboxColumn(
             "Food",
@@ -113,7 +116,9 @@ st.data_editor(
             required=True,
         ),
         "Min" : st.column_config.NumberColumn("Min",width="small", required=True, default=None, format=None,
-                                              min_value=0, max_value=1000, step=10)
+                                              min_value=0, max_value=1000),
+        "Max" : st.column_config.NumberColumn("Max", width="small", required=True, default=None, format=None,
+                                              min_value=0, max_value=1000)
     },
     hide_index=True,
 )
