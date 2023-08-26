@@ -92,13 +92,19 @@ st.divider()
 #     with st.expander("""### Food 12"""):
 #         st.write("hello")
 
+
+convert_dict = {'Food': str,
+                'Min(gr)': int,
+                'Max(gr)': int
+                }
 data_df = pd.DataFrame(
     {
         "Food": [],
         "Min(gr)": [],
         "Max(gr)":[]
-    }
+    }.astype(convert_dict)
 )
+
 
 food_table = st.data_editor(
     data_df,
