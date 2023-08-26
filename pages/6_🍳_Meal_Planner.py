@@ -23,7 +23,7 @@ st.markdown(
 
 st.markdown(
     """
-    ## red:[Set your meal objectives]
+    ## :red[Set your meal objectives]
     """
 )
 cals, carbs, proteins, fats = st.columns(4)
