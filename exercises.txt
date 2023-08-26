@@ -9,7 +9,7 @@ Barbell Lunges
 Horizontal Leg Press
 Leg Extension
 Seated Leg Curl
-Seated ip Abduction
+Seated Hip Abduction
 Seated Hip Adduction
 Floor Crunch
 Dumbbell Side Bend
@@ -76,7 +76,8 @@ Cable Seated Fly
 Cable Incline Chest Flyes
 Cable Decline Chest Flyes
 Dumbell Pull Over
-Lever Chest Press
+Lever Chest Press Wide Grip
+Lever Chest Press Close Grip
 Landmine Chest Press
 Alternating Incline Cable Curl
 Seated Low Cable Crossover
@@ -86,3 +87,7 @@ Cable Shrug
 Hip Thrust
 Cable One Arm Row
 Cable One Arm Overhead Extension
+One-Leg Leg Extension
+Dumbell Curl 
+Dumbbell Bulgarian Split Squats
+Seated Cable Row Wide Grip
