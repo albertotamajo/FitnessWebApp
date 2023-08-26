@@ -123,5 +123,5 @@ food_table = st.data_editor(
     hide_index=True,
 )
 
-print(food_table[0, 0])
+print(food_table["Min(gr)"])
 
