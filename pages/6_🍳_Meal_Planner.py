@@ -28,7 +28,6 @@ with cals:
    st.markdown("### Calories")
    calsMin = st.number_input('Min', key="calsMin")
    calsMax = st.number_input('Max', key="calsMax")
-   st.metric("Calories", None, "1.2 °F", label_visibility="hidden")
 
 with carbs:
    st.markdown("### Carbs")
