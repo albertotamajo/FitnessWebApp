@@ -115,9 +115,9 @@ st.data_editor(
             ],
             required=True,
         ),
-        "Min" : st.column_config.NumberColumn("Min",width="small", required=True, default=None, format=None,
+        "Min(gr)" : st.column_config.NumberColumn("Min",width="small", required=True, default=None, format=None,
                                               min_value=0, max_value=1000),
-        "Max" : st.column_config.NumberColumn("Max", width="small", required=True, default=None, format=None,
+        "Max(gr)" : st.column_config.NumberColumn("Max", width="small", required=True, default=None, format=None,
                                               min_value=0, max_value=1000)
     },
     hide_index=True,
