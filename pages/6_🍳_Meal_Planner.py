@@ -54,3 +54,10 @@ st.markdown(
 )
 
 st.divider()
+
+with st.expander("""### Food 1"""):
+    pass
+
+with st.expander("""### Food 2"""):
+    pass
+
