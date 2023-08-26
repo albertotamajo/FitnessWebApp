@@ -44,10 +44,10 @@ with fats:
    fatsMax = st.number_input('Max', key="fatsMax")
 
 st.markdown(
-    """
-    - Calories: min | max
-    - Carbs: min | max
-    - Proteins: min | max
-    - Fats: min | max
+    f"""
+    - Calories: min :green[calsMin] kcal | max :red[calsMax] kcal
+    - Carbs: min :green[carbsMin] gr | max :red[carbsMax] gr
+    - Proteins: min :green[prtsMin] gr | max :red[prtsMax] gr
+    - Fats: min :green[fatsMin] gr | max :red[fatsMax] gr
     """
 )
