@@ -21,15 +21,10 @@ st.markdown(
     """
 )
 
-st.markdown(
-    """
-    ## :red[Set your meal objectives]
-    """
-)
 cals, carbs, proteins, fats = st.columns(4)
 
 with cals:
-   st.header("Calories")
+   st.markdown("## Calories")
    calsMin = st.number_input('Min', key="calsMin")
    calsMax = st.number_input('Max', key="calsMax")
 
