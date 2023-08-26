@@ -95,8 +95,8 @@ st.divider()
 data_df = pd.DataFrame(
     {
         "Food": ["hello"],
-        "Min": [1],
-        "Max":[2]
+        "Min(gr)": [1],
+        "Max(gr)":[2]
     }
 )
 
@@ -115,9 +115,9 @@ st.data_editor(
             ],
             required=True,
         ),
-        "Min(gr)" : st.column_config.NumberColumn("Min",width="small", required=True, default=None, format=None,
+        "Min(gr)" : st.column_config.NumberColumn("Min(gr)", width="small", required=True, default=None, format=None,
                                               min_value=0, max_value=1000),
-        "Max(gr)" : st.column_config.NumberColumn("Max", width="small", required=True, default=None, format=None,
+        "Max(gr)" : st.column_config.NumberColumn("Max(gr)", width="small", required=True, default=None, format=None,
                                               min_value=0, max_value=1000)
     },
     hide_index=True,
