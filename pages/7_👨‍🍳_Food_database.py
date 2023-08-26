@@ -102,10 +102,10 @@ with st.expander("""### Visualise food database"""):
         with fs.open(file, 'rb') as f:
             d = pickle.load(f)
         df = pd.DataFrame({"Food": [i for i in d.keys()],
-                      "Calories": [d[i]["Cals"] * 100 for i in d.keys()],
-                      "Carbs": [d[i]["Carbs"] * 100 for i in d.keys()],
-                      "Proteins": [d[i]["Proteins"] * 100 for i in d.keys()],
-                      "Fats": [d[i]["Fats"] * 100 for i in d.keys()]
+                      "Calories(100gr)": [d[i]["Cals"] * 100 for i in d.keys()],
+                      "Carbs(100gr)": [d[i]["Carbs"] * 100 for i in d.keys()],
+                      "Proteins(100gr)": [d[i]["Proteins"] * 100 for i in d.keys()],
+                      "Fats(100gr)": [d[i]["Fats"] * 100 for i in d.keys()]
                       })
         st.dataframe(df)
     else:
