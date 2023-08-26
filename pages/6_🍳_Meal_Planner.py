@@ -103,7 +103,7 @@ data_df = pd.DataFrame(
 st.data_editor(
     data_df,
     use_container_width=False,
-    num_rows="fixed",
+    num_rows="dynamic",
     column_config={
         "Food": st.column_config.SelectboxColumn(
             "Food",
