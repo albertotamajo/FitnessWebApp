@@ -28,7 +28,7 @@ with st.expander("""### Add food from openfoodfacts"""):
 
 with st.expander("""### Add food manually"""):
     food_name = st.text_input("Write the name of the food", value="")
-    calories = st.number_input('Write the calories of this food (100gr)', min_value=0)
-    carbs = st.number_input('Write the carbs of this food (100gr)', min_value=0)
-    proteins = st.number_input('Write the proteins of this food (100gr)', min_value=0)
-    fats = st.number_input('Write the fats of this food (100gr)', min_value=0)
+    calories = st.number_input('Write the calories of this food (100gr)', min_value=0, max_value=1000)
+    carbs = st.number_input('Write the carbs of this food (100gr)', min_value=0, max_value=1000)
+    proteins = st.number_input('Write the proteins of this food (100gr)', min_value=0, max_value=1000)
+    fats = st.number_input('Write the fats of this food (100gr)', min_value=0, max_value=1000)
