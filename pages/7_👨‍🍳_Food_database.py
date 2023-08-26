@@ -24,7 +24,10 @@ st.markdown(
 
 
 with st.expander("""### Add food from openfoodfacts"""):
-    pass
+    query = st.text_input("Write the name of the food", value="")
+    query = "+".join(query.split())
+    url = "https://it.openfoodfacts.org/cgi/search.pl?search_terms={0}&search_simple=1&json=1&action=process"
+    search_result = requests.get(url.format(query)).json()
 
 with st.expander("""### Add food manually"""):
     food_name = st.text_input("Write the name of the food", value="")
