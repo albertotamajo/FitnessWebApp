@@ -91,3 +91,28 @@ with col4:
         st.write("hello")
     with st.expander("""### Food 12"""):
         st.write("hello")
+
+data_df = pd.DataFrame(
+    {
+        "Food": ["hello"],
+        "Min": [1],
+        "Max":[2]
+    }
+)
+st.data_editor(
+    data_df,
+    column_config={
+        "Food": st.column_config.SelectboxColumn(
+            "Food",
+            help="The category of the app",
+            width="large",
+            options=[
+                "📊 Data Exploration",
+                "📈 Data Visualization",
+                "🤖 LLM",
+            ],
+            required=True,
+        )
+    },
+    hide_index=True,
+)
