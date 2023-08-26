@@ -51,3 +51,5 @@ st.markdown(
     - Fats: min :green[{fatsMin}] gr | max :red[{fatsMax}] gr
     """
 )
+
+st.divider()
