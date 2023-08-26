@@ -115,13 +115,13 @@ food_table = st.data_editor(
             ],
             required=True,
         ),
-        "Min(gr)" : st.column_config.NumberColumn("Min(gr)", width="small", required=True, default=0, format=None,
+        "Min(gr)":st.column_config.NumberColumn("Min(gr)", width="small", required=True, default=0, format=None,
                                               min_value=0, max_value=1000),
-        "Max(gr)" : st.column_config.NumberColumn("Max(gr)", width="small", required=True, default=0, format=None,
+        "Max(gr)":st.column_config.NumberColumn("Max(gr)", width="small", required=True, default=0, format=None,
                                               min_value=0, max_value=1000)
     },
     hide_index=True,
 )
 
-print(food_table)
+print(food_table[0, 0])
 
