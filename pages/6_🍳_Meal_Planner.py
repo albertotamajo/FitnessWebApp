@@ -28,7 +28,7 @@ with cals:
    st.markdown("### Calories")
    calsMin = st.number_input('Min', key="calsMin")
    calsMax = st.number_input('Max', key="calsMax")
-   st.markdown("""min :green[{calsMin}] kcal | max :red[{calsMax}] kcal""")
+   st.markdown(f"""min :green[{calsMin}] kcal | max :red[{calsMax}] kcal""")
 
 with carbs:
    st.markdown("### Carbs")
