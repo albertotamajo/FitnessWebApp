@@ -2,7 +2,6 @@ import streamlit as st
 import requests
 from streamlit_image_select import image_select
 import pickle
-import pytz
 import utils
 
 st.set_page_config(
@@ -32,13 +31,39 @@ st.markdown(
 
 
 with st.expander("""### Add food from openfoodfacts"""):
-    query = st.text_input("Write the name of the food", value="", key="foodQuery")
+    query = st.text_input("Write a query for the food", value="", key="foodQuery")
     query = "+".join(query.split())
     url = "https://it.openfoodfacts.org/cgi/search.pl?search_terms={0}&search_simple=1&json=1&action=process"
-    search_result = requests.get(url.format(query)).json()
-    products = search_result['products'][:10]
-    img = image_select("Select food", [p["image_front_small_url"] for p in products if "image_front_small_url" in p],
-                       return_value="index", use_container_width=True)
+    if query is not "":
+        search_result = requests.get(url.format(query)).json()
+        products = search_result['products'][:10]
+        ind = image_select("Select food", [p["image_front_small_url"] for p in products if "image_front_small_url" in p],
+                           return_value="index", use_container_width=True)
+        product = products[ind]
+        product_name = " ".join((product["url"].split("/")[-1]).split("-"))
+        food_name = st.text_input("Write the name of the food", value=product_name)
+        calories = product["nutriments"]['energy-kcal_100g']
+        carbs = product["nutriments"]['carbohydrates_100g']
+        proteins = product["nutriments"]['proteins_100g']
+        fats = product["nutriments"]['fat_100g']
+        if st.button('Add food', key="OpenFoodButton"):
+            save = True
+            if fs.exists(file):
+                with fs.open(file, 'rb') as f:
+                    d = pickle.load(f)
+                    if food_name not in d.keys():
+                        d[food_name] = {"Cals": calories / 100.0, "Carbs": carbs / 100.0, "Proteins": proteins / 100.0,
+                                        "Fats": fats / 100.0}
+                    else:
+                        save = False
+                        st.error('Your food is already in the database')
+            else:
+                fs.touch(file)
+                d = {food_name: {"Cals": calories / 100.0, "Carbs": carbs / 100.0, "Proteins": proteins / 100.0,
+                                 "Fats": fats / 100.0}}
+            with fs.open(file, 'wb') as f:
+                if save:
+                    pickle.dump(d, f)
 
 
 with st.expander("""### Add food manually"""):
