@@ -1,3 +1,4 @@
+import pandas as pd
 import streamlit as st
 import requests
 from streamlit_image_select import image_select
@@ -64,6 +65,7 @@ with st.expander("""### Add food from openfoodfacts"""):
             with fs.open(file, 'wb') as f:
                 if save:
                     pickle.dump(d, f)
+                    st.success("Food saved successfully!")
 
 
 with st.expander("""### Add food manually"""):
@@ -90,3 +92,18 @@ with st.expander("""### Add food manually"""):
         with fs.open(file, 'wb') as f:
             if save:
                 pickle.dump(d, f)
+                st.success("Food saved successfully!")
+
+with st.expander("""### Visualise food database"""):
+    if fs.exists(file):
+        with fs.open(file, 'rb') as f:
+            d = pickle.load(f)
+            df = pd.DataFrame({"Food": [i for i in d.keys()],
+                          "Calories": [int(d[i]["Cals"] * 100) for i in d.keys()],
+                          "Carbs": [int(d[i]["Carbs"] * 100) for i in d.keys()],
+                          "Proteins": [int(d[i]["Proteins"] * 100) for i in d.keys()],
+                          "Fats": [int(d[i]["Proteins"] * 100) for i in d.keys()]
+                          })
+            st.dataframe(df)
+    else:
+        st.error("There is no food database at the moment")
