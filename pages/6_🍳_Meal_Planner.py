@@ -59,7 +59,7 @@ col1, col2, col3, col4 = st.columns(4)
 
 with col1:
     with st.expander("""### Food 1"""):
-        st.selectbox("Food 1", ["pollo conad", "aiò maiala"], label_visibility="hidden")
+        st.selectbox("Food 1", ["pollo conad conad conad", "aiò maiala"], label_visibility="hidden")
     with st.expander("""### Food 5"""):
         st.write("hello")
     with st.expander("""### Food 9"""):
