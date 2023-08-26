@@ -54,7 +54,6 @@ st.markdown(
     """
 )
 
-st.divider()
 
 # col1, col2, col3, col4 = st.columns(4)
 #
@@ -100,7 +99,7 @@ data_df = pd.DataFrame(
     }
 )
 
-st.data_editor(
+food_table = st.data_editor(
     data_df,
     use_container_width=False,
     num_rows="dynamic",
@@ -122,3 +121,4 @@ st.data_editor(
     },
     hide_index=True,
 )
+
