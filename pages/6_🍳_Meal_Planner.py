@@ -54,6 +54,7 @@ st.markdown(
     """
 )
 
+st.divider()
 
 # col1, col2, col3, col4 = st.columns(4)
 #
