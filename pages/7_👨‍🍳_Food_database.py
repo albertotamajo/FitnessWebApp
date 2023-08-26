@@ -1,11 +1,19 @@
 import streamlit as st
 import requests
 from streamlit_image_select import image_select
+import pickle
+import pytz
+import utils
 
 st.set_page_config(
     page_title="Food database",
     page_icon="👨‍🍳",
 )
+
+AWS_BUCKET = "fitnessmanagement/"
+file = "{0}Food.pickle".format(AWS_BUCKET)
+fs = utils.s3fs_file_system()
+fs.clear_instance_cache()
 
 hide_st_style = """
 <style>
@@ -32,9 +40,28 @@ with st.expander("""### Add food from openfoodfacts"""):
     img = image_select("Select food", [p["image_front_small_url"] for p in products if "image_front_small_url" in p],
                        return_value="index", use_container_width=True)
 
+
 with st.expander("""### Add food manually"""):
     food_name = st.text_input("Write the name of the food", value="", key="foodName")
     calories = st.number_input('Write the calories of this food (100gr)', min_value=int(0), max_value=int(1000), step=1)
     carbs = st.number_input('Write the carbs of this food (100gr)', min_value=int(0), max_value=int(1000), step=1)
     proteins = st.number_input('Write the proteins of this food (100gr)', min_value=int(0), max_value=int(1000), step=1)
     fats = st.number_input('Write the fats of this food (100gr)', min_value=int(0), max_value=int(1000), step=1)
+    if st.button('Add food'):
+        save = True
+        if fs.exists(file):
+            with fs.open(file, 'rb') as f:
+                d = pickle.load(f)
+                if food_name not in d.keys():
+                    d[food_name] = {"Cals": calories / 100.0, "Carbs": carbs / 100.0, "Proteins": proteins / 100.0,
+                                    "Fats": fats / 100.0}
+                else:
+                    save = False
+                    st.error('Your food is already in the database')
+        else:
+            fs.touch(file)
+            d = {food_name: {"Cals": calories / 100.0, "Carbs": carbs / 100.0, "Proteins": proteins / 100.0,
+                             "Fats": fats / 100.0}}
+        with fs.open(file, 'wb') as f:
+            if save:
+                pickle.dump(d, f)
