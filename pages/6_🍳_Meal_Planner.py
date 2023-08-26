@@ -45,9 +45,9 @@ with fats:
 
 st.markdown(
     f"""
-    - Calories: min :green[{calsMin}] kcal | max :red[calsMax] kcal
-    - Carbs: min :green[carbsMin] gr | max :red[carbsMax] gr
-    - Proteins: min :green[prtsMin] gr | max :red[prtsMax] gr
-    - Fats: min :green[fatsMin] gr | max :red[fatsMax] gr
+    - Calories: min :green[{calsMin}] kcal | max :red[{calsMax}] kcal
+    - Carbs: min :green[{carbsMin}] gr | max :red[{carbsMax}] gr
+    - Proteins: min :green[{prtsMin}] gr | max :red[{prtsMax}] gr
+    - Fats: min :green[{fatsMin}] gr | max :red[{fatsMax}] gr
     """
 )
