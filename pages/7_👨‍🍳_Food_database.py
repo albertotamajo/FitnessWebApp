@@ -47,6 +47,8 @@ with st.expander("""### Add food from openfoodfacts"""):
             carbs = product["nutriments"]['carbohydrates_100g']
             proteins = product["nutriments"]['proteins_100g']
             fats = product["nutriments"]['fat_100g']
+            st.markdown(f"""## Food name """)
+            food_name = st.text_input("""##Write the name of the food""", value=product_name)
             st.markdown(
                 f"""
                 ## Nutritional values
