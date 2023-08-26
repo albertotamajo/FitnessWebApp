@@ -29,7 +29,7 @@ with cals:
    st.markdown("### Calories")
    calsMin = st.number_input('Min', key="calsMin")
    calsMax = st.number_input('Max', key="calsMax")
-   df = pd.DataFrame({"Max": calsMax, "Min": calsMin})
+   df = pd.DataFrame({"Max": [calsMax], "Min": [calsMin]})
    st.bar_chart(df)
 
 with carbs:
