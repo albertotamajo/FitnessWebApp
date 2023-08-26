@@ -29,17 +29,17 @@ with cals:
    calsMax = st.number_input('Max', key="calsMax")
 
 with carbs:
-   st.header("Carbs")
+   st.markdown("### Carbs")
    carbsMin = st.number_input('Min', key="carbsMin")
    carbsMax = st.number_input('Max', key="carbsMax")
 
 with proteins:
-   st.header("Proteins")
+   st.markdown("### Proteins")
    prtsMin = st.number_input('Min', key="prtsMin")
    prtsMax = st.number_input('Max', key="prtsMax")
 
 with fats:
-   st.header("Fats")
+   st.markdown("### Fats")
    fatsMin = st.number_input('Min', key="fatsMin")
    fatsMax = st.number_input('Max', key="fatsMax")
 
