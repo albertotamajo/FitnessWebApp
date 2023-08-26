@@ -30,8 +30,8 @@ with cals:
 
 with carbs:
    st.header("Carbs")
-   st.number_input('Mit', key="carbsMin")
-   st.number_input('Mat', key="carbsMax")
+   st.number_input('Min', key="carbsMin")
+   st.number_input('Max', key="carbsMax")
 
 with proteins:
    st.header("Proteins")
