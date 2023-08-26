@@ -22,8 +22,13 @@ st.markdown(
     """
 )
 
-col1, col2 = st.columns(2)
-with col1:
-    st.markdown("### Add food from openfoodfacts")
-with col2:
-    st.markdown("### Add food manually")
+
+with st.expander("""### Add food from openfoodfacts"""):
+    pass
+
+with st.expander("""### Add food manually"""):
+    food_name = st.text_input("Write the name of the food", value="")
+    calories = st.number_input('Write the calories of this food (100gr)')
+    carbs = st.number_input('Write the carbs of this food (100gr)')
+    proteins = st.number_input('Write the proteins of this food (100gr)')
+    fats = st.number_input('Write the fats of this food (100gr)')
