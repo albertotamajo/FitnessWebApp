@@ -56,8 +56,8 @@ st.markdown(
 st.divider()
 
 with st.expander("""### Food 1"""):
-    pass
+    st.write("ciao")
 
 with st.expander("""### Food 2"""):
-    pass
+    st.write("hello")
 
