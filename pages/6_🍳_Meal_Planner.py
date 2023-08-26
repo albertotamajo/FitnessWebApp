@@ -131,7 +131,7 @@ food_table = st.data_editor(
         "Food": st.column_config.SelectboxColumn(
             "Food",
             width="large",
-            options=list(fetch_food.keys()),
+            options=list(fetch_food().keys()),
             required=True,
         ),
         "Min(gr)":st.column_config.NumberColumn("Min(gr)", width="small", required=True, default=0, format=None,
