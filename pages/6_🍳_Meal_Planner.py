@@ -61,3 +61,32 @@ with st.expander("""### Food 1"""):
 with st.expander("""### Food 2"""):
     st.write("hello")
 
+with st.expander("""### Food 3"""):
+    st.write("hello")
+
+with st.expander("""### Food 4"""):
+    st.write("hello")
+
+with st.expander("""### Food 5"""):
+    st.write("hello")
+
+with st.expander("""### Food 6"""):
+    st.write("hello")
+
+with st.expander("""### Food 7"""):
+    st.write("hello")
+
+with st.expander("""### Food 8"""):
+    st.write("hello")
+
+with st.expander("""### Food 9"""):
+    st.write("hello")
+
+with st.expander("""### Food 10"""):
+    st.write("hello")
+
+with st.expander("""### Food 11"""):
+    st.write("hello")
+
+with st.expander("""### Food 12"""):
+    st.write("hello")
