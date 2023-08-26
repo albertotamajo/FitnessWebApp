@@ -24,7 +24,7 @@ st.markdown(
 cals, carbs, proteins, fats = st.columns(4)
 
 with cals:
-   st.markdown("## Calories")
+   st.markdown("### Calories")
    calsMin = st.number_input('Min', key="calsMin")
    calsMax = st.number_input('Max', key="calsMax")
 
