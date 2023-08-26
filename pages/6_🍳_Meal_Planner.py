@@ -25,20 +25,20 @@ cals, carbs, proteins, fats = st.columns(4)
 
 with cals:
    st.header("Calories")
-   st.number_input('Min')
-   st.number_input('Max')
+   st.number_input('Min', key="calsMin")
+   st.number_input('Max', key="calsMax")
 
 with carbs:
    st.header("Carbs")
-   st.number_input('Mit')
-   st.number_input('Mat')
+   st.number_input('Mit', key="carbsMin")
+   st.number_input('Mat', key="carbsMax")
 
 with proteins:
    st.header("Proteins")
-   st.number_input('Min')
-   st.number_input('Max')
+   st.number_input('Min', key="prtsMin")
+   st.number_input('Max', key="prtsMax")
 
 with fats:
    st.header("Fats")
-   st.number_input('Min')
-   st.number_input('Max')
+   st.number_input('Min', key="fatsMin")
+   st.number_input('Max', key="fatsMax")
