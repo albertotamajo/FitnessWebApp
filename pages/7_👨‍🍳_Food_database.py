@@ -105,7 +105,7 @@ with st.expander("""### Visualise food database"""):
                       "Calories": [d[i]["Cals"] * 100 for i in d.keys()],
                       "Carbs": [d[i]["Carbs"] * 100 for i in d.keys()],
                       "Proteins": [d[i]["Proteins"] * 100 for i in d.keys()],
-                      "Fats": [d[i]["Proteins"] * 100 for i in d.keys()]
+                      "Fats": [d[i]["Fats"] * 100 for i in d.keys()]
                       })
         st.dataframe(df)
     else:
