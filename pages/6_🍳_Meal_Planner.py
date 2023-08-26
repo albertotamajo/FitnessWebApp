@@ -1,5 +1,6 @@
+import pandas as pd
 import streamlit as st
-import requests
+import pandas as pd
 
 st.set_page_config(
     page_title="Meal planner",
@@ -28,6 +29,8 @@ with cals:
    st.markdown("### Calories")
    calsMin = st.number_input('Min', key="calsMin")
    calsMax = st.number_input('Max', key="calsMax")
+   df = pd.DataFrame({"Max": calsMax, "Min": calsMin})
+   st.bar_chart(df)
 
 with carbs:
    st.markdown("### Carbs")
