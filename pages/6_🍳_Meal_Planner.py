@@ -21,7 +21,7 @@ st.markdown(
     """
 )
 
-cals, carbs, proteins, fats = st.columns(3)
+cals, carbs, proteins, fats = st.columns(4)
 
 with cals:
    st.header("Calories")
