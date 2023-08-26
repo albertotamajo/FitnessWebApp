@@ -43,11 +43,19 @@ with st.expander("""### Add food from openfoodfacts"""):
                                return_value="index", use_container_width=True)
             product = products[ind]
             product_name = " ".join((product["url"].split("/")[-1]).split("-"))
-            food_name = st.text_input("Write the name of the food", value=product_name)
             calories = product["nutriments"]['energy-kcal_100g']
             carbs = product["nutriments"]['carbohydrates_100g']
             proteins = product["nutriments"]['proteins_100g']
             fats = product["nutriments"]['fat_100g']
+            st.markdown(
+                f"""
+                - Calories (100gr): :green[{calories}] kcal
+                - Carbs (100gr): min :green[{carbs}] gr
+                - Proteins (100gr): min :green[{proteins}] gr
+                - Fats (100gr): min :green[{fats}] gr
+                """
+            )
+            food_name = st.text_input("Write the name of the food", value=product_name)
             if st.button('Add food', key="OpenFoodButton"):
                 save = True
                 if fs.exists(file):
