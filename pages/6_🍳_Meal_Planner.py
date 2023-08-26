@@ -23,23 +23,31 @@ st.markdown(
 
 cals, carbs, proteins, fats = st.columns(4)
 
-
 with cals:
    st.header("Calories")
    calsMin = st.number_input('Min', key="calsMin")
-   st.number_input('Max', key="calsMax")
+   calsMax = st.number_input('Max', key="calsMax")
 
 with carbs:
    st.header("Carbs")
-   st.number_input('Min', key="carbsMin")
-   st.number_input('Max', key="carbsMax")
+   carbsMin = st.number_input('Min', key="carbsMin")
+   carbsMax = st.number_input('Max', key="carbsMax")
 
 with proteins:
    st.header("Proteins")
-   st.number_input('Min', key="prtsMin")
-   st.number_input('Max', key="prtsMax")
+   prtsMin = st.number_input('Min', key="prtsMin")
+   prtsMax = st.number_input('Max', key="prtsMax")
 
 with fats:
    st.header("Fats")
-   st.number_input('Min', key="fatsMin")
-   st.number_input('Max', key="fatsMax")
+   fatsMin = st.number_input('Min', key="fatsMin")
+   fatsMax = st.number_input('Max', key="fatsMax")
+
+st.markdown(
+    """
+    - Calories: min | max
+    - Carbs: min | max
+    - Proteins: min | max
+    - Fats: min | max
+    """
+)
