@@ -49,10 +49,11 @@ with st.expander("""### Add food from openfoodfacts"""):
             fats = product["nutriments"]['fat_100g']
             st.markdown(
                 f"""
+                ## Nutritional values
                 - Calories (100gr): :green[{calories}] kcal
-                - Carbs (100gr): min :green[{carbs}] gr
-                - Proteins (100gr): min :green[{proteins}] gr
-                - Fats (100gr): min :green[{fats}] gr
+                - Carbs (100gr): :green[{carbs}] gr
+                - Proteins (100gr): :green[{proteins}] gr
+                - Fats (100gr): :green[{fats}] gr
                 """
             )
             food_name = st.text_input("Write the name of the food", value=product_name)
