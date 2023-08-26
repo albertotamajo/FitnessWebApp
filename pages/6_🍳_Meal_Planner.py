@@ -20,6 +20,7 @@ st.markdown(
     Set your meal objectives, select your food and let me compute the quantity of food you need.
     """
 )
+st.divider()
 
 cals, carbs, proteins, fats = st.columns(4)
 
