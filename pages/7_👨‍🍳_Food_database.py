@@ -116,10 +116,13 @@ with st.expander("""### Remove food"""):
         with fs.open(file, 'rb') as f:
             d = pickle.load(f)
         food = st.selectbox("Select the food to be removed", ["<select>"] + list(d.keys()))
-        if food is not "<select>":
-            d.pop(food)
-            with fs.open(file, 'wb') as f:
-                pickle.dump(d, f)
-                st.success("Food removed successfully!")
+        if st.button('Remove food'):
+            if food is not "<select>":
+                d.pop(food)
+                with fs.open(file, 'wb') as f:
+                    pickle.dump(d, f)
+                    st.success("Food removed successfully!")
+            else:
+                st.error("You need to select a food!")
     else:
         st.error("There is no food database at the moment")
