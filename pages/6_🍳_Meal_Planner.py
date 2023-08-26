@@ -14,7 +14,7 @@ file = "{0}Food.pickle".format(AWS_BUCKET)
 fs = utils.s3fs_file_system()
 fs.clear_instance_cache()
 
-@st.cache_data
+#@st.cache_data
 def fetch_food():
     # Fetch data from URL here, and then clean it up.
     if fs.exists(file):
