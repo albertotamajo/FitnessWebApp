@@ -70,10 +70,10 @@ with st.expander("""### Add food from openfoodfacts"""):
 
 with st.expander("""### Add food manually"""):
     food_name = st.text_input("Write the name of the food", value="", key="foodName")
-    calories = st.number_input('Write the calories of this food (100gr)', min_value=int(0), max_value=int(1000), step=1)
-    carbs = st.number_input('Write the carbs of this food (100gr)', min_value=int(0), max_value=int(1000), step=1)
-    proteins = st.number_input('Write the proteins of this food (100gr)', min_value=int(0), max_value=int(1000), step=1)
-    fats = st.number_input('Write the fats of this food (100gr)', min_value=int(0), max_value=int(1000), step=1)
+    calories = st.number_input('Write the calories of this food (100gr)', min_value=0., max_value=1000., step=1.)
+    carbs = st.number_input('Write the carbs of this food (100gr)', min_value=0., max_value=1000., step=1.)
+    proteins = st.number_input('Write the proteins of this food (100gr)', min_value=0., max_value=1000., step=1.)
+    fats = st.number_input('Write the fats of this food (100gr)', min_value=0., max_value=1000., step=1.)
     if st.button('Add food'):
         save = True
         if fs.exists(file):
@@ -99,10 +99,10 @@ with st.expander("""### Visualise food database"""):
         with fs.open(file, 'rb') as f:
             d = pickle.load(f)
             df = pd.DataFrame({"Food": [i for i in d.keys()],
-                          "Calories": [int(d[i]["Cals"] * 100) for i in d.keys()],
-                          "Carbs": [int(d[i]["Carbs"] * 100) for i in d.keys()],
-                          "Proteins": [int(d[i]["Proteins"] * 100) for i in d.keys()],
-                          "Fats": [int(d[i]["Proteins"] * 100) for i in d.keys()]
+                          "Calories": [d[i]["Cals"] * 100 for i in d.keys()],
+                          "Carbs": [d[i]["Carbs"] * 100 for i in d.keys()],
+                          "Proteins": [d[i]["Proteins"] * 100 for i in d.keys()],
+                          "Fats": [d[i]["Proteins"] * 100 for i in d.keys()]
                           })
             st.dataframe(df)
     else:
