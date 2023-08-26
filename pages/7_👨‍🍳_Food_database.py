@@ -21,3 +21,9 @@ st.markdown(
     Add food to your database.
     """
 )
+
+col1, col2 = st.columns(2)
+with col1:
+    st.markdown("### Add food from openfoodfacts")
+with col2:
+    st.markdown("### Add food manually")
