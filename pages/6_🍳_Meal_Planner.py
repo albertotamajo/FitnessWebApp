@@ -102,8 +102,8 @@ data_df = pd.DataFrame(
         "Food": [],
         "Min(gr)": [],
         "Max(gr)":[]
-    }.astype(convert_dict)
-)
+    }
+).astype(convert_dict)
 
 
 food_table = st.data_editor(
