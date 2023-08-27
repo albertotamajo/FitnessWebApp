@@ -44,6 +44,9 @@ REMOVE_REPETITION_KEY = "REMOVE_WEIGHT_REPETITION_SELECTION"
 REMOVE_PASSWORD_KEY = "ADD_WEIGHT_PASSWORD_SELECTION"
 REMOVE_INDEX_KEY = "REMOVE_WEIGHT_INDEX_SELECTION"
 
+HISTORY_USER_KEY = "HISTORY_USER_SELECTION"
+HISTORY_EXERCISE_KEY = "HISTORY_EXERCISE_SELECTION"
+
 repetition_default = 8
 weight_default = 50.0
 
@@ -134,8 +137,8 @@ with st.expander("Remove weights"):
                     st.success('Weight removed successfully!')
 
 with st.expander("History"):
-    user = st.selectbox('Who is the user?', ('<select>', 'Alberto', 'Giuseppe'))
-    exercise = st.selectbox('What is the exercise?', exercise_list)
+    user = st.selectbox('Who is the user?', ('<select>', 'Alberto', 'Giuseppe'), key=HISTORY_USER_KEY)
+    exercise = st.selectbox('What is the exercise?', exercise_list, key=HISTORY_EXERCISE_KEY)
 
     if st.button('Check'):
         if user == '<select>' or exercise == '<select>':
