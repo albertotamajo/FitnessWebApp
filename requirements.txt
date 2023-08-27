@@ -50,6 +50,7 @@ Pillow==8.4.0
 prometheus-client==0.16.0
 prompt-toolkit==3.0.36
 protobuf==3.20
+pulp==2.7.0
 pyarrow==6.0.1
 pycparser==2.21
 pydeck==0.8
