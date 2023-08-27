@@ -124,6 +124,7 @@ if authentication_status:
             hide_index=True,
         )
         optim = st.selectbox("Select optimisation", ["Maximise", "Minimise"])
+        st.divider()
         if st.button("Compute meal plan"):
             optim = LpMaximize if optim == "Maximise" else LpMinimize
             # Instantiate model
