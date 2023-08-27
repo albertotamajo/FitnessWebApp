@@ -73,15 +73,12 @@ if authentication_status:
         repetitions = st.slider('How many reps did you do?', 1, 20, value=repetition_default, key=ADD_REPETITION_KEY)
         weight = st.number_input('What weight did you use (kg)?', min_value=0.0, max_value=200.0, value=weight_default,
                                  step=0.25, key=ADD_WEIGHT_KEY)
-        password = st.text_input('Password', key=ADD_PASSWORD_KEY)
         if st.button('Add weight'):
-            if user == '<select>' or exercise == '<select>' or password != st.secrets["PASSWORD"]:
+            if user == '<select>' or exercise == '<select>':
                 if user == '<select>':
                     st.error('You need to select a user')
                 if exercise == '<select>':
                     st.error('You need to select an exercise')
-                if password != st.secrets["PASSWORD"]:
-                    st.error('You need to type a correct password')
             else:
                 datetime = datetime.now(pytz.timezone("Europe/Rome"))
                 date = "{0}-{1}-{2}".format(datetime.year, datetime.month, datetime.day)
@@ -115,16 +112,13 @@ if authentication_status:
         repetitions = st.slider('How many reps did you do?', 1, 20, value=repetition_default, key=REMOVE_REPETITION_KEY)
         index = st.number_input('What is the index?', min_value=0, max_value=None, value=0, step=1,
                                 key=REMOVE_INDEX_KEY)
-        password = st.text_input('Password', key=REMOVE_PASSWORD_KEY)
 
         if st.button('Remove weight'):
-            if user == '<select>' or exercise == '<select>' or password != st.secrets["PASSWORD"]:
+            if user == '<select>' or exercise == '<select>':
                 if user == '<select>':
                     st.error('You need to select a user')
                 if exercise == '<select>':
                     st.error('You need to select an exercise')
-                if password != st.secrets["PASSWORD"]:
-                    st.error('You need to type a correct password')
             else:
                 file = "{0}Weights{1}.pickle".format(AWS_BUCKET, user)
                 remove = False
