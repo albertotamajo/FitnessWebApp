@@ -126,7 +126,7 @@ if authentication_status:
 
         if st.button("Compute meal plan"):
             # Instantiate model
-            model = LpProblem("MealPlan", LpMaximize)
+            model = LpProblem("MealPlan", LpMinimize)
             # Instantiate decision variables
             decision_variables = [LpVariable(name=food_table["Food"][ind], lowBound=food_table["Min(gr)"][ind],
                                              upBound=food_table["Max(gr)"][ind], cat=LpInteger) for ind in
