@@ -183,6 +183,9 @@ if st.button("Compute meal plan"):
         df = pd.DataFrame(dict)
         df.loc['Total'] = df.sum(numeric_only=True)
         st.dataframe(df)
+        df.to_excel("my_meal_plan.xlsx")
+        st.download_button("Download meal plan", "my_meal_plan.xlsx")
+
     else:
         st.error(f"Solver error: status {status}")
 
