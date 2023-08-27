@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 import utils
 import pickle
-
+from pulp import *
 st.set_page_config(
     page_title="Meal planner",
     page_icon="🍳",
@@ -122,6 +122,7 @@ data_df = pd.DataFrame(
     }
 ).astype(convert_dict)
 
+food_dict = fetch_food()
 
 food_table = st.data_editor(
     data_df,
@@ -131,7 +132,7 @@ food_table = st.data_editor(
         "Food": st.column_config.SelectboxColumn(
             "Food",
             width="large",
-            options=list(fetch_food().keys()),
+            options=list(food_dict.keys()),
             required=True,
         ),
         "Min(gr)":st.column_config.NumberColumn("Min(gr)", width="small", required=True, default=0, format=None,
@@ -141,6 +142,45 @@ food_table = st.data_editor(
     },
     hide_index=True,
 )
+
+if st.button("Compute meal plan"):
+    # Instantiate model
+    model = LpProblem("MealPlan", LpMaximize)
+    # Instantiate decision variables
+    decision_variables = [LpVariable(name=food_table["Food"][ind], lowBound=food_table["Min(gr)"][ind],
+                                     upBound=food_table["Max(gr)"][ind], cat=LpInteger) for ind in food_table.index]
+    # Add Objective function
+    model += lpSum(decision_variables)
+
+    # Add constraints
+    model += lpSum([decision_variables[ind] * food_dict[food_table["Food"][ind]]["Cals"] for ind in food_table.index])\
+             >= calsMin, "minCalories"
+    model += lpSum([decision_variables[ind] * food_dict[food_table["Food"][ind]]["Cals"] for ind in food_table.index])\
+             <= calsMax, "maxCalories"
+    model += lpSum([decision_variables[ind] * food_dict[food_table["Food"][ind]]["Carbs"] for ind in food_table.index]) \
+             >= carbsMin, "minCarbs"
+    model += lpSum([decision_variables[ind] * food_dict[food_table["Food"][ind]]["Carbs"] for ind in food_table.index]) \
+             <= carbsMax, "maxCarbs"
+    model += lpSum([decision_variables[ind] * food_dict[food_table["Food"][ind]]["Proteins"] for ind in food_table.index]) \
+             >= prtsMin, "minProteins"
+    model += lpSum([decision_variables[ind] * food_dict[food_table["Food"][ind]]["Proteins"] for ind in food_table.index]) \
+             <= prtsMax, "maxProteins"
+    model += lpSum([decision_variables[ind] * food_dict[food_table["Food"][ind]]["Fats"] for ind in food_table.index]) \
+             >= fatsMin, "minFats"
+    model += lpSum([decision_variables[ind] * food_dict[food_table["Food"][ind]]["Fats"] for ind in food_table.index]) \
+             <= fatsMax, "maxFats"
+
+    # The problem is solved using PuLP's Solver
+    status = LpStatus[model.solve()]
+    st.divider()
+    if status is "Optimal":
+        st.success("Solved successfully")
+        # Each of the variables is printed with it's resolved optimum value
+        for v in model.variables():
+            print(v.name, "=", v.varValue)
+    else:
+        st.error(f"Solver error: status {status}")
+
 
 print(food_table)
 
