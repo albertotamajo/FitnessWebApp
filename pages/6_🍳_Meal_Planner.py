@@ -40,156 +40,120 @@ st.markdown(
 )
 st.divider()
 
-cals, carbs, proteins, fats = st.columns(4)
+with st.expander("Plan your meal"):
+    cals, carbs, proteins, fats = st.columns(4)
 
-with cals:
-   st.markdown("### Calories")
-   calsMax = st.number_input('Max', key="calsMax")
-   calsMin = st.number_input('Min', key="calsMin")
+    with cals:
+       st.markdown("### Calories")
+       calsMax = st.number_input('Max', key="calsMax")
+       calsMin = st.number_input('Min', key="calsMin")
 
-with carbs:
-   st.markdown("### Carbs")
-   carbsMax = st.number_input('Max', key="carbsMax")
-   carbsMin = st.number_input('Min', key="carbsMin")
+    with carbs:
+       st.markdown("### Carbs")
+       carbsMax = st.number_input('Max', key="carbsMax")
+       carbsMin = st.number_input('Min', key="carbsMin")
 
-with proteins:
-   st.markdown("### Proteins")
-   prtsMax = st.number_input('Max', key="prtsMax")
-   prtsMin = st.number_input('Min', key="prtsMin")
+    with proteins:
+       st.markdown("### Proteins")
+       prtsMax = st.number_input('Max', key="prtsMax")
+       prtsMin = st.number_input('Min', key="prtsMin")
 
-with fats:
-   st.markdown("### Fats")
-   fatsMax = st.number_input('Max', key="fatsMax")
-   fatsMin = st.number_input('Min', key="fatsMin")
+    with fats:
+       st.markdown("### Fats")
+       fatsMax = st.number_input('Max', key="fatsMax")
+       fatsMin = st.number_input('Min', key="fatsMin")
 
-st.markdown(
-    f"""
-    - Calories: min :green[{calsMin}] kcal | max :red[{calsMax}] kcal
-    - Carbs: min :green[{carbsMin}] gr | max :red[{carbsMax}] gr
-    - Proteins: min :green[{prtsMin}] gr | max :red[{prtsMax}] gr
-    - Fats: min :green[{fatsMin}] gr | max :red[{fatsMax}] gr
-    """
-)
+    st.markdown(
+        f"""
+        - Calories: min :green[{calsMin}] kcal | max :red[{calsMax}] kcal
+        - Carbs: min :green[{carbsMin}] gr | max :red[{carbsMax}] gr
+        - Proteins: min :green[{prtsMin}] gr | max :red[{prtsMax}] gr
+        - Fats: min :green[{fatsMin}] gr | max :red[{fatsMax}] gr
+        """
+    )
 
-st.divider()
-
-# col1, col2, col3, col4 = st.columns(4)
-#
-# with col1:
-#     with st.expander("""### Food 1"""):
-#         st.selectbox("Food 1", ["pollo conad conad conad", "aiò maiala"], label_visibility="hidden")
-#         food1Min = st.number_input('Min', key="food1Min")
-#         food1Max = st.number_input('Min', key="food1Max")
-#     with st.expander("""### Food 5"""):
-#         st.write("hello")
-#     with st.expander("""### Food 9"""):
-#         st.write("hello")
-#
-# with col2:
-#     with st.expander("""### Food 2"""):
-#         st.write("hello")
-#     with st.expander("""### Food 6"""):
-#         st.write("hello")
-#     with st.expander("""### Food 10"""):
-#         st.write("hello")
-#
-# with col3:
-#     with st.expander("""### Food 3"""):
-#         st.write("hello")
-#     with st.expander("""### Food 7"""):
-#         st.write("hello")
-#     with st.expander("""### Food 11"""):
-#         st.write("hello")
-#
-# with col4:
-#     with st.expander("""### Food 4"""):
-#         st.write("hello")
-#     with st.expander("""### Food 8"""):
-#         st.write("hello")
-#     with st.expander("""### Food 12"""):
-#         st.write("hello")
-
-
-convert_dict = {'Food': str,
-                'Min(gr)': int,
-                'Max(gr)': int
-                }
-data_df = pd.DataFrame(
-    {
-        "Food": [],
-        "Min(gr)": [],
-        "Max(gr)":[]
-    }
-).astype(convert_dict)
-
-food_dict = fetch_food()
-
-food_table = st.data_editor(
-    data_df,
-    use_container_width=False,
-    num_rows="dynamic",
-    column_config={
-        "Food": st.column_config.SelectboxColumn(
-            "Food",
-            width="large",
-            options=list(food_dict.keys()),
-            required=True,
-        ),
-        "Min(gr)":st.column_config.NumberColumn("Min(gr)", width="small", required=True, default=0, format=None,
-                                              min_value=0, max_value=1000),
-        "Max(gr)":st.column_config.NumberColumn("Max(gr)", width="small", required=True, default=0, format=None,
-                                              min_value=0, max_value=1000)
-    },
-    hide_index=True,
-)
-
-if st.button("Compute meal plan"):
-    # Instantiate model
-    model = LpProblem("MealPlan", LpMaximize)
-    # Instantiate decision variables
-    decision_variables = [LpVariable(name=food_table["Food"][ind], lowBound=food_table["Min(gr)"][ind],
-                                     upBound=food_table["Max(gr)"][ind], cat=LpInteger) for ind in food_table.index]
-    # Add Objective function
-    model += lpSum(decision_variables)
-
-    # Add constraints
-    model += lpSum([decision_variables[ind] * food_dict[food_table["Food"][ind]]["Cals"] for ind in food_table.index])\
-             >= calsMin, "minCalories"
-    model += lpSum([decision_variables[ind] * food_dict[food_table["Food"][ind]]["Cals"] for ind in food_table.index])\
-             <= calsMax, "maxCalories"
-    model += lpSum([decision_variables[ind] * food_dict[food_table["Food"][ind]]["Carbs"] for ind in food_table.index]) \
-             >= carbsMin, "minCarbs"
-    model += lpSum([decision_variables[ind] * food_dict[food_table["Food"][ind]]["Carbs"] for ind in food_table.index]) \
-             <= carbsMax, "maxCarbs"
-    model += lpSum([decision_variables[ind] * food_dict[food_table["Food"][ind]]["Proteins"] for ind in food_table.index]) \
-             >= prtsMin, "minProteins"
-    model += lpSum([decision_variables[ind] * food_dict[food_table["Food"][ind]]["Proteins"] for ind in food_table.index]) \
-             <= prtsMax, "maxProteins"
-    model += lpSum([decision_variables[ind] * food_dict[food_table["Food"][ind]]["Fats"] for ind in food_table.index]) \
-             >= fatsMin, "minFats"
-    model += lpSum([decision_variables[ind] * food_dict[food_table["Food"][ind]]["Fats"] for ind in food_table.index]) \
-             <= fatsMax, "maxFats"
-
-    # The problem is solved using PuLP's Solver
-    status = LpStatus[model.solve()]
     st.divider()
-    if status is "Optimal":
-        dict = {"Food": [v.name.replace("_", " ") for v in model.variables()],
-                "Qnt(gr)": [v.varValue for v in model.variables()],
-                "Cals(kcal)": [food_dict[v.name.replace("_", " ")]["Cals"] * v.varValue for v in model.variables()],
-                "Carbs(gr)": [food_dict[v.name.replace("_", " ")]["Carbs"] * v.varValue for v in model.variables()],
-                "Proteins(gr)": [food_dict[v.name.replace("_", " ")]["Proteins"] * v.varValue for v in model.variables()],
-                "Fats(gr)": [food_dict[v.name.replace("_", " ")]["Fats"] * v.varValue for v in model.variables()]}
-        df = pd.DataFrame(dict)
-        df.loc['Total'] = df.sum(numeric_only=True)
-        st.dataframe(df)
-        df.to_excel("my_meal_plan.xlsx")
-        with open("my_meal_plan.xlsx", "rb") as f:
-            st.download_button("Download meal plan", f, file_name="my_meal_plan.xlsx")
 
-    else:
-        st.error(f"Solver error: status {status}")
+    convert_dict = {'Food': str,
+                    'Min(gr)': int,
+                    'Max(gr)': int
+                    }
+    data_df = pd.DataFrame(
+        {
+            "Food": [],
+            "Min(gr)": [],
+            "Max(gr)":[]
+        }
+    ).astype(convert_dict)
+
+    food_dict = fetch_food()
+
+    food_table = st.data_editor(
+        data_df,
+        use_container_width=False,
+        num_rows="dynamic",
+        column_config={
+            "Food": st.column_config.SelectboxColumn(
+                "Food",
+                width="large",
+                options=list(food_dict.keys()),
+                required=True,
+            ),
+            "Min(gr)":st.column_config.NumberColumn("Min(gr)", width="small", required=True, default=0, format=None,
+                                                  min_value=0, max_value=1000),
+            "Max(gr)":st.column_config.NumberColumn("Max(gr)", width="small", required=True, default=0, format=None,
+                                                  min_value=0, max_value=1000)
+        },
+        hide_index=True,
+    )
+
+    if st.button("Compute meal plan"):
+        # Instantiate model
+        model = LpProblem("MealPlan", LpMaximize)
+        # Instantiate decision variables
+        decision_variables = [LpVariable(name=food_table["Food"][ind], lowBound=food_table["Min(gr)"][ind],
+                                         upBound=food_table["Max(gr)"][ind], cat=LpInteger) for ind in food_table.index]
+        # Add Objective function
+        model += lpSum(decision_variables)
+
+        # Add constraints
+        model += lpSum([decision_variables[ind] * food_dict[food_table["Food"][ind]]["Cals"] for ind in food_table.index])\
+                 >= calsMin, "minCalories"
+        model += lpSum([decision_variables[ind] * food_dict[food_table["Food"][ind]]["Cals"] for ind in food_table.index])\
+                 <= calsMax, "maxCalories"
+        model += lpSum([decision_variables[ind] * food_dict[food_table["Food"][ind]]["Carbs"] for ind in food_table.index]) \
+                 >= carbsMin, "minCarbs"
+        model += lpSum([decision_variables[ind] * food_dict[food_table["Food"][ind]]["Carbs"] for ind in food_table.index]) \
+                 <= carbsMax, "maxCarbs"
+        model += lpSum([decision_variables[ind] * food_dict[food_table["Food"][ind]]["Proteins"] for ind in food_table.index]) \
+                 >= prtsMin, "minProteins"
+        model += lpSum([decision_variables[ind] * food_dict[food_table["Food"][ind]]["Proteins"] for ind in food_table.index]) \
+                 <= prtsMax, "maxProteins"
+        model += lpSum([decision_variables[ind] * food_dict[food_table["Food"][ind]]["Fats"] for ind in food_table.index]) \
+                 >= fatsMin, "minFats"
+        model += lpSum([decision_variables[ind] * food_dict[food_table["Food"][ind]]["Fats"] for ind in food_table.index]) \
+                 <= fatsMax, "maxFats"
+
+        # The problem is solved using PuLP's Solver
+        status = LpStatus[model.solve()]
+        st.divider()
+        if status is "Optimal":
+            dict = {"Food": [v.name.replace("_", " ") for v in model.variables()],
+                    "Qnt(gr)": [v.varValue for v in model.variables()],
+                    "Cals(kcal)": [food_dict[v.name.replace("_", " ")]["Cals"] * v.varValue for v in model.variables()],
+                    "Carbs(gr)": [food_dict[v.name.replace("_", " ")]["Carbs"] * v.varValue for v in model.variables()],
+                    "Proteins(gr)": [food_dict[v.name.replace("_", " ")]["Proteins"] * v.varValue for v in model.variables()],
+                    "Fats(gr)": [food_dict[v.name.replace("_", " ")]["Fats"] * v.varValue for v in model.variables()]}
+            df = pd.DataFrame(dict)
+            df.loc['Total'] = df.sum(numeric_only=True)
+            st.dataframe(df)
+            df.to_excel("my_meal_plan.xlsx")
+            with open("my_meal_plan.xlsx", "rb") as f:
+                st.download_button("Download meal plan", f, file_name="my_meal_plan.xlsx")
+
+        else:
+            st.error(f"Solver error: status {status}")
 
 
-print(food_table)
+    print(food_table)
 
