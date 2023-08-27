@@ -29,7 +29,7 @@ authenticator = stauth.Authenticate(
 name, authentication_status, username = authenticator.login('Login', 'main')
 
 if authentication_status:
-    authenticator.logout('Logout', 'main')
+    authenticator.logout('Logout', 'sidebar')
 
     st.write("# Welcome to the Fitness Management Web App! 👋")
 
