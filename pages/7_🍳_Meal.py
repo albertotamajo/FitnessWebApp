@@ -148,6 +148,48 @@ with st.expander("Plan your meal"):
         else:
             st.error(f"Solver error: status {status}")
 
+with st.expander("Compute meal's nutritional values"):
 
-    print(food_table)
+    convert_dict = {'Food': str,
+                    'Qnt(gr)': int
+                    }
+    data_df = pd.DataFrame(
+        {
+            "Food": [],
+            "Qnt(gr)": []
+        }
+    ).astype(convert_dict)
 
+    food_dict = fetch_food()
+
+    food_table = st.data_editor(
+        data_df,
+        use_container_width=False,
+        num_rows="dynamic",
+        column_config={
+            "Food": st.column_config.SelectboxColumn(
+                "Food",
+                width="large",
+                options=list(food_dict.keys()),
+                required=True,
+            ),
+            "Qnt(gr)": st.column_config.NumberColumn("Qnt(gr)", width="small", required=True, default=0, format=None,
+                                                     min_value=0, max_value=1000)
+        },
+        hide_index=True,
+    )
+    if st.button("Compute nutritional values"):
+        dict = {
+            "Food": [food_table["Food"][ind] for ind in food_table.index],
+            "Qnt(gr)": [food_table["Qnt(gr)"][ind] for ind in food_table.index],
+            "Cals(kcal)": [food_dict[food_table["Food"][ind]]["Cals"] * food_table["Qnt(gr)"][ind] for ind in food_table.index],
+            "Carbs(gr)": [food_dict[food_table["Food"][ind]]["Carbs"] * food_table["Qnt(gr)"][ind] for ind in food_table.index],
+            "Proteins(gr)": [food_dict[food_table["Food"][ind]]["Proteins"] * food_table["Qnt(gr)"][ind] for ind in food_table.index],
+            "Fats(gr)": [food_dict[food_table["Food"][ind]]["Fats"] * food_table["Qnt(gr)"][ind] for ind in food_table.index]
+        }
+        df = pd.DataFrame(dict)
+        df.loc['Total'] = df.sum(numeric_only=True)
+        st.dataframe(df)
+        df.to_excel("my_meal_nutrition.xlsx")
+        with open("my_meal_nutrition.xlsx", "rb") as f:
+            st.download_button("Download meal nutrition", f, file_name="my_meal_nutrition.xlsx")
