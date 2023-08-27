@@ -176,10 +176,10 @@ if st.button("Compute meal plan"):
     if status is "Optimal":
         dict = {"Food": [v.name for v in model.variables()],
                 "Qnt(gr)": [v.varValue for v in model.variables()],
-                "Cals(kcal)": [[food_dict[v.name]["Cals"] * v.varValue for v in model.variables()]],
-                "Carbs(gr)": [[food_dict[v.name]["Carbs"] * v.varValue for v in model.variables()]],
-                "Proteins(gr)": [[food_dict[v.name]["Proteins"] * v.varValue for v in model.variables()]],
-                "Fats(gr)": [[food_dict[v.name]["Fats"] * v.varValue for v in model.variables()]]}
+                "Cals(kcal)": [food_dict[v.name]["Cals"] * v.varValue for v in model.variables()],
+                "Carbs(gr)": [food_dict[v.name]["Carbs"] * v.varValue for v in model.variables()],
+                "Proteins(gr)": [food_dict[v.name]["Proteins"] * v.varValue for v in model.variables()],
+                "Fats(gr)": [food_dict[v.name]["Fats"] * v.varValue for v in model.variables()]}
         df = pd.DataFrame(dict)
         df.loc['Total'] = df.sum(numeric_only=True)
         st.dataframe(df)
