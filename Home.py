@@ -1,27 +1,46 @@
 import streamlit as st
+import streamlit_authenticator as stauth
+import yaml
+from yaml.loader import SafeLoader
 
-st.set_page_config(
-    page_title="Hello",
-    page_icon="👋",
+with open('config.yaml') as file:
+    config = yaml.load(file, Loader=SafeLoader)
+authenticator = stauth.Authenticate(
+    config['credentials'],
+    config['cookie']['name'],
+    config['cookie']['key'],
+    config['cookie']['expiry_days'],
+    config['preauthorized']
 )
+name, authentication_status, username = authenticator.login('Login', 'main')
 
-hide_st_style = """
-<style>
-#MainMenu {visibility: hidden;}
-footer {visibility: hidden;}
-</style>
-"""
-st.markdown(hide_st_style, unsafe_allow_html=True)
+if authentication_status:
+    authenticator.logout('Logout', 'main')
+    st.set_page_config(
+        page_title="Hello",
+        page_icon="👋",
+    )
 
-AWS_BUCKET="fitnessmanagement/"
-
-
-st.write("# Welcome to the Fitness Management Web App! 👋")
-
-st.sidebar.success("Select one of these functionalities.")
-
-st.markdown(
+    hide_st_style = """
+    <style>
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    </style>
     """
-    This web app is used by Alberto Tamajo and Giuseppe Mistretta.
-"""
-)
+    st.markdown(hide_st_style, unsafe_allow_html=True)
+
+    AWS_BUCKET = "fitnessmanagement/"
+
+    st.write("# Welcome to the Fitness Management Web App! 👋")
+
+    st.sidebar.success("Select one of these functionalities.")
+
+    st.markdown(
+        """
+        This web app is used by Alberto Tamajo and Giuseppe Mistretta.
+    """
+    )
+elif authentication_status == False:
+    st.error('Username/password is incorrect')
+elif authentication_status == None:
+    st.warning('Please enter your username and password')
