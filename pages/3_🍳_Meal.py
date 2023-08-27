@@ -123,10 +123,11 @@ if authentication_status:
             },
             hide_index=True,
         )
-
+        optim = st.selectbox("Select optimisation", ["Maximise", "Minimise"])
         if st.button("Compute meal plan"):
+            optim = LpMaximize if optim == "Maximise" else LpMinimize
             # Instantiate model
-            model = LpProblem("MealPlan", LpMinimize)
+            model = LpProblem("MealPlan", optim)
             # Instantiate decision variables
             decision_variables = [LpVariable(name=food_table["Food"][ind], lowBound=food_table["Min(gr)"][ind],
                                              upBound=food_table["Max(gr)"][ind], cat=LpInteger) for ind in
