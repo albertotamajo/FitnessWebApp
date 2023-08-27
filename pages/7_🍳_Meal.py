@@ -5,7 +5,7 @@ import utils
 import pickle
 from pulp import *
 st.set_page_config(
-    page_title="Meal planner",
+    page_title="Meal",
     page_icon="🍳",
 )
 
@@ -32,13 +32,7 @@ footer {visibility: hidden;}
 """
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
-st.write("# Meal planner! 🍳")
-st.markdown(
-    """
-    Set your meal objectives, select your food and let me compute the quantity of food you need.
-    """
-)
-st.divider()
+st.write("# Meal! 🍳")
 
 with st.expander("Plan your meal"):
     cals, carbs, proteins, fats = st.columns(4)
