@@ -1,0 +1,17 @@
+credentials:
+  usernames:
+    alberto:
+      email: tamajoalberto@gmail.com
+      name: Alberto Tamajo
+      password: $2b$12$IGLm8EKZVw4tzfl5nR3lP.GoK8PoiQUKll22bakf0IgTLVnJ5ob0.
+    giuseppe:
+      email: giuseppemistretta@virgilio.it
+      name: Giuseppe Mistretta
+      password: $2b$12$ExTMe1S4GTWs6JpdVSc/y.89eveO4bRxOLowFtTdptyk09L89RBkS
+cookie:
+  expiry_days: 30
+  key: random_signature_key # Must be string
+  name: random_cookie_name
+preauthorized:
+  emails:
+  - melsby@gmail.com
