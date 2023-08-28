@@ -148,15 +148,46 @@ if authentication_status:
 
         st.divider()
         if st.button("Compute meal plan"):
-            optim = LpMaximize
+            if calsDec == "None":
+                calsCoef = np.asarray([0. for ind in food_table.index])
+            else:
+                calsCoef = np.asarray([food_dict[food_table["Food"][ind]]["Cals"] for ind in food_table.index])
+                if calsDec == "Minimise":
+                    calsCoef = - calsCoef
+
+            if carbsDec is "None":
+                carbsCoef = np.asarray([0. for ind in food_table.index])
+            else:
+                carbsCoef = np.asarray([food_dict[food_table["Food"][ind]]["Carbs"] for ind in food_table.index])
+                if carbsDec == "Minimise":
+                    carbsCoef = - carbsCoef
+
+            if proteinsDec is "None":
+                proteinsCoef = np.asarray([0. for ind in food_table.index])
+            else:
+                proteinsCoef = np.asarray([food_dict[food_table["Food"][ind]]["Proteins"] for ind in food_table.index])
+                if proteinsDec == "Minimise":
+                    proteinsCoef = - proteinsCoef
+
+            if fatsDec is "None":
+                fatsCoef = np.asarray([0. for ind in food_table.index])
+            else:
+                fatsCoef = np.asarray([food_dict[food_table["Food"][ind]]["Fats"] for ind in food_table.index])
+                if fatsDec == "Minimise":
+                    fatsCoef = - fatsCoef
+
+            coef = calsCoef + carbsCoef + proteinsCoef + fatsCoef
+            if not np.any(coef):
+                coef = coef + 1.
+
             # Instantiate model
-            model = LpProblem("MealPlan", optim)
+            model = LpProblem("MealPlan", LpMaximize)
             # Instantiate decision variables
             decision_variables = [LpVariable(name=food_table["Food"][ind], lowBound=food_table["Min(gr)"][ind],
                                              upBound=food_table["Max(gr)"][ind], cat=LpInteger) for ind in
                                   food_table.index]
             # Add Objective function
-            model += lpSum(decision_variables)
+            model += lpSum([decision_variables[ind] * float(c) for ind, c in coef])
 
             # Add constraints
             model += lpSum(
