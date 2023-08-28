@@ -187,7 +187,7 @@ if authentication_status:
                                              upBound=food_table["Max(gr)"][ind], cat=LpInteger) for ind in
                                   food_table.index]
             # Add Objective function
-            model += lpSum([decision_variables[ind] * float(c) for ind, c in coef])
+            model += lpSum([decision_variables[ind] * float(c) for ind, c in enumerate(coef)])
 
             # Add constraints
             model += lpSum(
