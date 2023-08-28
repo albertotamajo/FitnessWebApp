@@ -125,11 +125,11 @@ if authentication_status:
             hide_index=True,
         )
         st.divider()
-        st.markdown("## Optimisation choices")
+        st.markdown("### Optimisation choices")
         calsOpt, carbsOpt, proteinsOpt, fatsOpt = st.columns(4)
         options = ["None", "Maximise", "Minimise"]
         with calsOpt:
-            st.markdown("### Calories")
+            st.markdown("#### Calories")
             calsDec = st.selectbox("", options=options, key="calsDec")
 
         with carbsOpt:
