@@ -133,15 +133,15 @@ if authentication_status:
             calsDec = st.selectbox("", options=options, key="calsDec")
 
         with carbsOpt:
-            st.markdown("### Carbs")
+            st.markdown("#### Carbs")
             carbsDec = st.selectbox("", options=options, key="carbsDec")
 
         with proteinsOpt:
-            st.markdown("### Proteins")
+            st.markdown("#### Proteins")
             proteinsDec = st.selectbox("", options=options, key="proteinsDec")
 
         with fatsOpt:
-            st.markdown("### Fats")
+            st.markdown("#### Fats")
             fatsDec = st.selectbox("", options=options, key="fatsDec")
 
         st.divider()
