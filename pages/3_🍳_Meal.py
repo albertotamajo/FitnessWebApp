@@ -124,10 +124,28 @@ if authentication_status:
             },
             hide_index=True,
         )
-        optim = st.selectbox("Select optimisation", ["Maximise", "Minimise"])
+        st.divider()
+        calsOpt, carbsOpt, proteinsOpt, fatsOpt = st.columns(4)
+        options = ["None", "Max", "Min"]
+        with calsOpt:
+            st.markdown("### Calories")
+            calsDec = st.selectbox("", options=options, key="calsDec")
+
+        with carbsOpt:
+            st.markdown("### Carbs")
+            carbsDec = st.selectbox("", options=options, key="carbsDec")
+
+        with proteinsOpt:
+            st.markdown("### Proteins")
+            proteinsDec = st.selectbox("", options=options, key="proteinsDec")
+
+        with fatsOpt:
+            st.markdown("### Fats")
+            fatsDec = st.selectbox("", options=options, key="fatsDec")
+
         st.divider()
         if st.button("Compute meal plan"):
-            optim = LpMaximize if optim == "Maximise" else LpMinimize
+            optim = LpMaximize
             # Instantiate model
             model = LpProblem("MealPlan", optim)
             # Instantiate decision variables
