@@ -200,7 +200,7 @@ if authentication_status:
             df = pd.DataFrame(arr, columns=["Carbs-Proteins-Fats(%)", "Carbs-Proteins-Fats(kcal)",
                                             "Carbs-Proteins-Fats(gr)"]).astype(str)
             for ind, r in enumerate(ratios):
-                df.loc[ind, "Carbs-Proteins-Fats(%)"] = f"{int((1-r) * remaining_ratio_cal)}-{int(proteins_ratio_cal)}-{int(r * remaining_ratio_cal)}"
+                df.loc[ind, "Carbs-Proteins-Fats(%)"] = f"{int((1-r) * remaining_ratio_cal * 100)}-{int(proteins_ratio_cal * 100)}-{int(r * remaining_ratio_cal * 100)}"
                 df.loc[ind, "Carbs-Proteins-Fats(kcal)"] = f"{int((1-r) * remaining_ratio_cal * cals)}-{int(proteins_ratio_cal * cals)}-{int(r * remaining_ratio_cal * cals)}"
                 df.loc[ind, "Carbs-Proteins-Fats(gr)"] = f"{int(((1 - r) * remaining_ratio_cal * cals)/4)}-{int((proteins_ratio_cal * cals)/4)}-{int((r * remaining_ratio_cal * cals)/9)}"
 
