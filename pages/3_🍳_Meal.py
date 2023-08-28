@@ -90,6 +90,7 @@ if authentication_status:
         )
 
         st.divider()
+        st.markdown("""### :blue[Select food]""")
 
         convert_dict = {'Food': str,
                         'Min(gr)': int,
@@ -126,7 +127,7 @@ if authentication_status:
             hide_index=True,
         )
         st.divider()
-        st.markdown("### Optimisation choices")
+        st.markdown("""### :blue[Optimisation choices]""")
         calsOpt, carbsOpt, proteinsOpt, fatsOpt = st.columns(4)
         options = ["None", "Maximise", "Minimise"]
         with calsOpt:
