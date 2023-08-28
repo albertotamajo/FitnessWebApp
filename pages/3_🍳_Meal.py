@@ -6,6 +6,7 @@ import pickle
 from pulp import *
 import streamlit_authenticator as stauth
 import yaml
+import numpy as np
 from yaml.loader import SafeLoader
 
 st.set_page_config(
@@ -185,6 +186,25 @@ if authentication_status:
 
             else:
                 st.error(f"Solver error: status {status}")
+
+    with st.expander("Calories/Fats proportions"):
+        cals = st.number_input("Enter calories(kcal)", min_value=0., max_value=5000., step=1.)
+        proteins = st.number_input("Enter proteins(gr)", min_value=0., max_value=500., step=1.)
+        if st.button("Compute proportions"):
+            st.divider()
+            proteins_cal = proteins * 4
+            proteins_ratio_cal = proteins_cal / cals
+            ratios = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.]
+            remaining_ratio_cal = 1. - proteins_ratio_cal
+            arr = np.zeros((10, 3))
+            df = pd.DataFrame(arr, columns=["Carbs-Proteins-Fats(%)", "Carbs-Proteins-Fats(kcal)",
+                                            "Carbs-Proteins-Fats(gr)"]).astype(str)
+            for r, ind in enumerate(ratios):
+                df[ind, "Carbs-Proteins-Fats(%)"] = f"{(1-r) * remaining_ratio_cal}-{proteins_ratio_cal}-{r * remaining_ratio_cal}"
+                df[ind, "Carbs-Proteins-Fats(kcal)"] = f"{(1-r) * remaining_ratio_cal * cals}-{proteins_ratio_cal * cals}-{r * remaining_ratio_cal * cals}"
+                df[ind, "Carbs-Proteins-Fats(gr)"] = f"{((1 - r) * remaining_ratio_cal * cals)/4}-{(proteins_ratio_cal * cals)/4}-{(r * remaining_ratio_cal * cals)/9}"
+
+            st.dataframe(df)
 
     with st.expander("Compute meal's nutritional values"):
 
