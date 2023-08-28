@@ -194,9 +194,9 @@ if authentication_status:
             st.divider()
             proteins_cal = proteins * 4
             proteins_ratio_cal = proteins_cal / cals
-            ratios = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.]
+            ratios = [0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.]
             remaining_ratio_cal = 1. - proteins_ratio_cal
-            arr = np.zeros((10, 3))
+            arr = np.zeros((11, 3))
             df = pd.DataFrame(arr, columns=["Carbs-Proteins-Fats(%)", "Carbs-Proteins-Fats(kcal)",
                                             "Carbs-Proteins-Fats(gr)"]).astype(str)
             for ind, r in enumerate(ratios):
