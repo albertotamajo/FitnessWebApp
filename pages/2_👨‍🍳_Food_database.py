@@ -76,7 +76,7 @@ if authentication_status:
                         with fs.open(file, 'rb') as f:
                             d = pickle.load(f)
                             if food_name not in d.keys():
-                                d[food_name] = {"Cals": calories / 100.0, "Carbs": carbs / 100.0,
+                                d[food_name.strip()] = {"Cals": calories / 100.0, "Carbs": carbs / 100.0,
                                                 "Proteins": proteins / 100.0,
                                                 "Fats": fats / 100.0}
                             else:
@@ -84,7 +84,7 @@ if authentication_status:
                                 st.error('Your food is already in the database')
                     else:
                         fs.touch(file)
-                        d = {food_name: {"Cals": calories / 100.0, "Carbs": carbs / 100.0, "Proteins": proteins / 100.0,
+                        d = {food_name.strip(): {"Cals": calories / 100.0, "Carbs": carbs / 100.0, "Proteins": proteins / 100.0,
                                          "Fats": fats / 100.0}}
 
                     if save:
@@ -107,14 +107,14 @@ if authentication_status:
                 with fs.open(file, 'rb') as f:
                     d = pickle.load(f)
                     if food_name not in d.keys():
-                        d[food_name] = {"Cals": calories / 100.0, "Carbs": carbs / 100.0, "Proteins": proteins / 100.0,
+                        d[food_name.strip()] = {"Cals": calories / 100.0, "Carbs": carbs / 100.0, "Proteins": proteins / 100.0,
                                         "Fats": fats / 100.0}
                     else:
                         save = False
                         st.error('Your food is already in the database')
             else:
                 fs.touch(file)
-                d = {food_name: {"Cals": calories / 100.0, "Carbs": carbs / 100.0, "Proteins": proteins / 100.0,
+                d = {food_name.strip(): {"Cals": calories / 100.0, "Carbs": carbs / 100.0, "Proteins": proteins / 100.0,
                                  "Fats": fats / 100.0}}
             with fs.open(file, 'wb') as f:
                 if save:
@@ -131,7 +131,7 @@ if authentication_status:
                                "Proteins(100gr)": [d[i]["Proteins"] * 100 for i in d.keys()],
                                "Fats(100gr)": [d[i]["Fats"] * 100 for i in d.keys()]
                                })
-            st.dataframe(df)
+            st.dataframe(df.sort_values("Food"))
         else:
             st.error("There is no food database at the moment")
 
