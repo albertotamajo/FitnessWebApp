@@ -648,11 +648,11 @@ if authentication_status:
                                 for v in model.variables() if "Breakfast" in v.name],
                             "Fats(gr)": [food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Fats"] * v.varValue
                                          for v in model.variables() if "Breakfast" in v.name]}
-                    df = pd.DataFrame(dict)
-                    df.loc['Total'] = df.sum(numeric_only=True)
-                    df.loc['% kcal'] = (df.loc['Total'] / df.loc['Total']["Cals(kcal)"]) * np.asarray(
+                    df_breakfast = pd.DataFrame(dict)
+                    df_breakfast.loc['Total'] = df_breakfast.sum(numeric_only=True)
+                    df_breakfast.loc['% kcal'] = (df_breakfast.loc['Total'] / df_breakfast.loc['Total']["Cals(kcal)"]) * np.asarray(
                         [0, 0, 0, 4, 4, 9]) * 100
-                    st.dataframe(df)
+                    st.dataframe(df_breakfast)
 
                 # Add snack1 table
                 if np.any(np.asarray(["Snack1" in v for v in dec_var_names])):
@@ -672,11 +672,11 @@ if authentication_status:
                             "Fats(gr)": [
                                 food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Fats"] * v.varValue
                                 for v in model.variables() if "Snack1" in v.name]}
-                    df = pd.DataFrame(dict)
-                    df.loc['Total'] = df.sum(numeric_only=True)
-                    df.loc['% kcal'] = (df.loc['Total'] / df.loc['Total']["Cals(kcal)"]) * np.asarray(
+                    df_snack1 = pd.DataFrame(dict)
+                    df_snack1.loc['Total'] = df_snack1.sum(numeric_only=True)
+                    df_snack1.loc['% kcal'] = (df_snack1.loc['Total'] / df_snack1.loc['Total']["Cals(kcal)"]) * np.asarray(
                         [0, 0, 0, 4, 4, 9]) * 100
-                    st.dataframe(df)
+                    st.dataframe(df_snack1)
 
                 # Add lunch table
                 if np.any(np.asarray(["Lunch" in v for v in dec_var_names])):
@@ -696,11 +696,11 @@ if authentication_status:
                             "Fats(gr)": [
                                 food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Fats"] * v.varValue
                                 for v in model.variables() if "Lunch" in v.name]}
-                    df = pd.DataFrame(dict)
-                    df.loc['Total'] = df.sum(numeric_only=True)
-                    df.loc['% kcal'] = (df.loc['Total'] / df.loc['Total']["Cals(kcal)"]) * np.asarray(
+                    df_lunch = pd.DataFrame(dict)
+                    df_lunch.loc['Total'] = df_lunch.sum(numeric_only=True)
+                    df_lunch.loc['% kcal'] = (df_lunch.loc['Total'] / df_lunch.loc['Total']["Cals(kcal)"]) * np.asarray(
                         [0, 0, 0, 4, 4, 9]) * 100
-                    st.dataframe(df)
+                    st.dataframe(df_lunch)
 
                 # Add snack2 table
                 if np.any(np.asarray(["Snack2" in v for v in dec_var_names])):
@@ -720,11 +720,11 @@ if authentication_status:
                             "Fats(gr)": [
                                 food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Fats"] * v.varValue
                                 for v in model.variables() if "Snack2" in v.name]}
-                    df = pd.DataFrame(dict)
-                    df.loc['Total'] = df.sum(numeric_only=True)
-                    df.loc['% kcal'] = (df.loc['Total'] / df.loc['Total']["Cals(kcal)"]) * np.asarray(
+                    df_snack2 = pd.DataFrame(dict)
+                    df_snack2.loc['Total'] = df_snack2.sum(numeric_only=True)
+                    df_snack2.loc['% kcal'] = (df_snack2.loc['Total'] / df_snack2.loc['Total']["Cals(kcal)"]) * np.asarray(
                         [0, 0, 0, 4, 4, 9]) * 100
-                    st.dataframe(df)
+                    st.dataframe(df_snack2)
 
                 # Add dinner table
                 if np.any(np.asarray(["Dinner" in v for v in dec_var_names])):
@@ -744,11 +744,11 @@ if authentication_status:
                             "Fats(gr)": [
                                 food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Fats"] * v.varValue
                                 for v in model.variables() if "Dinner" in v.name]}
-                    df = pd.DataFrame(dict)
-                    df.loc['Total'] = df.sum(numeric_only=True)
-                    df.loc['% kcal'] = (df.loc['Total'] / df.loc['Total']["Cals(kcal)"]) * np.asarray(
+                    df_dinner = pd.DataFrame(dict)
+                    df_dinner.loc['Total'] = df_dinner.sum(numeric_only=True)
+                    df_dinner.loc['% kcal'] = (df_dinner.loc['Total'] / df_dinner.loc['Total']["Cals(kcal)"]) * np.asarray(
                         [0, 0, 0, 4, 4, 9]) * 100
-                    st.dataframe(df)
+                    st.dataframe(df_dinner)
 
                 # Add snack3 table
                 if np.any(np.asarray(["Snack3" in v for v in dec_var_names])):
@@ -768,11 +768,14 @@ if authentication_status:
                             "Fats(gr)": [
                                 food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Fats"] * v.varValue
                                 for v in model.variables() if "Snack3" in v.name]}
-                    df = pd.DataFrame(dict)
-                    df.loc['Total'] = df.sum(numeric_only=True)
-                    df.loc['% kcal'] = (df.loc['Total'] / df.loc['Total']["Cals(kcal)"]) * np.asarray(
+                    df_snack3 = pd.DataFrame(dict)
+                    df_snack3.loc['Total'] = df_snack3.sum(numeric_only=True)
+                    df_snack3.loc['% kcal'] = (df_snack3.loc['Total'] / df_snack3.loc['Total']["Cals(kcal)"]) * np.asarray(
                         [0, 0, 0, 4, 4, 9]) * 100
-                    st.dataframe(df)
+                    st.dataframe(df_snack3)
+
+                dfs = pd.concat([df, df_snack1, df_lunch, df_snack2, df_dinner, df_snack3], axis=0)
+                st.dataframe(dfs)
 
             else:
                 st.error(f"Solver error: status {status}")
