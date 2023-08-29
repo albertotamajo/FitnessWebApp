@@ -757,7 +757,7 @@ if authentication_status:
                             "Fats(gr)": [
                                 food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Fats"] * v.varValue
                                 for v in model.variables() if "Dinner" in v.name]}
-                    df_dinner = pd.DataFrame(dict)
+                    df_dinner = pd.DataFrame(dict, index="")
                     df_dinner.loc['Total'] = df_dinner.sum(numeric_only=True)
                     df_dinner.loc['% kcal'] = (df_dinner.loc['Total'] / df_dinner.loc['Total']["Cals(kcal)"]) * np.asarray(
                         [0, 0, 0, 0, 4, 4, 9]) * 100
