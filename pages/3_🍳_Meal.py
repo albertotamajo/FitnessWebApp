@@ -704,6 +704,7 @@ if authentication_status:
             }
             df = pd.DataFrame(dict)
             df.loc['Total'] = df.sum(numeric_only=True)
+            df.loc['% kcal'] = df.loc['Total'] / df.loc['Total']["Cals(kcal)"]
             st.dataframe(df)
             df.to_excel("my_meal_nutrition.xlsx")
             with open("my_meal_nutrition.xlsx", "rb") as f:
