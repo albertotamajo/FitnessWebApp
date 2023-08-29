@@ -631,9 +631,6 @@ if authentication_status:
                 df.loc['Total'] = df.sum(numeric_only=True)
                 df.loc['% kcal'] = (df.loc['Total'] / df.loc['Total']["Cals(kcal)"]) * np.asarray([0,0,0,0,4,4,9]) * 100
                 dfs.append(df)
-                df.to_excel("my_meal_plan.xlsx")
-                with open("my_meal_plan.xlsx", "rb") as f:
-                    st.download_button("Download meal plan", f, file_name="my_meal_plan.xlsx")
 
                 # Add breakfast table
                 if np.any(np.asarray(["Breakfast" in v for v in dec_var_names])):
