@@ -88,9 +88,10 @@ if authentication_status:
                                          "Fats": fats / 100.0}}
 
                     if save:
-                        with fs.open(file, 'wb') as f:
-                            pickle.dump(d, f)
-                            st.success("Food saved successfully!")
+                        if d:
+                            with fs.open(file, 'wb') as f:
+                                pickle.dump(d, f)
+                                st.success("Food saved successfully!")
             else:
                 st.error("There is no product matching the query!")
 
