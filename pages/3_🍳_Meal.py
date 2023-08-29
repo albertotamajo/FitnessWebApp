@@ -56,8 +56,8 @@ if authentication_status:
 
     st.write("# Meal! 🍳")
 
-    with st.expander("Plan your meal"):
-        st.markdown("""### :blue[Set objectives]""")
+    with st.expander("Plan your diet"):
+        st.markdown("""### :blue[Set diet objectives]""")
         cals, carbs, proteins, fats = st.columns(4)
 
         with cals:
@@ -88,6 +88,8 @@ if authentication_status:
             - Fats: min :green[{fatsMin}] gr | max :red[{fatsMax}] gr
             """
         )
+
+        st.divider()
 
         st.divider()
         st.markdown("""### :blue[Select food]""")
@@ -192,7 +194,7 @@ if authentication_status:
             # Instantiate model
             model = LpProblem("MealPlan", LpMaximize)
             # Instantiate decision variables
-            decision_variables = [LpVariable(name=food_table["Food"][ind], lowBound=food_table["Min(gr)"][ind],
+            decision_variables = [LpVariable(name=food_table["Food"][ind] + "_" + food_table["Meal"][ind], lowBound=food_table["Min(gr)"][ind],
                                              upBound=food_table["Max(gr)"][ind], cat=LpInteger) for ind in
                                   food_table.index]
             # Add Objective function
@@ -228,16 +230,16 @@ if authentication_status:
             status = LpStatus[model.solve()]
             st.divider()
             if status is "Optimal":
-                dict = {"Food": [v.name.replace("_", " ") for v in model.variables()],
+                dict = {"Food": [" ".join(v.name.replace("_", " ").split()[:-1]) for v in model.variables()],
                         "Qnt(gr)": [v.varValue for v in model.variables()],
-                        "Cals(kcal)": [food_dict[v.name.replace("_", " ")]["Cals"] * v.varValue for v in
-                                       model.variables()],
-                        "Carbs(gr)": [food_dict[v.name.replace("_", " ")]["Carbs"] * v.varValue for v in
-                                      model.variables()],
-                        "Proteins(gr)": [food_dict[v.name.replace("_", " ")]["Proteins"] * v.varValue for v in
-                                         model.variables()],
-                        "Fats(gr)": [food_dict[v.name.replace("_", " ")]["Fats"] * v.varValue for v in
-                                     model.variables()]}
+                        "Cals(kcal)": [food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Cals"] * v.varValue
+                                       for v in model.variables()],
+                        "Carbs(gr)": [food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Carbs"] * v.varValue
+                                      for v in model.variables()],
+                        "Proteins(gr)": [food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Proteins"] * v.varValue
+                                         for v in model.variables()],
+                        "Fats(gr)": [food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Fats"] * v.varValue
+                                     for v in model.variables()]}
                 df = pd.DataFrame(dict)
                 df.loc['Total'] = df.sum(numeric_only=True)
                 st.dataframe(df)
