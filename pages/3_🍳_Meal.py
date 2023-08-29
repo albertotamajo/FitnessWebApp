@@ -58,44 +58,42 @@ if authentication_status:
 
     with st.expander("Plan your diet"):
         st.markdown("""### :blue[Set diet objectives]""")
-        cals, carbs, proteins, fats = st.columns(4)
+        daily_tab, breakfast_tab, snack1_tab, lunch_tab, snack2_tab, dinner_tab, snack3_tab = st.tabs(
+            ["Daily", "Breakfast", "Snack1",
+             "Lunch", "Snack2", "Dinner",
+             "Snack3"])
 
-        with cals:
-            st.markdown("#### Calories")
-            calsMax = st.number_input('Max', key="calsMax")
-            calsMin = st.number_input('Min', key="calsMin")
+        with daily_tab:
+            cals, carbs, proteins, fats = st.columns(4)
 
-        with carbs:
-            st.markdown("#### Carbs")
-            carbsMax = st.number_input('Max', key="carbsMax")
-            carbsMin = st.number_input('Min', key="carbsMin")
+            with cals:
+                st.markdown("#### Calories")
+                calsMax = st.number_input('Max', key="calsMax")
+                calsMin = st.number_input('Min', key="calsMin")
 
-        with proteins:
-            st.markdown("#### Proteins")
-            prtsMax = st.number_input('Max', key="prtsMax")
-            prtsMin = st.number_input('Min', key="prtsMin")
+            with carbs:
+                st.markdown("#### Carbs")
+                carbsMax = st.number_input('Max', key="carbsMax")
+                carbsMin = st.number_input('Min', key="carbsMin")
 
-        with fats:
-            st.markdown("#### Fats")
-            fatsMax = st.number_input('Max', key="fatsMax")
-            fatsMin = st.number_input('Min', key="fatsMin")
+            with proteins:
+                st.markdown("#### Proteins")
+                prtsMax = st.number_input('Max', key="prtsMax")
+                prtsMin = st.number_input('Min', key="prtsMin")
 
-        st.markdown(
-            f"""
-            - Calories: min :green[{calsMin}] kcal | max :red[{calsMax}] kcal
-            - Carbs: min :green[{carbsMin}] gr | max :red[{carbsMax}] gr
-            - Proteins: min :green[{prtsMin}] gr | max :red[{prtsMax}] gr
-            - Fats: min :green[{fatsMin}] gr | max :red[{fatsMax}] gr
-            """
-        )
+            with fats:
+                st.markdown("#### Fats")
+                fatsMax = st.number_input('Max', key="fatsMax")
+                fatsMin = st.number_input('Min', key="fatsMin")
 
-        st.divider()
-        st.markdown("""### :blue[Set meal objectives]""")
-        none_tab, breakfast_tab, snack1_tab, lunch_tab, snack2_tab, dinner_tab, snack3_tab = st.tabs(["None", "Breakfast", "Snack1",
-                                                                                            "Lunch", "Snack2", "Dinner",
-                                                                                            "Snack3"])
-        with none_tab:
-            pass
+            st.markdown(
+                f"""
+                        - Calories: min :green[{calsMin}] kcal | max :red[{calsMax}] kcal
+                        - Carbs: min :green[{carbsMin}] gr | max :red[{carbsMax}] gr
+                        - Proteins: min :green[{prtsMin}] gr | max :red[{prtsMax}] gr
+                        - Fats: min :green[{fatsMin}] gr | max :red[{fatsMax}] gr
+                        """
+            )
         with breakfast_tab:
             cals_breakfast, carbs_breakfast, proteins_breakfast, fats_breakfast = st.columns(4)
             with cals_breakfast:
@@ -129,6 +127,7 @@ if authentication_status:
             pass
 
         st.divider()
+
         st.markdown("""### :blue[Select food]""")
 
         convert_dict = {'Food': str,
