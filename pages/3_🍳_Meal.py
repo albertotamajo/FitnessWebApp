@@ -834,6 +834,8 @@ if authentication_status:
         ).astype(convert_dict)
 
         food_dict = fetch_food()
+        food_list = list(food_dict.keys())
+        food_list.sort()
 
         food_table = st.data_editor(
             data_df,
@@ -843,7 +845,7 @@ if authentication_status:
                 "Food": st.column_config.SelectboxColumn(
                     "Food",
                     width="large",
-                    options=list(food_dict.keys()),
+                    options=food_list,
                     required=True,
                 ),
                 "Qnt(gr)": st.column_config.NumberColumn("Qnt(gr)", width="small", required=True, default=0,

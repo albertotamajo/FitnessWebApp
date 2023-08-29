@@ -141,7 +141,9 @@ if authentication_status:
         if fs.exists(file):
             with fs.open(file, 'rb') as f:
                 d = pickle.load(f)
-            food = st.selectbox("Select the food to be removed", ["<select>"] + list(d.keys()))
+            food_list = list(d.keys())
+            food_list.sort()
+            food = st.selectbox("Select the food to be removed", ["<select>"] + food_list)
             if st.button('Remove food'):
                 if food is not "<select>":
                     d.pop(food)
