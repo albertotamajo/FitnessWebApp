@@ -641,7 +641,7 @@ if authentication_status:
                         "Fats(gr)": ["",""]}
 
                 empty_df = pd.DataFrame(dict, index=["",""])
-                dfs.append((empty_df))
+                dfs.append(empty_df)
 
                 # Add breakfast table
                 if np.any(np.asarray(["Breakfast" in v for v in dec_var_names])):
@@ -661,7 +661,8 @@ if authentication_status:
                     df_breakfast.loc['Total'] = df_breakfast.sum(numeric_only=True)
                     df_breakfast.loc['% kcal'] = (df_breakfast.loc['Total'] / df_breakfast.loc['Total']["Cals(kcal)"]) * np.asarray(
                         [0, 0, 0, 0, 4, 4, 9]) * 100
-                    dfs.append(df_breakfast)
+                    dfs.append(df_breakfast.round(2))
+                    dfs.append(empty_df)
 
                 # Add snack1 table
                 if np.any(np.asarray(["Snack1" in v for v in dec_var_names])):
@@ -685,7 +686,8 @@ if authentication_status:
                     df_snack1.loc['Total'] = df_snack1.sum(numeric_only=True)
                     df_snack1.loc['% kcal'] = (df_snack1.loc['Total'] / df_snack1.loc['Total']["Cals(kcal)"]) * np.asarray(
                         [0, 0, 0, 0, 4, 4, 9]) * 100
-                    dfs.append(df_snack1)
+                    dfs.append(df_snack1.round(2))
+                    dfs.append(empty_df)
 
                 # Add lunch table
                 if np.any(np.asarray(["Lunch" in v for v in dec_var_names])):
@@ -709,7 +711,8 @@ if authentication_status:
                     df_lunch.loc['Total'] = df_lunch.sum(numeric_only=True)
                     df_lunch.loc['% kcal'] = (df_lunch.loc['Total'] / df_lunch.loc['Total']["Cals(kcal)"]) * np.asarray(
                         [0, 0, 0, 0, 4, 4, 9]) * 100
-                    dfs.append(df_lunch)
+                    dfs.append(df_lunch.round(2))
+                    dfs.append(empty_df)
 
                 # Add snack2 table
                 if np.any(np.asarray(["Snack2" in v for v in dec_var_names])):
@@ -733,7 +736,8 @@ if authentication_status:
                     df_snack2.loc['Total'] = df_snack2.sum(numeric_only=True)
                     df_snack2.loc['% kcal'] = (df_snack2.loc['Total'] / df_snack2.loc['Total']["Cals(kcal)"]) * np.asarray(
                         [0, 0, 0, 0, 4, 4, 9]) * 100
-                    dfs.append(df_snack2)
+                    dfs.append(df_snack2.round(2))
+                    dfs.append(empty_df)
 
                 # Add dinner table
                 if np.any(np.asarray(["Dinner" in v for v in dec_var_names])):
@@ -757,7 +761,8 @@ if authentication_status:
                     df_dinner.loc['Total'] = df_dinner.sum(numeric_only=True)
                     df_dinner.loc['% kcal'] = (df_dinner.loc['Total'] / df_dinner.loc['Total']["Cals(kcal)"]) * np.asarray(
                         [0, 0, 0, 0, 4, 4, 9]) * 100
-                    dfs.append(df_dinner)
+                    dfs.append(df_dinner.round(2))
+                    dfs.append(empty_df)
 
                 # Add snack3 table
                 if np.any(np.asarray(["Snack3" in v for v in dec_var_names])):
@@ -781,7 +786,7 @@ if authentication_status:
                     df_snack3.loc['Total'] = df_snack3.sum(numeric_only=True)
                     df_snack3.loc['% kcal'] = (df_snack3.loc['Total'] / df_snack3.loc['Total']["Cals(kcal)"]) * np.asarray(
                         [0, 0, 0, 0, 4, 4, 9]) * 100
-                    dfs.append(df_snack3)
+                    dfs.append(df_snack3.round(2))
 
                 dfs = pd.concat(dfs, axis=0)
                 st.dataframe(dfs)
