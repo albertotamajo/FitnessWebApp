@@ -637,7 +637,6 @@ if authentication_status:
 
                 # Add breakfast table
                 if np.any(np.asarray(["Breakfast" in v for v in dec_var_names])):
-                    st.markdown("#### Breakfast")
                     dict = {"Food": [" ".join(v.name.replace("_", " ").split()[:-1]) for v in model.variables() if "Breakfast" in v.name],
                             "Meal": [v.name.split("_")[-1] for v in model.variables() if "Breakfast" in v.name],
                             "Qnt(gr)": [v.varValue for v in model.variables() if "Breakfast" in v.name],
@@ -658,7 +657,6 @@ if authentication_status:
 
                 # Add snack1 table
                 if np.any(np.asarray(["Snack1" in v for v in dec_var_names])):
-                    st.markdown("#### Snack1")
                     dict = {"Food": [" ".join(v.name.replace("_", " ").split()[:-1]) for v in model.variables() if
                                      "Snack1" in v.name],
                             "Meal": [v.name.split("_")[-1] for v in model.variables() if "Snack1" in v.name],
@@ -683,7 +681,6 @@ if authentication_status:
 
                 # Add lunch table
                 if np.any(np.asarray(["Lunch" in v for v in dec_var_names])):
-                    st.markdown("#### Lunch")
                     dict = {"Food": [" ".join(v.name.replace("_", " ").split()[:-1]) for v in model.variables() if
                                      "Lunch" in v.name],
                             "Meal": [v.name.split("_")[-1] for v in model.variables() if "Lunch" in v.name],
@@ -708,7 +705,6 @@ if authentication_status:
 
                 # Add snack2 table
                 if np.any(np.asarray(["Snack2" in v for v in dec_var_names])):
-                    st.markdown("#### Snack2")
                     dict = {"Food": [" ".join(v.name.replace("_", " ").split()[:-1]) for v in model.variables() if
                                      "Snack2" in v.name],
                             "Meal": [v.name.split("_")[-1] for v in model.variables() if "Snack2" in v.name],
@@ -733,7 +729,6 @@ if authentication_status:
 
                 # Add dinner table
                 if np.any(np.asarray(["Dinner" in v for v in dec_var_names])):
-                    st.markdown("#### Dinner")
                     dict = {"Food": [" ".join(v.name.replace("_", " ").split()[:-1]) for v in model.variables() if
                                      "Dinner" in v.name],
                             "Meal": [v.name.split("_")[-1] for v in model.variables() if "Dinner" in v.name],
@@ -758,7 +753,6 @@ if authentication_status:
 
                 # Add snack3 table
                 if np.any(np.asarray(["Snack3" in v for v in dec_var_names])):
-                    st.markdown("#### Snack3")
                     dict = {"Food": [" ".join(v.name.replace("_", " ").split()[:-1]) for v in model.variables() if
                                      "Snack3" in v.name],
                             "Meal": [v.name.split("_")[-1] for v in model.variables() if "Snack3" in v.name],
