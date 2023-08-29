@@ -630,7 +630,7 @@ if authentication_status:
                 df = pd.DataFrame(dict)
                 df.loc['Total'] = df.sum(numeric_only=True)
                 df.loc['% kcal'] = (df.loc['Total'] / df.loc['Total']["Cals(kcal)"]) * np.asarray([0,0,0,0,4,4,9]) * 100
-                dfs.append(df)
+                dfs.append(df.round(2))
 
                 dict = {"Food": ["",""],
                         "Meal": ["",""],
