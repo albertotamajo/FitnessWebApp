@@ -103,23 +103,15 @@ if authentication_status:
 
         with cals2:
             st.markdown("#### Calories")
-            calsMax = st.number_input('Max', key="calsMax")
-            calsMin = st.number_input('Min', key="calsMin")
 
         with carbs2:
             st.markdown("#### Carbs")
-            carbsMax = st.number_input('Max', key="carbsMax")
-            carbsMin = st.number_input('Min', key="carbsMin")
 
         with proteins2:
             st.markdown("#### Proteins")
-            prtsMax = st.number_input('Max', key="prtsMax")
-            prtsMin = st.number_input('Min', key="prtsMin")
 
         with fats2:
             st.markdown("#### Fats")
-            fatsMax = st.number_input('Max', key="fatsMax")
-            fatsMin = st.number_input('Min', key="fatsMin")
 
         st.divider()
         st.markdown("""### :blue[Select food]""")
