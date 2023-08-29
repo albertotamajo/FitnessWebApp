@@ -277,7 +277,19 @@ if authentication_status:
         with txt_tab:
             txt = st.text_area("Insert text", label_visibility="hidden")
             if st.button("Update"):
-                pass
+                convert_dict = {'Food': str,
+                                'Meal': str,
+                                'Min(gr)': int,
+                                'Max(gr)': int
+                                }
+                st.session_state.food_data_editor = pd.DataFrame(
+                    {
+                        "Food": ["hi"],
+                        "Meal": ["hi"],
+                        "Min(gr)": [20],
+                        "Max(gr)": [10]
+                    }
+                ).astype(convert_dict)
 
         st.divider()
         st.markdown("""### :blue[Optimisation choices]""")
