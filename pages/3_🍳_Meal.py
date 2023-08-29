@@ -248,7 +248,7 @@ if authentication_status:
             meals = ["None", "Breakfast", "Snack1", "Lunch", "Snack2", "Dinner", "Snack3"]
 
             food_table = st.data_editor(
-                st.session_state["food_data_editor"].copy(),
+                st.session_state["food_data_editor"],
                 use_container_width=True,
                 num_rows="dynamic",
                 column_config={
