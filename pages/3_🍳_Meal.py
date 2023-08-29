@@ -633,7 +633,7 @@ if authentication_status:
                 dfs.append(df)
 
                 dict = {"Food": [],
-                        "Meal": [],
+                        "Meal": ["", "Breakfast", ""],
                         "Qnt(gr)": [],
                         "Cals(kcal)": [],
                         "Carbs(gr)": [],
