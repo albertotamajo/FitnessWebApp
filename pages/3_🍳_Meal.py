@@ -231,6 +231,7 @@ if authentication_status:
             st.divider()
             if status is "Optimal":
                 dict = {"Food": [" ".join(v.name.replace("_", " ").split()[:-1]) for v in model.variables()],
+                        "Meal": [v.name.split("_")[:-1] for v in model.variables()],
                         "Qnt(gr)": [v.varValue for v in model.variables()],
                         "Cals(kcal)": [food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Cals"] * v.varValue
                                        for v in model.variables()],
