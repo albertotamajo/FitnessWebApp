@@ -98,22 +98,22 @@ if authentication_status:
             cals_breakfast, carbs_breakfast, proteins_breakfast, fats_breakfast = st.columns(4)
             with cals_breakfast:
                 st.markdown("#### Calories")
-                calsMaxBreakfast = st.number_input('Max', value=10000, key="calsMaxBreakfast")
+                calsMaxBreakfast = st.number_input('Max', value=10000., key="calsMaxBreakfast")
                 calsMinBreakfast = st.number_input('Min', key="calsMinBreakfast")
 
             with carbs_breakfast:
                 st.markdown("#### Carbs")
-                carbsMaxBreakfast = st.number_input('Max', value=10000, key="carbsMaxBreakfast")
+                carbsMaxBreakfast = st.number_input('Max', value=10000., key="carbsMaxBreakfast")
                 carbsMinBreakfast = st.number_input('Min', key="carbsMinBreakfast")
 
             with proteins_breakfast:
                 st.markdown("#### Proteins")
-                prtsMaxBreakfast = st.number_input('Max', value=10000, key="prtsMaxBreakfast")
+                prtsMaxBreakfast = st.number_input('Max', value=10000., key="prtsMaxBreakfast")
                 prtsMinBreakfast = st.number_input('Min', key="prtsMinBreakfast")
 
             with fats_breakfast:
                 st.markdown("#### Fats")
-                fatsMaxBreakfast = st.number_input('Max', value=10000, key="fatsMaxBreakfast")
+                fatsMaxBreakfast = st.number_input('Max', value=10000., key="fatsMaxBreakfast")
                 fatsMinBreakfast = st.number_input('Min', key="fatsMinBreakfast")
         with snack1_tab:
             pass
