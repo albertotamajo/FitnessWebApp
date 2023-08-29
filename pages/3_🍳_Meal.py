@@ -632,13 +632,13 @@ if authentication_status:
                 df.loc['% kcal'] = (df.loc['Total'] / df.loc['Total']["Cals(kcal)"]) * np.asarray([0,0,0,0,4,4,9]) * 100
                 dfs.append(df)
 
-                dict = {"Food": [],
-                        "Meal": ["", "Breakfast", ""],
-                        "Qnt(gr)": [],
-                        "Cals(kcal)": [],
-                        "Carbs(gr)": [],
-                        "Proteins(gr)": [],
-                        "Fats(gr)": []}
+                dict = {"Food": ["",""],
+                        "Meal": ["",""],
+                        "Qnt(gr)": ["", ""],
+                        "Cals(kcal)": ["",""],
+                        "Carbs(gr)": ["",""],
+                        "Proteins(gr)": ["",""],
+                        "Fats(gr)": ["",""]}
 
                 empty_df = pd.DataFrame(dict)
                 dfs.append((empty_df))
