@@ -224,53 +224,56 @@ if authentication_status:
         st.divider()
 
         st.markdown("""### :blue[Select food]""")
+        manual_tab, txt_tab = st.tabs(["Insert manually", "Upload from text"])
+        with manual_tab:
+            convert_dict = {'Food': str,
+                            'Meal': str,
+                            'Min(gr)': int,
+                            'Max(gr)': int
+                            }
+            data_df = pd.DataFrame(
+                {
+                    "Food": [],
+                    "Meal": [],
+                    "Min(gr)": [],
+                    "Max(gr)": []
+                }
+            ).astype(convert_dict)
 
-        convert_dict = {'Food': str,
-                        'Meal': str,
-                        'Min(gr)': int,
-                        'Max(gr)': int
-                        }
-        data_df = pd.DataFrame(
-            {
-                "Food": [],
-                "Meal": [],
-                "Min(gr)": [],
-                "Max(gr)": []
-            }
-        ).astype(convert_dict)
+            food_dict = fetch_food()
+            food_list = list(food_dict.keys())
+            food_list.sort()
+            meals = ["None", "Breakfast", "Snack1", "Lunch", "Snack2", "Dinner", "Snack3"]
 
-        food_dict = fetch_food()
-        food_list = list(food_dict.keys())
-        food_list.sort()
-        meals = ["None", "Breakfast", "Snack1", "Lunch", "Snack2", "Dinner", "Snack3"]
-
-        food_table = st.data_editor(
-            data_df,
-            use_container_width=True,
-            num_rows="dynamic",
-            column_config={
-                "Food": st.column_config.SelectboxColumn(
-                    "Food",
-                    width="medium",
-                    options=food_list,
-                    required=True,
-                ),
-                "Meal": st.column_config.SelectboxColumn(
-                    "Meal",
-                    width="medium",
-                    default="None",
-                    options=meals,
-                    required=True,
-                ),
-                "Min(gr)": st.column_config.NumberColumn("Min(gr)", width="small", required=True, default=0,
-                                                         format=None,
-                                                         min_value=0, max_value=1000),
-                "Max(gr)": st.column_config.NumberColumn("Max(gr)", width="small", required=True, default=1000,
-                                                         format=None,
-                                                         min_value=0, max_value=1000)
-            },
-            hide_index=True,
-        )
+            food_table = st.data_editor(
+                data_df,
+                use_container_width=True,
+                num_rows="dynamic",
+                column_config={
+                    "Food": st.column_config.SelectboxColumn(
+                        "Food",
+                        width="medium",
+                        options=food_list,
+                        required=True,
+                    ),
+                    "Meal": st.column_config.SelectboxColumn(
+                        "Meal",
+                        width="medium",
+                        default="None",
+                        options=meals,
+                        required=True,
+                    ),
+                    "Min(gr)": st.column_config.NumberColumn("Min(gr)", width="small", required=True, default=0,
+                                                             format=None,
+                                                             min_value=0, max_value=1000),
+                    "Max(gr)": st.column_config.NumberColumn("Max(gr)", width="small", required=True, default=1000,
+                                                             format=None,
+                                                             min_value=0, max_value=1000)
+                },
+                hide_index=True,
+            )
+        with txt_tab:
+            pass
         st.divider()
         st.markdown("""### :blue[Optimisation choices]""")
         calsOpt, carbsOpt, proteinsOpt, fatsOpt = st.columns(4)
