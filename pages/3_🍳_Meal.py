@@ -240,6 +240,8 @@ if authentication_status:
         ).astype(convert_dict)
 
         food_dict = fetch_food()
+        food_list = list(food_dict.keys())
+        food_list.sort()
         meals = ["None", "Breakfast", "Snack1", "Lunch", "Snack2", "Dinner", "Snack3"]
 
         food_table = st.data_editor(
@@ -250,7 +252,7 @@ if authentication_status:
                 "Food": st.column_config.SelectboxColumn(
                     "Food",
                     width="medium",
-                    options=list(food_dict.keys()),
+                    options=food_list,
                     required=True,
                 ),
                 "Meal": st.column_config.SelectboxColumn(
