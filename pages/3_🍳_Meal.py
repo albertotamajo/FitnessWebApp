@@ -273,7 +273,7 @@ if authentication_status:
                 hide_index=True,
             )
         with txt_tab:
-            pass
+            st.text_area("Insert text", label_visibility="hidden")
         st.divider()
         st.markdown("""### :blue[Optimisation choices]""")
         calsOpt, carbsOpt, proteinsOpt, fatsOpt = st.columns(4)
