@@ -28,7 +28,7 @@ if "food_data_editor" not in st.session_state:
                     'Min(gr)': int,
                     'Max(gr)': int
                     }
-    st.session_state.food_data_editor = pd.DataFrame(
+    st.session_state["food_data_editor"] = pd.DataFrame(
         {
             "Food": [],
             "Meal": [],
@@ -248,7 +248,7 @@ if authentication_status:
             meals = ["None", "Breakfast", "Snack1", "Lunch", "Snack2", "Dinner", "Snack3"]
 
             food_table = st.data_editor(
-                st.session_state.food_data_editor,
+                st.session_state["food_data_editor"],
                 use_container_width=True,
                 num_rows="dynamic",
                 column_config={
@@ -282,7 +282,7 @@ if authentication_status:
                                 'Min(gr)': int,
                                 'Max(gr)': int
                                 }
-                st.session_state.food_data_editor = pd.DataFrame(
+                st.session_state["food_data_editor"] = pd.DataFrame(
                     {
                         "Food": ["hi"],
                         "Meal": ["hi"],
