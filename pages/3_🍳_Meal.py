@@ -93,18 +93,21 @@ if authentication_status:
         st.markdown("""### :blue[Select food]""")
 
         convert_dict = {'Food': str,
+                        'Meal': str,
                         'Min(gr)': int,
                         'Max(gr)': int
                         }
         data_df = pd.DataFrame(
             {
                 "Food": [],
+                "Meal": [],
                 "Min(gr)": [],
                 "Max(gr)": []
             }
         ).astype(convert_dict)
 
         food_dict = fetch_food()
+        meals = ["Breakfast", "Snack1", "Lunch", "Snack2", "Dinner", "Snack3"]
 
         food_table = st.data_editor(
             data_df,
@@ -115,6 +118,12 @@ if authentication_status:
                     "Food",
                     width="large",
                     options=list(food_dict.keys()),
+                    required=True,
+                ),
+                "Meal": st.column_config.SelectboxColumn(
+                    "Meal",
+                    width="medium",
+                    options=meals,
                     required=True,
                 ),
                 "Min(gr)": st.column_config.NumberColumn("Min(gr)", width="small", required=True, default=0,
