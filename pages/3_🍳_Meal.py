@@ -290,6 +290,7 @@ if authentication_status:
                         "Max(gr)": [10]
                     }
                 ).astype(convert_dict)
+                st.experimental_rerun()
 
         st.divider()
         st.markdown("""### :blue[Optimisation choices]""")
