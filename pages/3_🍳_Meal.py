@@ -332,7 +332,7 @@ if authentication_status:
             # Add Objective function
             model += lpSum([decision_variables[ind] * float(c) for ind, c in enumerate(coef)])
 
-            # Add constraints
+            # Add daily constraints
             model += lpSum(
                 [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Cals"] for ind in food_table.index]) \
                      >= calsMin, "minCalories"
@@ -357,6 +357,262 @@ if authentication_status:
             model += lpSum(
                 [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Fats"] for ind in food_table.index]) \
                      <= fatsMax, "maxFats"
+
+            dec_var_names = [v.name for v in decision_variables]
+
+            # Add snack1 constraints
+            if np.any(np.asarray(["Sn" in v for v in dec_var_names])):
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Cals"] for ind in food_table.index
+                     if "Breakfast" in decision_variables[ind].name]) \
+                         >= calsMinBreakfast, "minCaloriesBreakfast"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Cals"] for ind in food_table.index
+                     if "Breakfast" in decision_variables[ind].name]) \
+                         <= calsMaxBreakfast, "maxCaloriesBreakfast"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Carbs"] for ind in food_table.index
+                     if "Breakfast" in decision_variables[ind].name]) \
+                         >= carbsMinBreakfast, "minCarbsBreakfast"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Carbs"] for ind in food_table.index
+                     if "Breakfast" in decision_variables[ind].name]) \
+                         <= carbsMaxBreakfast, "maxCarbsBreakfast"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Proteins"] for ind in food_table.index
+                     if "Breakfast" in decision_variables[ind].name]) \
+                         >= prtsMinBreakfast, "minProteinsBreakfast"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Proteins"] for ind in food_table.index
+                     if "Breakfast" in decision_variables[ind].name]) \
+                         <= prtsMaxBreakfast, "maxProteinsBreakfast"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Fats"] for ind in food_table.index
+                     if "Breakfast" in decision_variables[ind].name]) \
+                         >= fatsMinBreakfast, "minFatsBreakfast"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Fats"] for ind in food_table.index
+                     if "Breakfast" in decision_variables[ind].name]) \
+                         <= fatsMaxBreakfast, "maxFatsBreakfast"
+
+            # Add snack1 constraints
+            if np.any(np.asarray(["Snack1" in v for v in dec_var_names])):
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Cals"] for ind in
+                     food_table.index
+                     if "Snack1" in decision_variables[ind].name]) \
+                         >= calsMinSnack1, "minCaloriesSnack1"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Cals"] for ind in
+                     food_table.index
+                     if "Snack1" in decision_variables[ind].name]) \
+                         <= calsMaxSnack1, "maxCaloriesSnack1"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Carbs"] for ind in
+                     food_table.index
+                     if "Snack1" in decision_variables[ind].name]) \
+                         >= carbsMinSnack1, "minCarbsSnack1"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Carbs"] for ind in
+                     food_table.index
+                     if "Snack1" in decision_variables[ind].name]) \
+                         <= carbsMaxSnack1, "maxCarbsSnack1"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Proteins"] for ind in
+                     food_table.index
+                     if "Snack1" in decision_variables[ind].name]) \
+                         >= prtsMinSnack1, "minProteinsSnack1"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Proteins"] for ind in
+                     food_table.index
+                     if "Snack1" in decision_variables[ind].name]) \
+                         <= prtsMaxSnack1, "maxProteinsSnack1"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Fats"] for ind in
+                     food_table.index
+                     if "Snack1" in decision_variables[ind].name]) \
+                         >= fatsMinSnack1, "minFatsSnack1"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Fats"] for ind in
+                     food_table.index
+                     if "Snack1" in decision_variables[ind].name]) \
+                         <= fatsMaxSnack1, "maxFatsSnack1"
+
+            # Add snack2 constraints
+            if np.any(np.asarray(["Snack2" in v for v in dec_var_names])):
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Cals"] for ind in
+                     food_table.index
+                     if "Snack2" in decision_variables[ind].name]) \
+                         >= calsMinSnack2, "minCaloriesSnack2"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Cals"] for ind in
+                     food_table.index
+                     if "Snack2" in decision_variables[ind].name]) \
+                         <= calsMaxSnack2, "maxCaloriesSnack2"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Carbs"] for ind in
+                     food_table.index
+                     if "Snack2" in decision_variables[ind].name]) \
+                         >= carbsMinSnack2, "minCarbsSnack2"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Carbs"] for ind in
+                     food_table.index
+                     if "Snack2" in decision_variables[ind].name]) \
+                         <= carbsMaxSnack2, "maxCarbsSnack2"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Proteins"] for ind in
+                     food_table.index
+                     if "Snack2" in decision_variables[ind].name]) \
+                         >= prtsMinSnack2, "minProteinsSnack2"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Proteins"] for ind in
+                     food_table.index
+                     if "Snack2" in decision_variables[ind].name]) \
+                         <= prtsMaxSnack2, "maxProteinsSnack2"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Fats"] for ind in
+                     food_table.index
+                     if "Snack2" in decision_variables[ind].name]) \
+                         >= fatsMinSnack2, "minFatsSnack2"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Fats"] for ind in
+                     food_table.index
+                     if "Snack2" in decision_variables[ind].name]) \
+                         <= fatsMaxSnack2, "maxFatsSnack2"
+
+            # Add snack3 constraints
+            if np.any(np.asarray(["Snack3" in v for v in dec_var_names])):
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Cals"] for ind in
+                     food_table.index
+                     if "Snack3" in decision_variables[ind].name]) \
+                         >= calsMinSnack3, "minCaloriesSnack3"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Cals"] for ind in
+                     food_table.index
+                     if "Snack3" in decision_variables[ind].name]) \
+                         <= calsMaxSnack3, "maxCaloriesSnack3"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Carbs"] for ind in
+                     food_table.index
+                     if "Snack3" in decision_variables[ind].name]) \
+                         >= carbsMinSnack3, "minCarbsSnack3"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Carbs"] for ind in
+                     food_table.index
+                     if "Snack3" in decision_variables[ind].name]) \
+                         <= carbsMaxSnack3, "maxCarbsSnack3"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Proteins"] for ind in
+                     food_table.index
+                     if "Snack3" in decision_variables[ind].name]) \
+                         >= prtsMinSnack3, "minProteinsSnack3"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Proteins"] for ind in
+                     food_table.index
+                     if "Snack3" in decision_variables[ind].name]) \
+                         <= prtsMaxSnack3, "maxProteinsSnack3"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Fats"] for ind in
+                     food_table.index
+                     if "Snack3" in decision_variables[ind].name]) \
+                         >= fatsMinSnack3, "minFatsSnack3"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Fats"] for ind in
+                     food_table.index
+                     if "Snack3" in decision_variables[ind].name]) \
+                         <= fatsMaxSnack3, "maxFatsSnack3"
+
+            # Add lunch constraints
+            if np.any(np.asarray(["Lunch" in v for v in dec_var_names])):
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Cals"] for ind in
+                     food_table.index
+                     if "Lunch" in decision_variables[ind].name]) \
+                         >= calsMinLunch, "minCaloriesLunch"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Cals"] for ind in
+                     food_table.index
+                     if "Lunch" in decision_variables[ind].name]) \
+                         <= calsMaxLunch, "maxCaloriesLunch"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Carbs"] for ind in
+                     food_table.index
+                     if "Lunch" in decision_variables[ind].name]) \
+                         >= carbsMinLunch, "minCarbsLunch"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Carbs"] for ind in
+                     food_table.index
+                     if "Lunch" in decision_variables[ind].name]) \
+                         <= carbsMaxLunch, "maxCarbsLunch"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Proteins"] for ind in
+                     food_table.index
+                     if "Lunch" in decision_variables[ind].name]) \
+                         >= prtsMinLunch, "minProteinsLunch"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Proteins"] for ind in
+                     food_table.index
+                     if "Lunch" in decision_variables[ind].name]) \
+                         <= prtsMaxLunch, "maxProteinsLunch"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Fats"] for ind in
+                     food_table.index
+                     if "Lunch" in decision_variables[ind].name]) \
+                         >= fatsMinLunch, "minFatsLunch"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Fats"] for ind in
+                     food_table.index
+                     if "Lunch" in decision_variables[ind].name]) \
+                         <= fatsMaxLunch, "maxFatsLunch"
+
+            # Add dinner constraints
+            if np.any(np.asarray(["Dinner" in v for v in dec_var_names])):
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Cals"] for ind in
+                     food_table.index
+                     if "Dinner" in decision_variables[ind].name]) \
+                         >= calsMinDinner, "minCaloriesDinner"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Cals"] for ind in
+                     food_table.index
+                     if "Dinner" in decision_variables[ind].name]) \
+                         <= calsMaxDinner, "maxCaloriesDinner"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Carbs"] for ind in
+                     food_table.index
+                     if "Dinner" in decision_variables[ind].name]) \
+                         >= carbsMinDinner, "minCarbsDinner"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Carbs"] for ind in
+                     food_table.index
+                     if "Dinner" in decision_variables[ind].name]) \
+                         <= carbsMaxDinner, "maxCarbsDinner"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Proteins"] for ind in
+                     food_table.index
+                     if "Dinner" in decision_variables[ind].name]) \
+                         >= prtsMinDinner, "minProteinsDinner"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Proteins"] for ind in
+                     food_table.index
+                     if "Dinner" in decision_variables[ind].name]) \
+                         <= prtsMaxDinner, "maxProteinsDinner"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Fats"] for ind in
+                     food_table.index
+                     if "Dinner" in decision_variables[ind].name]) \
+                         >= fatsMinDinner, "minFatsDinner"
+                model += lpSum(
+                    [decision_variables[ind] * food_dict[food_table["Food"][ind]]["Fats"] for ind in
+                     food_table.index
+                     if "Dinner" in decision_variables[ind].name]) \
+                         <= fatsMaxDinner, "maxFatsDinner"
+
+
+
+
 
             # The problem is solved using PuLP's Solver
             status = LpStatus[model.solve()]
