@@ -90,6 +90,7 @@ if authentication_status:
         )
 
         st.divider()
+        st.markdown("""### :blue[Set meal objectives]""")
         index, cals2, carbs2, proteins2, fats2 = st.columns(5)
 
         with index:
