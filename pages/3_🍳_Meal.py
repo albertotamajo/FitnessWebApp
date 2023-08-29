@@ -116,15 +116,110 @@ if authentication_status:
                 fatsMaxBreakfast = st.number_input('Max', value=10000., key="fatsMaxBreakfast")
                 fatsMinBreakfast = st.number_input('Min', key="fatsMinBreakfast")
         with snack1_tab:
-            pass
+            cals_snack1, carbs_snack1, proteins_snack1, fats_snack1 = st.columns(4)
+            with cals_snack1:
+                st.markdown("#### Calories")
+                calsMaxSnack1 = st.number_input('Max', value=10000., key="calsMaxSnack1")
+                calsMinSnack1 = st.number_input('Min', key="calsMinSnack1")
+
+            with carbs_snack1:
+                st.markdown("#### Carbs")
+                carbsMaxSnack1 = st.number_input('Max', value=10000., key="carbsMaxSnack1")
+                carbsMinSnack1 = st.number_input('Min', key="carbsMinSnack1")
+
+            with proteins_snack1:
+                st.markdown("#### Proteins")
+                prtsMaxSnack1 = st.number_input('Max', value=10000., key="prtsMaxSnack1")
+                prtsMinSnack1 = st.number_input('Min', key="prtsMinSnack1")
+
+            with fats_snack1:
+                st.markdown("#### Fats")
+                fatsMaxSnack1 = st.number_input('Max', value=10000., key="fatsMaxSnack1")
+                fatsMinSnack1 = st.number_input('Min', key="fatsMinSnack1")
         with lunch_tab:
-            pass
+            cals_lunch, carbs_lunch, proteins_lunch, fats_lunch = st.columns(4)
+            with cals_lunch:
+                st.markdown("#### Calories")
+                calsMaxLunch = st.number_input('Max', value=10000., key="calsMaxLunch")
+                calsMinLunch = st.number_input('Min', key="calsMinLunch")
+
+            with carbs_lunch:
+                st.markdown("#### Carbs")
+                carbsMaxLunch = st.number_input('Max', value=10000., key="carbsMaxLunch")
+                carbsMinLunch = st.number_input('Min', key="carbsMinLunch")
+
+            with proteins_lunch:
+                st.markdown("#### Proteins")
+                prtsMaxLunch = st.number_input('Max', value=10000., key="prtsMaxLunch")
+                prtsMinLunch = st.number_input('Min', key="prtsMinLunch")
+
+            with fats_lunch:
+                st.markdown("#### Fats")
+                fatsMaxLunch = st.number_input('Max', value=10000., key="fatsMaxLunch")
+                fatsMinLunch = st.number_input('Min', key="fatsMinLunch")
         with snack2_tab:
-            pass
+            cals_snack2, carbs_snack2, proteins_snack2, fats_snack2 = st.columns(4)
+            with cals_snack2:
+                st.markdown("#### Calories")
+                calsMaxSnack2 = st.number_input('Max', value=10000., key="calsMaxSnack2")
+                calsMinSnack2 = st.number_input('Min', key="calsMinSnack2")
+
+            with carbs_snack2:
+                st.markdown("#### Carbs")
+                carbsMaxSnack2 = st.number_input('Max', value=10000., key="carbsMaxSnack2")
+                carbsMinSnack2 = st.number_input('Min', key="carbsMinSnack2")
+
+            with proteins_snack2:
+                st.markdown("#### Proteins")
+                prtsMaxSnack2 = st.number_input('Max', value=10000., key="prtsMaxSnack2")
+                prtsMinSnack2 = st.number_input('Min', key="prtsMinSnack2")
+
+            with fats_snack2:
+                st.markdown("#### Fats")
+                fatsMaxSnack2 = st.number_input('Max', value=10000., key="fatsMaxSnack2")
+                fatsMinSnack2 = st.number_input('Min', key="fatsMinSnack2")
         with dinner_tab:
-            pass
+            cals_dinner, carbs_dinner, proteins_dinner, fats_dinner = st.columns(4)
+            with cals_dinner:
+                st.markdown("#### Calories")
+                calsMaxDinner = st.number_input('Max', value=10000., key="calsMaxDinner")
+                calsMinDinner = st.number_input('Min', key="calsMinDinner")
+
+            with carbs_dinner:
+                st.markdown("#### Carbs")
+                carbsMaxDinner = st.number_input('Max', value=10000., key="carbsMaxDinner")
+                carbsMinDinner = st.number_input('Min', key="carbsMinDinner")
+
+            with proteins_dinner:
+                st.markdown("#### Proteins")
+                prtsMaxDinner = st.number_input('Max', value=10000., key="prtsMaxDinner")
+                prtsMinDinner = st.number_input('Min', key="prtsMinDinner")
+
+            with fats_dinner:
+                st.markdown("#### Fats")
+                fatsMaxDinner = st.number_input('Max', value=10000., key="fatsMaxDinner")
+                fatsMinDinner = st.number_input('Min', key="fatsMinDinner")
         with snack3_tab:
-            pass
+            cals_snack3, carbs_snack3, proteins_snack3, fats_snack3 = st.columns(4)
+            with cals_snack3:
+                st.markdown("#### Calories")
+                calsMaxSnack3 = st.number_input('Max', value=10000., key="calsMaxSnack3")
+                calsMinSnack3 = st.number_input('Min', key="calsMinSnack3")
+
+            with carbs_snack3:
+                st.markdown("#### Carbs")
+                carbsMaxSnack3 = st.number_input('Max', value=10000., key="carbsMaxSnack3")
+                carbsMinSnack3 = st.number_input('Min', key="carbsMinSnack3")
+
+            with proteins_snack3:
+                st.markdown("#### Proteins")
+                prtsMaxSnack3 = st.number_input('Max', value=10000., key="prtsMaxSnack3")
+                prtsMinSnack3 = st.number_input('Min', key="prtsMinSnack3")
+
+            with fats_snack3:
+                st.markdown("#### Fats")
+                fatsMaxSnack3 = st.number_input('Max', value=10000., key="fatsMaxSnack3")
+                fatsMinSnack3 = st.number_input('Min', key="fatsMinSnack3")
 
         st.divider()
 
