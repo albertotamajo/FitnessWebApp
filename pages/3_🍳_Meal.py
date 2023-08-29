@@ -91,9 +91,11 @@ if authentication_status:
 
         st.divider()
         st.markdown("""### :blue[Set meal objectives]""")
-        breakfast_tab, snack1_tab, lunch_tab, snack2_tab, dinner_tab, snack3_tab = st.tabs(["Breakfast", "Snack1",
+        none_tab, breakfast_tab, snack1_tab, lunch_tab, snack2_tab, dinner_tab, snack3_tab = st.tabs(["None", "Breakfast", "Snack1",
                                                                                             "Lunch", "Snack2", "Dinner",
                                                                                             "Snack3"])
+        with none_tab:
+            pass
         with breakfast_tab:
             cals_breakfast, carbs_breakfast, proteins_breakfast, fats_breakfast = st.columns(4)
             with cals_breakfast:
