@@ -632,6 +632,17 @@ if authentication_status:
                 df.loc['% kcal'] = (df.loc['Total'] / df.loc['Total']["Cals(kcal)"]) * np.asarray([0,0,0,0,4,4,9]) * 100
                 dfs.append(df)
 
+                dict = {"Food": [],
+                        "Meal": [],
+                        "Qnt(gr)": [],
+                        "Cals(kcal)": [],
+                        "Carbs(gr)": [],
+                        "Proteins(gr)": [],
+                        "Fats(gr)": []}
+
+                empty_df = pd.DataFrame(dict)
+                dfs.append((empty_df))
+
                 # Add breakfast table
                 if np.any(np.asarray(["Breakfast" in v for v in dec_var_names])):
                     dict = {"Food": [" ".join(v.name.replace("_", " ").split()[:-1]) for v in model.variables() if "Breakfast" in v.name],
