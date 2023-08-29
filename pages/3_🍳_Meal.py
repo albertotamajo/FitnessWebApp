@@ -291,7 +291,6 @@ if authentication_status:
                     }
                 ).astype(convert_dict)
                 st.write(st.session_state["food_data_editor"])
-                st.experimental_rerun()
 
         st.divider()
         st.markdown("""### :blue[Optimisation choices]""")
