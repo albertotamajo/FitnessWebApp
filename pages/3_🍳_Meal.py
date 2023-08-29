@@ -91,28 +91,40 @@ if authentication_status:
 
         st.divider()
         st.markdown("""### :blue[Set meal objectives]""")
-        index, cals2, carbs2, proteins2, fats2 = st.columns(5)
+        breakfast_tab, snack1_tab, lunch_tab, snack2_tab, dinner_tab, snack3_tab = st.tabs(["Breakfast", "Snack1",
+                                                                                            "Lunch", "Snack2", "Dinner",
+                                                                                            "Snack3"])
+        with breakfast_tab:
+            cals_breakfast, carbs_breakfast, proteins_breakfast, fats_breakfast = st.columns(4)
+            with cals_breakfast:
+                st.markdown("#### Calories")
+                calsMaxBreakfast = st.number_input('Max', key="calsMaxBreakfast")
+                calsMinBreakfast = st.number_input('Min', key="calsMinBreakfast")
 
-        with index:
-            st.markdown("####")
-            st.markdown("#### Breakfast")
-            st.markdown("#### Snack1")
-            st.markdown("#### Lunch")
-            st.markdown("#### Snack2")
-            st.markdown("#### Dinner")
-            st.markdown("#### Snack3")
+            with carbs_breakfast:
+                st.markdown("#### Carbs")
+                carbsMaxBreakfast = st.number_input('Max', key="carbsMaxBreakfast")
+                carbsMinBreakfast = st.number_input('Min', key="carbsMinBreakfast")
 
-        with cals2:
-            st.markdown("#### Calories")
+            with proteins_breakfast:
+                st.markdown("#### Proteins")
+                prtsMaxBreakfast = st.number_input('Max', key="prtsMaxBreakfast")
+                prtsMinBreakfast = st.number_input('Min', key="prtsMinBreakfast")
 
-        with carbs2:
-            st.markdown("#### Carbs")
-
-        with proteins2:
-            st.markdown("#### Proteins")
-
-        with fats2:
-            st.markdown("#### Fats")
+            with fats_breakfast:
+                st.markdown("#### Fats")
+                fatsMaxBreakfast = st.number_input('Max', key="fatsMaxBreakfast")
+                fatsMinBreakfast = st.number_input('Min', key="fatsMinBreakfast")
+        with snack1_tab:
+            pass
+        with lunch_tab:
+            pass
+        with snack2_tab:
+            pass
+        with dinner_tab:
+            pass
+        with snack3_tab:
+            pass
 
         st.divider()
         st.markdown("""### :blue[Select food]""")
