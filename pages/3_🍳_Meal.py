@@ -111,7 +111,7 @@ if authentication_status:
 
         food_table = st.data_editor(
             data_df,
-            use_container_width=False,
+            use_container_width=True,
             num_rows="dynamic",
             column_config={
                 "Food": st.column_config.SelectboxColumn(
