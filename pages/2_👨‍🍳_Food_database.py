@@ -86,7 +86,6 @@ if authentication_status:
                         fs.touch(file)
                         d = {food_name.strip(): {"Cals": calories / 100.0, "Carbs": carbs / 100.0, "Proteins": proteins / 100.0,
                                          "Fats": fats / 100.0}}
-
                     if save:
                         if d:
                             with fs.open(file, 'wb') as f:
@@ -116,10 +115,12 @@ if authentication_status:
                 fs.touch(file)
                 d = {food_name.strip(): {"Cals": calories / 100.0, "Carbs": carbs / 100.0, "Proteins": proteins / 100.0,
                                  "Fats": fats / 100.0}}
-            with fs.open(file, 'wb') as f:
-                if save:
-                    pickle.dump(d, f)
-                    st.success("Food saved successfully!")
+
+            if save:
+                if d:
+                    with fs.open(file, 'wb') as f:
+                        pickle.dump(d, f)
+                        st.success("Food saved successfully!")
 
     with st.expander("""### Visualise food database"""):
         if fs.exists(file):
