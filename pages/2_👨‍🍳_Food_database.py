@@ -131,7 +131,9 @@ if authentication_status:
                                "Proteins(100gr)": [d[i]["Proteins"] * 100 for i in d.keys()],
                                "Fats(100gr)": [d[i]["Fats"] * 100 for i in d.keys()]
                                })
-            st.dataframe(df.sort_values("Food"))
+            df = df.sort_values("Food")
+            df.reset_index(inplace=True, drop=True)
+            st.dataframe(df)
         else:
             st.error("There is no food database at the moment")
 
