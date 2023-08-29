@@ -22,6 +22,21 @@ footer {visibility: hidden;}
 """
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
+if "food_data_editor" not in st.session_state:
+    convert_dict = {'Food': str,
+                    'Meal': str,
+                    'Min(gr)': int,
+                    'Max(gr)': int
+                    }
+    st.session_state.food_data_editor = pd.DataFrame(
+        {
+            "Food": [],
+            "Meal": [],
+            "Min(gr)": [],
+            "Max(gr)": []
+        }
+    ).astype(convert_dict)
+
 
 with open('config.yaml') as file:
     config = yaml.load(file, Loader=SafeLoader)
@@ -224,21 +239,8 @@ if authentication_status:
         st.divider()
 
         st.markdown("""### :blue[Select food]""")
-        manual_tab, txt_tab = st.tabs(["Insert manually", "Upload from text"])
+        manual_tab, txt_tab = st.tabs(["Insert manually", "Update from text"])
         with manual_tab:
-            convert_dict = {'Food': str,
-                            'Meal': str,
-                            'Min(gr)': int,
-                            'Max(gr)': int
-                            }
-            data_df = pd.DataFrame(
-                {
-                    "Food": [],
-                    "Meal": [],
-                    "Min(gr)": [],
-                    "Max(gr)": []
-                }
-            ).astype(convert_dict)
 
             food_dict = fetch_food()
             food_list = list(food_dict.keys())
@@ -246,7 +248,7 @@ if authentication_status:
             meals = ["None", "Breakfast", "Snack1", "Lunch", "Snack2", "Dinner", "Snack3"]
 
             food_table = st.data_editor(
-                data_df,
+                st.session_state.food_data_editor,
                 use_container_width=True,
                 num_rows="dynamic",
                 column_config={
@@ -273,7 +275,10 @@ if authentication_status:
                 hide_index=True,
             )
         with txt_tab:
-            st.text_area("Insert text", label_visibility="hidden")
+            txt = st.text_area("Insert text", label_visibility="hidden")
+            if st.button("Update"):
+                pass
+
         st.divider()
         st.markdown("""### :blue[Optimisation choices]""")
         calsOpt, carbsOpt, proteinsOpt, fatsOpt = st.columns(4)
