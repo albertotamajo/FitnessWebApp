@@ -129,7 +129,7 @@ if authentication_status:
                 "Min(gr)": st.column_config.NumberColumn("Min(gr)", width="small", required=True, default=0,
                                                          format=None,
                                                          min_value=0, max_value=1000),
-                "Max(gr)": st.column_config.NumberColumn("Max(gr)", width="small", required=True, default=0,
+                "Max(gr)": st.column_config.NumberColumn("Max(gr)", width="small", required=True, default=1000,
                                                          format=None,
                                                          min_value=0, max_value=1000)
             },
