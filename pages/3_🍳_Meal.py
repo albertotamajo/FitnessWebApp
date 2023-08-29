@@ -116,7 +116,7 @@ if authentication_status:
             column_config={
                 "Food": st.column_config.SelectboxColumn(
                     "Food",
-                    width="large",
+                    width="medium",
                     options=list(food_dict.keys()),
                     required=True,
                 ),
