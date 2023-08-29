@@ -86,8 +86,9 @@ if authentication_status:
                         fs.touch(file)
                         d = {food_name: {"Cals": calories / 100.0, "Carbs": carbs / 100.0, "Proteins": proteins / 100.0,
                                          "Fats": fats / 100.0}}
-                    with fs.open(file, 'wb') as f:
-                        if save:
+
+                    if save:
+                        with fs.open(file, 'wb') as f:
                             pickle.dump(d, f)
                             st.success("Food saved successfully!")
             else:
