@@ -627,7 +627,7 @@ if authentication_status:
                                      for v in model.variables()]}
                 df = pd.DataFrame(dict)
                 df.loc['Total'] = df.sum(numeric_only=True)
-                df.loc['% kcal'] = (df.loc['Total'] / df.loc['Total']["Cals(kcal)"]) * np.asarray([0,0,0,0,4,4,9])
+                df.loc['% kcal'] = ((df.loc['Total'] / df.loc['Total']["Cals(kcal)"]) * np.asarray([0,0,0,0,4,4,9]) * 100).astype(int)
                 st.dataframe(df)
                 df.to_excel("my_meal_plan.xlsx")
                 with open("my_meal_plan.xlsx", "rb") as f:
