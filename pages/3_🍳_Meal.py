@@ -610,10 +610,6 @@ if authentication_status:
                      if "Dinner" in decision_variables[ind].name]) \
                          <= fatsMaxDinner, "maxFatsDinner"
 
-
-
-
-
             # The problem is solved using PuLP's Solver
             status = LpStatus[model.solve()]
             st.divider()
@@ -631,6 +627,7 @@ if authentication_status:
                                      for v in model.variables()]}
                 df = pd.DataFrame(dict)
                 df.loc['Total'] = df.sum(numeric_only=True)
+                df.loc['% kcal'] = df.loc['Total'] / df.loc['Total']["Cals(kcal)"]
                 st.dataframe(df)
                 df.to_excel("my_meal_plan.xlsx")
                 with open("my_meal_plan.xlsx", "rb") as f:
@@ -704,7 +701,6 @@ if authentication_status:
             }
             df = pd.DataFrame(dict)
             df.loc['Total'] = df.sum(numeric_only=True)
-            df.loc['% kcal'] = df.loc['Total'] / df.loc['Total']["Cals(kcal)"]
             st.dataframe(df)
             df.to_excel("my_meal_nutrition.xlsx")
             with open("my_meal_nutrition.xlsx", "rb") as f:
