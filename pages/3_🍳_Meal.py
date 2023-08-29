@@ -614,6 +614,7 @@ if authentication_status:
             status = LpStatus[model.solve()]
             st.divider()
             if status is "Optimal":
+                st.markdown("Daily diet")
                 dict = {"Food": [" ".join(v.name.replace("_", " ").split()[:-1]) for v in model.variables()],
                         "Meal": [v.name.split("_")[-1] for v in model.variables()],
                         "Qnt(gr)": [v.varValue for v in model.variables()],
@@ -632,6 +633,146 @@ if authentication_status:
                 df.to_excel("my_meal_plan.xlsx")
                 with open("my_meal_plan.xlsx", "rb") as f:
                     st.download_button("Download meal plan", f, file_name="my_meal_plan.xlsx")
+
+                # Add breakfast table
+                if np.any(np.asarray(["Breakfast" in v for v in dec_var_names])):
+                    st.markdown("#### Breakfast")
+                    dict = {"Food": [" ".join(v.name.replace("_", " ").split()[:-1]) for v in model.variables() if "Breakfast" in v.name],
+                            "Qnt(gr)": [v.varValue for v in model.variables() if "Breakfast" in v.name],
+                            "Cals(kcal)": [food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Cals"] * v.varValue
+                                           for v in model.variables() if "Breakfast" in v.name],
+                            "Carbs(gr)": [food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Carbs"] * v.varValue
+                                          for v in model.variables() if "Breakfast" in v.name],
+                            "Proteins(gr)": [
+                                food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Proteins"] * v.varValue
+                                for v in model.variables() if "Breakfast" in v.name],
+                            "Fats(gr)": [food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Fats"] * v.varValue
+                                         for v in model.variables() if "Breakfast" in v.name]}
+                    df = pd.DataFrame(dict)
+                    df.loc['Total'] = df.sum(numeric_only=True)
+                    df.loc['% kcal'] = (df.loc['Total'] / df.loc['Total']["Cals(kcal)"]) * np.asarray(
+                        [0, 0, 0, 4, 4, 9]) * 100
+                    st.dataframe(df)
+
+                # Add snack1 table
+                if np.any(np.asarray(["Snack1" in v for v in dec_var_names])):
+                    st.markdown("#### Snack1")
+                    dict = {"Food": [" ".join(v.name.replace("_", " ").split()[:-1]) for v in model.variables() if
+                                     "Snack1" in v.name],
+                            "Qnt(gr)": [v.varValue for v in model.variables() if "Snack1" in v.name],
+                            "Cals(kcal)": [
+                                food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Cals"] * v.varValue
+                                for v in model.variables() if "Snack1" in v.name],
+                            "Carbs(gr)": [
+                                food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Carbs"] * v.varValue
+                                for v in model.variables() if "Snack1" in v.name],
+                            "Proteins(gr)": [
+                                food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Proteins"] * v.varValue
+                                for v in model.variables() if "Snack1" in v.name],
+                            "Fats(gr)": [
+                                food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Fats"] * v.varValue
+                                for v in model.variables() if "Snack1" in v.name]}
+                    df = pd.DataFrame(dict)
+                    df.loc['Total'] = df.sum(numeric_only=True)
+                    df.loc['% kcal'] = (df.loc['Total'] / df.loc['Total']["Cals(kcal)"]) * np.asarray(
+                        [0, 0, 0, 4, 4, 9]) * 100
+                    st.dataframe(df)
+
+                # Add lunch table
+                if np.any(np.asarray(["Lunch" in v for v in dec_var_names])):
+                    st.markdown("#### Lunch")
+                    dict = {"Food": [" ".join(v.name.replace("_", " ").split()[:-1]) for v in model.variables() if
+                                     "Lunch" in v.name],
+                            "Qnt(gr)": [v.varValue for v in model.variables() if "Lunch" in v.name],
+                            "Cals(kcal)": [
+                                food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Cals"] * v.varValue
+                                for v in model.variables() if "Lunch" in v.name],
+                            "Carbs(gr)": [
+                                food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Carbs"] * v.varValue
+                                for v in model.variables() if "Lunch" in v.name],
+                            "Proteins(gr)": [
+                                food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Proteins"] * v.varValue
+                                for v in model.variables() if "Lunch" in v.name],
+                            "Fats(gr)": [
+                                food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Fats"] * v.varValue
+                                for v in model.variables() if "Lunch" in v.name]}
+                    df = pd.DataFrame(dict)
+                    df.loc['Total'] = df.sum(numeric_only=True)
+                    df.loc['% kcal'] = (df.loc['Total'] / df.loc['Total']["Cals(kcal)"]) * np.asarray(
+                        [0, 0, 0, 4, 4, 9]) * 100
+                    st.dataframe(df)
+
+                # Add snack2 table
+                if np.any(np.asarray(["Snack2" in v for v in dec_var_names])):
+                    st.markdown("#### Snack2")
+                    dict = {"Food": [" ".join(v.name.replace("_", " ").split()[:-1]) for v in model.variables() if
+                                     "Snack2" in v.name],
+                            "Qnt(gr)": [v.varValue for v in model.variables() if "Snack2" in v.name],
+                            "Cals(kcal)": [
+                                food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Cals"] * v.varValue
+                                for v in model.variables() if "Snack2" in v.name],
+                            "Carbs(gr)": [
+                                food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Carbs"] * v.varValue
+                                for v in model.variables() if "Snack2" in v.name],
+                            "Proteins(gr)": [
+                                food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Proteins"] * v.varValue
+                                for v in model.variables() if "Snack2" in v.name],
+                            "Fats(gr)": [
+                                food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Fats"] * v.varValue
+                                for v in model.variables() if "Snack2" in v.name]}
+                    df = pd.DataFrame(dict)
+                    df.loc['Total'] = df.sum(numeric_only=True)
+                    df.loc['% kcal'] = (df.loc['Total'] / df.loc['Total']["Cals(kcal)"]) * np.asarray(
+                        [0, 0, 0, 4, 4, 9]) * 100
+                    st.dataframe(df)
+
+                # Add dinner table
+                if np.any(np.asarray(["Dinner" in v for v in dec_var_names])):
+                    st.markdown("#### Dinner")
+                    dict = {"Food": [" ".join(v.name.replace("_", " ").split()[:-1]) for v in model.variables() if
+                                     "Dinner" in v.name],
+                            "Qnt(gr)": [v.varValue for v in model.variables() if "Dinner" in v.name],
+                            "Cals(kcal)": [
+                                food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Cals"] * v.varValue
+                                for v in model.variables() if "Dinner" in v.name],
+                            "Carbs(gr)": [
+                                food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Carbs"] * v.varValue
+                                for v in model.variables() if "Dinner" in v.name],
+                            "Proteins(gr)": [
+                                food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Proteins"] * v.varValue
+                                for v in model.variables() if "Dinner" in v.name],
+                            "Fats(gr)": [
+                                food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Fats"] * v.varValue
+                                for v in model.variables() if "Dinner" in v.name]}
+                    df = pd.DataFrame(dict)
+                    df.loc['Total'] = df.sum(numeric_only=True)
+                    df.loc['% kcal'] = (df.loc['Total'] / df.loc['Total']["Cals(kcal)"]) * np.asarray(
+                        [0, 0, 0, 4, 4, 9]) * 100
+                    st.dataframe(df)
+
+                # Add snack3 table
+                if np.any(np.asarray(["Snack3" in v for v in dec_var_names])):
+                    st.markdown("#### Snack3")
+                    dict = {"Food": [" ".join(v.name.replace("_", " ").split()[:-1]) for v in model.variables() if
+                                     "Snack3" in v.name],
+                            "Qnt(gr)": [v.varValue for v in model.variables() if "Snack3" in v.name],
+                            "Cals(kcal)": [
+                                food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Cals"] * v.varValue
+                                for v in model.variables() if "Snack3" in v.name],
+                            "Carbs(gr)": [
+                                food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Carbs"] * v.varValue
+                                for v in model.variables() if "Snack3" in v.name],
+                            "Proteins(gr)": [
+                                food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Proteins"] * v.varValue
+                                for v in model.variables() if "Snack3" in v.name],
+                            "Fats(gr)": [
+                                food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Fats"] * v.varValue
+                                for v in model.variables() if "Snack3" in v.name]}
+                    df = pd.DataFrame(dict)
+                    df.loc['Total'] = df.sum(numeric_only=True)
+                    df.loc['% kcal'] = (df.loc['Total'] / df.loc['Total']["Cals(kcal)"]) * np.asarray(
+                        [0, 0, 0, 4, 4, 9]) * 100
+                    st.dataframe(df)
 
             else:
                 st.error(f"Solver error: status {status}")
