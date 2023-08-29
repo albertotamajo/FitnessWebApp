@@ -770,7 +770,7 @@ if authentication_status:
                     df_snack3.loc['Total'] = df_snack3.sum(numeric_only=True)
                     df_snack3.loc['% kcal'] = (df_snack3.loc['Total'] / df_snack3.loc['Total']["Cals(kcal)"]) * np.asarray(
                         [0, 0, 0, 0, 4, 4, 9]) * 100
-                    df.apply(df_snack3)
+                    dfs.append(df_snack3)
 
                 dfs = pd.concat(dfs, axis=0)
                 st.dataframe(dfs)
