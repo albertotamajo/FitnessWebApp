@@ -630,7 +630,7 @@ if authentication_status:
                 df = pd.DataFrame(dict)
                 df["Meal"] = pd.Categorical(df["Meal"], meals)
                 df = df.sort_values("Meal")
-                df.reset_index()
+                df.reset_index(inplace=True)
                 df.loc['Total'] = df.sum(numeric_only=True)
                 df.loc['% kcal'] = (df.loc['Total'] / df.loc['Total']["Cals(kcal)"]) * np.asarray([0,0,0,0,4,4,9]) * 100
                 dfs.append(df.round(2))
