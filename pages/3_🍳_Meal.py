@@ -109,7 +109,7 @@ if authentication_status:
         ).astype(convert_dict)
 
         food_dict = fetch_food()
-        meals = ["Breakfast", "Snack1", "Lunch", "Snack2", "Dinner", "Snack3"]
+        meals = ["None", "Breakfast", "Snack1", "Lunch", "Snack2", "Dinner", "Snack3"]
 
         food_table = st.data_editor(
             data_df,
@@ -125,6 +125,7 @@ if authentication_status:
                 "Meal": st.column_config.SelectboxColumn(
                     "Meal",
                     width="medium",
+                    default="None",
                     options=meals,
                     required=True,
                 ),
