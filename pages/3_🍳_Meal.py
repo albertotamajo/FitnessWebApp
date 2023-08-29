@@ -640,7 +640,7 @@ if authentication_status:
                         "Proteins(gr)": ["",""],
                         "Fats(gr)": ["",""]}
 
-                empty_df = pd.DataFrame(dict)
+                empty_df = pd.DataFrame(dict, index=["",""])
                 dfs.append((empty_df))
 
                 # Add breakfast table
