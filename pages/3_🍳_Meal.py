@@ -630,7 +630,7 @@ if authentication_status:
                                      for v in model.variables()]
                         }
                 df = pd.DataFrame(dict)
-                df["Meal"] = pd.Categorical(df["Meal"], meals)
+                df["Meal"] = pd.Categorical(df["Meal"], meals+[""])
                 df = df.sort_values("Meal")
                 df.reset_index(inplace=True, drop=True)
                 df.loc['Total'] = df.sum(numeric_only=True)
