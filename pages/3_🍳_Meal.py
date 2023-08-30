@@ -1,13 +1,12 @@
 import pandas as pd
 import streamlit as st
 import pandas as pd
-import utils
-import pickle
 from pulp import *
 import streamlit_authenticator as stauth
 import yaml
 import numpy as np
 from yaml.loader import SafeLoader
+from utils import dropbox_connect, dropbox_download_file, dropbox_upload_file, dropbox_file_exists
 
 st.set_page_config(
     page_title="Meal",
@@ -37,19 +36,14 @@ name, authentication_status, username = authenticator.login('Login', 'main')
 
 if authentication_status:
     authenticator.logout('Logout', 'sidebar')
-    AWS_BUCKET = "fitnessmanagement/"
-    file = "{0}Food.pickle".format(AWS_BUCKET)
-    fs = utils.s3fs_file_system()
-    fs.clear_instance_cache()
-
+    file = "/Food.pickle"
+    dbx = dropbox_connect()
 
     @st.cache_data
     def fetch_food():
         # Fetch data from URL here, and then clean it up.
-        if fs.exists(file):
-            with fs.open(file, 'rb') as f:
-                d = pickle.load(f)
-            return d
+        if dropbox_file_exists(dbx, "", file[1:]):
+            return dropbox_download_file(dbx, file)
         else:
             return {}
 
@@ -798,7 +792,6 @@ if authentication_status:
                 dfs.to_excel("my_diet.xlsx")
                 with open("my_diet.xlsx", "rb") as f:
                     st.download_button("Download diet", f, file_name="my_diet.xlsx")
-
             else:
                 st.error(f"Solver error: status {status}")
 
