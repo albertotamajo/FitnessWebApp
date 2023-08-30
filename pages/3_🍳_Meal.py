@@ -635,7 +635,8 @@ if authentication_status:
                 df.reset_index(inplace=True, drop=True)
                 df.loc['Total'] = df.sum(numeric_only=True)
                 df.loc['% kcal'] = (df.loc['Total'] / df.loc['Total']["Cals(kcal)"]) * np.asarray([0,0,0,0,0,0,4,4,9]) * 100
-                df.loc['Total', ["Min(gr)", "Max(gr)"]] = ""
+                df.loc['Total', ["Food", "Meal", "Min(gr)", "Max(gr)"]] = ""
+                df.loc['% kcal', ["Food", "Meal", "Min(gr)", "Max(gr)", "Qnt(gr)", "Cals(kcal)"]] = ""
                 dfs.append(df.round(2))
 
                 dict = {"Food": ["",""],
@@ -673,6 +674,8 @@ if authentication_status:
                     df_breakfast.loc['Total'] = df_breakfast.sum(numeric_only=True)
                     df_breakfast.loc['% kcal'] = (df_breakfast.loc['Total'] / df_breakfast.loc['Total']["Cals(kcal)"]) * np.asarray(
                         [0, 0, 0, 0, 0, 0, 4, 4, 9]) * 100
+                    df_breakfast.loc['Total', ["Food", "Meal", "Min(gr)", "Max(gr)"]] = ""
+                    df_breakfast.loc['% kcal', ["Food", "Meal", "Min(gr)", "Max(gr)", "Qnt(gr)", "Cals(kcal)"]] = ""
                     dfs.append(df_breakfast.round(2))
                     dfs.append(empty_df)
 
@@ -701,6 +704,8 @@ if authentication_status:
                     df_snack1.loc['Total'] = df_snack1.sum(numeric_only=True)
                     df_snack1.loc['% kcal'] = (df_snack1.loc['Total'] / df_snack1.loc['Total']["Cals(kcal)"]) * np.asarray(
                         [0, 0, 0, 0, 0, 0, 4, 4, 9,]) * 100
+                    df_snack1.loc['Total', ["Food", "Meal", "Min(gr)", "Max(gr)"]] = ""
+                    df_snack1.loc['% kcal', ["Food", "Meal", "Min(gr)", "Max(gr)", "Qnt(gr)", "Cals(kcal)"]] = ""
                     dfs.append(df_snack1.round(2))
                     dfs.append(empty_df)
 
@@ -729,6 +734,8 @@ if authentication_status:
                     df_lunch.loc['Total'] = df_lunch.sum(numeric_only=True)
                     df_lunch.loc['% kcal'] = (df_lunch.loc['Total'] / df_lunch.loc['Total']["Cals(kcal)"]) * np.asarray(
                         [0, 0, 0, 0, 0, 0, 4, 4, 9]) * 100
+                    df_lunch.loc['Total', ["Food", "Meal", "Min(gr)", "Max(gr)"]] = ""
+                    df_lunch.loc['% kcal', ["Food", "Meal", "Min(gr)", "Max(gr)", "Qnt(gr)", "Cals(kcal)"]] = ""
                     dfs.append(df_lunch.round(2))
                     dfs.append(empty_df)
 
@@ -757,6 +764,8 @@ if authentication_status:
                     df_snack2.loc['Total'] = df_snack2.sum(numeric_only=True)
                     df_snack2.loc['% kcal'] = (df_snack2.loc['Total'] / df_snack2.loc['Total']["Cals(kcal)"]) * np.asarray(
                         [0, 0, 0, 0, 0, 0, 4, 4, 9]) * 100
+                    df_snack2.loc['Total', ["Food", "Meal", "Min(gr)", "Max(gr)"]] = ""
+                    df_snack2.loc['% kcal', ["Food", "Meal", "Min(gr)", "Max(gr)", "Qnt(gr)", "Cals(kcal)"]] = ""
                     dfs.append(df_snack2.round(2))
                     dfs.append(empty_df)
 
@@ -785,6 +794,8 @@ if authentication_status:
                     df_dinner.loc['Total'] = df_dinner.sum(numeric_only=True)
                     df_dinner.loc['% kcal'] = (df_dinner.loc['Total'] / df_dinner.loc['Total']["Cals(kcal)"]) * np.asarray(
                         [0, 0, 0, 0, 0, 0, 4, 4, 9]) * 100
+                    df_dinner.loc['Total', ["Food", "Meal", "Min(gr)", "Max(gr)"]] = ""
+                    df_dinner.loc['% kcal', ["Food", "Meal", "Min(gr)", "Max(gr)", "Qnt(gr)", "Cals(kcal)"]] = ""
                     dfs.append(df_dinner.round(2))
                     dfs.append(empty_df)
 
@@ -813,6 +824,8 @@ if authentication_status:
                     df_snack3.loc['Total'] = df_snack3.sum(numeric_only=True)
                     df_snack3.loc['% kcal'] = (df_snack3.loc['Total'] / df_snack3.loc['Total']["Cals(kcal)"]) * np.asarray(
                         [0, 0, 0, 0, 0, 0, 4, 4, 9]) * 100
+                    df_snack3.loc['Total', ["Food", "Meal", "Min(gr)", "Max(gr)"]] = ""
+                    df_snack3.loc['% kcal', ["Food", "Meal", "Min(gr)", "Max(gr)", "Qnt(gr)", "Cals(kcal)"]] = ""
                     dfs.append(df_snack3.round(2))
 
                 dfs = pd.concat(dfs, axis=0)
