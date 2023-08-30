@@ -815,7 +815,7 @@ if authentication_status:
                     dfs.append(df_snack3.round(2))
 
                 dfs = pd.concat(dfs, axis=0)
-                st.dataframe(dfs)
+                st.dataframe(dfs.drop(columns=['Min(gr)', 'Max(gr)']))
                 dfs.to_excel("my_diet.xlsx")
                 with open("my_diet.xlsx", "rb") as f:
                     st.download_button("Download diet", f, file_name="my_diet.xlsx")
