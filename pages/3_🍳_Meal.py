@@ -43,7 +43,7 @@ if authentication_status:
     fs.clear_instance_cache()
 
 
-    # @st.cache_data
+    @st.cache_data
     def fetch_food():
         # Fetch data from URL here, and then clean it up.
         if fs.exists(file):
