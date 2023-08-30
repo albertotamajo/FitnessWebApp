@@ -3,7 +3,7 @@ import streamlit as st
 import requests
 from streamlit_image_select import image_select
 import pickle
-import utils
+from utils import dropbox_connect, dropbox_download_file, dropbox_upload_file, dropbox_file_exists
 import streamlit_authenticator as stauth
 import yaml
 from yaml.loader import SafeLoader
@@ -38,17 +38,14 @@ name, authentication_status, username = authenticator.login('Login', 'main')
 if authentication_status:
     authenticator.logout('Logout', 'sidebar')
     AWS_BUCKET = "fitnessmanagement/"
-    file = "{0}Food.pickle".format(AWS_BUCKET)
-    fs = utils.s3fs_file_system()
-    fs.clear_instance_cache()
+    file = "/Food.pickle"
+    dbx = dropbox_connect()
 
     @st.cache_data
     def fetch_food():
         # Fetch data from URL here, and then clean it up.
-        if fs.exists(file):
-            with fs.open(file, 'rb') as f:
-                d = pickle.load(f)
-            return d
+        if dropbox_file_exists(dbx, "", file[1:]):
+            return dropbox_download_file(dbx, file)
         else:
             return {}
 
@@ -83,25 +80,22 @@ if authentication_status:
                 )
                 if st.button('Add food', key="OpenFoodButton"):
                     save = True
-                    if fs.exists(file):
-                        with fs.open(file, 'rb') as f:
-                            d = pickle.load(f)
-                            if food_name not in d.keys():
-                                d[food_name.strip()] = {"Cals": calories / 100.0, "Carbs": carbs / 100.0,
-                                                "Proteins": proteins / 100.0,
-                                                "Fats": fats / 100.0}
-                            else:
-                                save = False
-                                st.error('Your food is already in the database')
+                    if dropbox_file_exists(dbx, "", file[1:]):
+                        d = dropbox_download_file(dbx, file)
+                        if food_name not in d.keys():
+                            d[food_name.strip()] = {"Cals": calories / 100.0, "Carbs": carbs / 100.0,
+                                            "Proteins": proteins / 100.0,
+                                            "Fats": fats / 100.0}
+                        else:
+                            save = False
+                            st.error('Your food is already in the database')
                     else:
-                        fs.touch(file)
                         d = {food_name.strip(): {"Cals": calories / 100.0, "Carbs": carbs / 100.0, "Proteins": proteins / 100.0,
                                          "Fats": fats / 100.0}}
                     if save:
                         if d:
-                            with fs.open(file, 'wb') as f:
-                                pickle.dump(d, f)
-                                st.success("Food saved successfully!")
+                            dropbox_upload_file(dbx, d, file)
+                            st.success("Food saved successfully!")
             else:
                 st.error("There is no product matching the query!")
 
@@ -113,24 +107,21 @@ if authentication_status:
         fats = st.number_input('Write the fats of this food (100gr)', min_value=0., max_value=1000., step=1.)
         if st.button('Add food'):
             save = True
-            if fs.exists(file):
-                with fs.open(file, 'rb') as f:
-                    d = pickle.load(f)
-                    if food_name not in d.keys():
-                        d[food_name.strip()] = {"Cals": calories / 100.0, "Carbs": carbs / 100.0, "Proteins": proteins / 100.0,
-                                        "Fats": fats / 100.0}
-                    else:
-                        save = False
-                        st.error('Your food is already in the database')
+            if dropbox_file_exists(dbx, "", file[1:]):
+                d = dropbox_download_file(dbx, file)
+                if food_name not in d.keys():
+                    d[food_name.strip()] = {"Cals": calories / 100.0, "Carbs": carbs / 100.0, "Proteins": proteins / 100.0,
+                                    "Fats": fats / 100.0}
+                else:
+                    save = False
+                    st.error('Your food is already in the database')
             else:
-                fs.touch(file)
                 d = {food_name.strip(): {"Cals": calories / 100.0, "Carbs": carbs / 100.0, "Proteins": proteins / 100.0,
                                  "Fats": fats / 100.0}}
             if save:
                 if d:
-                    with fs.open(file, 'wb') as f:
-                        pickle.dump(d, f)
-                        st.success("Food saved successfully!")
+                    dropbox_upload_file(dbx, d, file)
+                    st.success("Food saved successfully!")
 
     with st.expander("""### Visualise food database"""):
         d = fetch_food()
@@ -150,18 +141,16 @@ if authentication_status:
     with st.expander("""### Remove food"""):
         if st.button("Start remove food"):
             st.divider()
-            if fs.exists(file):
-                with fs.open(file, 'rb') as f:
-                    d = pickle.load(f)
+            if dropbox_file_exists(dbx, "", file[1:]):
+                d = dropbox_download_file(dbx, file)
                 food_list = list(d.keys())
                 food_list.sort()
                 food = st.selectbox("Select the food to be removed", ["<select>"] + food_list)
                 if st.button('Remove food'):
                     if food is not "<select>":
                         d.pop(food)
-                        with fs.open(file, 'wb') as f:
-                            pickle.dump(d, f)
-                            st.success("Food removed successfully!")
+                        dropbox_upload_file(dbx, d, file)
+                        st.success("Food removed successfully!")
                     else:
                         st.error("You need to select a food!")
             else:
