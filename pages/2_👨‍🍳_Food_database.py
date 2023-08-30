@@ -22,6 +22,7 @@ footer {visibility: hidden;}
 """
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
+
 with open('config.yaml') as file:
     config = yaml.load(file, Loader=SafeLoader)
 
@@ -40,6 +41,16 @@ if authentication_status:
     file = "{0}Food.pickle".format(AWS_BUCKET)
     fs = utils.s3fs_file_system()
     fs.clear_instance_cache()
+
+    @st.cache_data
+    def fetch_food():
+        # Fetch data from URL here, and then clean it up.
+        if fs.exists(file):
+            with fs.open(file, 'rb') as f:
+                d = pickle.load(f)
+            return d
+        else:
+            return {}
 
     st.write("# Food database! 👨‍🍳")
     with st.expander("""### Add food from openfoodfacts"""):
@@ -122,9 +133,8 @@ if authentication_status:
                         st.success("Food saved successfully!")
 
     with st.expander("""### Visualise food database"""):
-        if fs.exists(file):
-            with fs.open(file, 'rb') as f:
-                d = pickle.load(f)
+        d = fetch_food()
+        if d:
             df = pd.DataFrame({"Food": [i for i in d.keys()],
                                "Calories(100gr)": [d[i]["Cals"] * 100 for i in d.keys()],
                                "Carbs(100gr)": [d[i]["Carbs"] * 100 for i in d.keys()],
