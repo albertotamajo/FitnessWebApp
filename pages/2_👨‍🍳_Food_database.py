@@ -148,22 +148,23 @@ if authentication_status:
             st.error("There is no food database at the moment")
 
     with st.expander("""### Remove food"""):
-        if fs.exists(file):
-            with fs.open(file, 'rb') as f:
-                d = pickle.load(f)
-            food_list = list(d.keys())
-            food_list.sort()
-            food = st.selectbox("Select the food to be removed", ["<select>"] + food_list)
-            if st.button('Remove food'):
-                if food is not "<select>":
-                    d.pop(food)
-                    with fs.open(file, 'wb') as f:
-                        pickle.dump(d, f)
-                        st.success("Food removed successfully!")
-                else:
-                    st.error("You need to select a food!")
-        else:
-            st.error("There is no food database at the moment")
+        if st.button("Start remove food"):
+            if fs.exists(file):
+                with fs.open(file, 'rb') as f:
+                    d = pickle.load(f)
+                food_list = list(d.keys())
+                food_list.sort()
+                food = st.selectbox("Select the food to be removed", ["<select>"] + food_list)
+                if st.button('Remove food'):
+                    if food is not "<select>":
+                        d.pop(food)
+                        with fs.open(file, 'wb') as f:
+                            pickle.dump(d, f)
+                            st.success("Food removed successfully!")
+                    else:
+                        st.error("You need to select a food!")
+            else:
+                st.error("There is no food database at the moment")
 
 elif authentication_status == False:
     st.error('Username/password is incorrect')
