@@ -35,13 +35,6 @@ authenticator = stauth.Authenticate(
 name, authentication_status, username = authenticator.login('Login', 'main')
 
 if authentication_status:
-    with st.sidebar:
-        if st.button("Clear cache"):
-            st.cache_data.clear()
-    authenticator.logout('Logout', 'sidebar')
-    file = "/Food.pickle"
-    dbx = dropbox_connect()
-
     @st.cache_data
     def fetch_food():
         # Fetch data from URL here, and then clean it up.
@@ -50,6 +43,13 @@ if authentication_status:
         else:
             return {}
 
+    with st.sidebar:
+        if st.button("Clear cache"):
+            fetch_food.clear()
+
+    authenticator.logout('Logout', 'sidebar')
+    file = "/Food.pickle"
+    dbx = dropbox_connect()
 
     st.write("# Meal! 🍳")
 
