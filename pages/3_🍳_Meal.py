@@ -635,7 +635,7 @@ if authentication_status:
                 df.reset_index(inplace=True, drop=True)
                 df.loc['Total'] = df.sum(numeric_only=True)
                 df.loc['% kcal'] = (df.loc['Total'] / df.loc['Total']["Cals(kcal)"]) * np.asarray([0,0,0,0,0,0,4,4,9]) * 100
-                df.loc['Total', "Min(gr)"] = ""
+                df.loc['Total', ["Min(gr)", "Max(gr)"]] = ""
                 dfs.append(df.round(2))
 
                 dict = {"Food": ["",""],
