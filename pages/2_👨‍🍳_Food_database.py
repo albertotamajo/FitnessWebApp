@@ -149,6 +149,7 @@ if authentication_status:
 
     with st.expander("""### Remove food"""):
         if st.button("Start remove food"):
+            st.divider()
             if fs.exists(file):
                 with fs.open(file, 'rb') as f:
                     d = pickle.load(f)
