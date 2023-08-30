@@ -39,7 +39,7 @@ if authentication_status:
     file = "/Food.pickle"
     dbx = dropbox_connect()
 
-    #@st.cache_data
+    @st.cache_data
     def fetch_food():
         # Fetch data from URL here, and then clean it up.
         if dropbox_file_exists(dbx, "", file[1:]):
@@ -93,6 +93,7 @@ if authentication_status:
                     if save:
                         if d:
                             dropbox_upload_file(dbx, d, file)
+                            fetch_food.clear()
                             st.success("Food saved successfully!")
             else:
                 st.error("There is no product matching the query!")
@@ -119,6 +120,7 @@ if authentication_status:
             if save:
                 if d:
                     dropbox_upload_file(dbx, d, file)
+                    fetch_food.clear()
                     st.success("Food saved successfully!")
 
     with st.expander("""### Visualise food database"""):
