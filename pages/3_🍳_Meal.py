@@ -689,8 +689,8 @@ if authentication_status:
                             "Fats(gr)": [
                                 food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Fats"] * v.varValue
                                 for v in model.variables() if "Snack1" in v.name],
-                            "Min(gr)": [v.lowBound for v in model.variables() if "Breakfast" in v.name if "Snack1" in v.name],
-                            "Max(gr)": [v.upBound for v in model.variables() if "Breakfast" in v.name if "Snack1" in v.name]
+                            "Min(gr)": [v.lowBound for v in model.variables() if "Snack1" in v.name],
+                            "Max(gr)": [v.upBound for v in model.variables() if "Snack1" in v.name]
                             }
                     df_snack1 = pd.DataFrame(dict)
                     df_snack1.loc['Total'] = df_snack1.sum(numeric_only=True)
@@ -717,8 +717,8 @@ if authentication_status:
                             "Fats(gr)": [
                                 food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Fats"] * v.varValue
                                 for v in model.variables() if "Lunch" in v.name],
-                            "Min(gr)": [v.lowBound for v in model.variables() if "Breakfast" in v.name if "Lunch" in v.name],
-                            "Max(gr)": [v.upBound for v in model.variables() if "Breakfast" in v.name if "Lunch" in v.name]
+                            "Min(gr)": [v.lowBound for v in model.variables() if "Lunch" in v.name],
+                            "Max(gr)": [v.upBound for v in model.variables() if "Lunch" in v.name]
                             }
                     df_lunch = pd.DataFrame(dict)
                     df_lunch.loc['Total'] = df_lunch.sum(numeric_only=True)
@@ -745,8 +745,8 @@ if authentication_status:
                             "Fats(gr)": [
                                 food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Fats"] * v.varValue
                                 for v in model.variables() if "Snack2" in v.name],
-                            "Min(gr)": [v.lowBound for v in model.variables() if "Breakfast" in v.name if "Snack2" in v.name],
-                            "Max(gr)": [v.upBound for v in model.variables() if "Breakfast" in v.name if "Snack2" in v.name]
+                            "Min(gr)": [v.lowBound for v in model.variables() if "Snack2" in v.name],
+                            "Max(gr)": [v.upBound for v in model.variables() if "Snack2" in v.name]
                             }
                     df_snack2 = pd.DataFrame(dict)
                     df_snack2.loc['Total'] = df_snack2.sum(numeric_only=True)
@@ -773,8 +773,8 @@ if authentication_status:
                             "Fats(gr)": [
                                 food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Fats"] * v.varValue
                                 for v in model.variables() if "Dinner" in v.name],
-                            "Min(gr)": [v.lowBound for v in model.variables() if "Breakfast" in v.name if "Dinner" in v.name],
-                            "Max(gr)": [v.upBound for v in model.variables() if "Breakfast" in v.name if "Dinner" in v.name]
+                            "Min(gr)": [v.lowBound for v in model.variables() if "Dinner" in v.name],
+                            "Max(gr)": [v.upBound for v in model.variables() if "Dinner" in v.name]
                             }
                     df_dinner = pd.DataFrame(dict)
                     df_dinner.loc['Total'] = df_dinner.sum(numeric_only=True)
@@ -801,8 +801,8 @@ if authentication_status:
                             "Fats(gr)": [
                                 food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Fats"] * v.varValue
                                 for v in model.variables() if "Snack3" in v.name],
-                            "Min(gr)": [v.lowBound for v in model.variables() if "Breakfast" in v.name if "Snack3" in v.name],
-                            "Max(gr)": [v.upBound for v in model.variables() if "Breakfast" in v.name if "Snack3" in v.name]
+                            "Min(gr)": [v.lowBound for v in model.variables() if "Snack3" in v.name],
+                            "Max(gr)": [v.upBound for v in model.variables() if "Snack3" in v.name]
                             }
                     df_snack3 = pd.DataFrame(dict)
                     df_snack3.loc['Total'] = df_snack3.sum(numeric_only=True)
