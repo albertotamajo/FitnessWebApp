@@ -129,6 +129,9 @@ if authentication_status:
                                                                                                        index))
                     else:
                         st.error("Sorry, there is no entry for repetition {0}".format(repetitions))
+                else:
+                    st.error("Sorry, a database file does not exist!")
+
                 if remove:
                     dropbox_upload_file(dbx, d, file)
                     st.success('Weight removed successfully!')
