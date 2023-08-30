@@ -139,9 +139,8 @@ if authentication_status:
             st.error("There is no food database at the moment")
 
     with st.expander("""### Remove food"""):
-        if dropbox_file_exists(dbx, "", file[1:]):
-            d = fetch_food()
-            d = dropbox_download_file(dbx, file)
+        d = fetch_food()
+        if d:
             food_list = list(d.keys())
             food_list.sort()
             food = st.selectbox("Select the food to be removed", ["<select>"] + food_list)
