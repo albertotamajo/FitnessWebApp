@@ -7,6 +7,7 @@ import pandas as pd
 import streamlit_authenticator as stauth
 import yaml
 from yaml.loader import SafeLoader
+from utils import dropbox_connect, dropbox_download_file, dropbox_file_exists, dropbox_upload_file
 
 st.set_page_config(
     page_title="Weights database",
@@ -35,13 +36,8 @@ name, authentication_status, username = authenticator.login('Login', 'main')
 
 if authentication_status:
     authenticator.logout('Logout', 'sidebar')
-    AWS_BUCKET = "fitnessmanagement/"
-
-    fs = utils.s3fs_file_system()
-    fs.clear_instance_cache()
-
+    dbx = dropbox_connect()
     st.write("# Weights database! 🏋️")
-
     EXERCISE_LIST_PATH = "exercises.txt"
 
     with open(EXERCISE_LIST_PATH, 'rb') as f:
@@ -83,27 +79,17 @@ if authentication_status:
                 datetime = datetime.now(pytz.timezone("Europe/Rome"))
                 date = "{0}-{1}-{2}".format(datetime.year, datetime.month, datetime.day)
                 d = {repetitions: {exercise: [(date, weight)]}}
-                file = "{0}Weights{1}.pickle".format(AWS_BUCKET, user)
-                if fs.exists(file):
-                    with fs.open(file, 'rb') as f:
-                        d = pickle.load(f)
-                        if repetitions in d.keys():
-                            if exercise in d[repetitions].keys():
-                                d[repetitions][exercise].append((date, weight))
-                            else:
-                                d[repetitions][exercise] = [(date, weight)]
+                file = f"/Weights{user}.pickle"
+                if dropbox_file_exists(dbx, "", file[1:]):
+                    d = dropbox_download_file(dbx, file)
+                    if repetitions in d.keys():
+                        if exercise in d[repetitions].keys():
+                            d[repetitions][exercise].append((date, weight))
                         else:
-                            d[repetitions] = {exercise: [(date, weight)]}
-                else:
-                    fs.touch(file)
-                with fs.open(file, 'wb') as f:
-                    pickle.dump(d, f)
-
-                filecopy = "{0}Weights{1}(Copy).pickle".format(AWS_BUCKET, user)
-                if not fs.exists(filecopy):
-                    fs.touch(filecopy)
-                with fs.open(filecopy, 'wb') as f:
-                    pickle.dump(d, f)
+                            d[repetitions][exercise] = [(date, weight)]
+                    else:
+                        d[repetitions] = {exercise: [(date, weight)]}
+                dropbox_upload_file(dbx, d, file)
                 st.success('Weight added successfully!')
 
     with st.expander("Remove weights"):
@@ -120,34 +106,32 @@ if authentication_status:
                 if exercise == '<select>':
                     st.error('You need to select an exercise')
             else:
-                file = "{0}Weights{1}.pickle".format(AWS_BUCKET, user)
+                file = f"/Weights{user}.pickle"
                 remove = False
-                if fs.exists(file):
-                    with fs.open(file, 'rb') as f:
-                        d = pickle.load(f)
-                        if repetitions in d.keys():
-                            if exercise in d[repetitions].keys():
-                                l = d[repetitions][exercise]
-                                index_rev = len(l) - 1 - index
-                                if len(l) > index_rev:
-                                    l.pop(index_rev)
-                                    if len(l) == 0:
-                                        del d[repetitions][exercise]
-                                    if len(d[repetitions]) == 0:
-                                        del d[repetitions]
-                                    remove = True
-                                else:
-                                    st.error("Sorry, the provided index does not exists!")
+                if dropbox_file_exists(dbx, "", file[1:]):
+                    d = dropbox_download_file(dbx, file)
+                    if repetitions in d.keys():
+                        if exercise in d[repetitions].keys():
+                            l = d[repetitions][exercise]
+                            index_rev = len(l) - 1 - index
+                            if len(l) > index_rev:
+                                l.pop(index_rev)
+                                if len(l) == 0:
+                                    del d[repetitions][exercise]
+                                if len(d[repetitions]) == 0:
+                                    del d[repetitions]
+                                remove = True
                             else:
-                                st.error(
-                                    "Sorry, the exercise {0} does not have any entry for index {1}".format(exercise,
-                                                                                                           index))
+                                st.error("Sorry, the provided index does not exists!")
                         else:
-                            st.error("Sorry, there is no entry for repetition {0}".format(repetitions))
-                    if remove:
-                        with fs.open(file, 'wb') as f:
-                            pickle.dump(d, f)
-                        st.success('Weight removed successfully!')
+                            st.error(
+                                "Sorry, the exercise {0} does not have any entry for index {1}".format(exercise,
+                                                                                                       index))
+                    else:
+                        st.error("Sorry, there is no entry for repetition {0}".format(repetitions))
+                if remove:
+                    dropbox_upload_file(dbx, d, file)
+                    st.success('Weight removed successfully!')
 
     with st.expander("History"):
         user = st.selectbox('Who is the user?', ('<select>', 'Alberto', 'Giuseppe'), key=HISTORY_USER_KEY)
@@ -160,24 +144,23 @@ if authentication_status:
                 if exercise == '<select>':
                     st.error('You need to select an exercise')
             else:
-                file = "{0}Weights{1}.pickle".format(AWS_BUCKET, user)
-                if fs.exists(file):
-                    with fs.open(file, 'rb') as f:
-                        d = pickle.load(f)
-                        new_d = {}
-                        for repetition in d.keys():
-                            if exercise in d[repetition].keys():
-                                new_d[str(repetition) + " reps"] = [str(weight) + " Kg" for time, weight in
-                                                                    d[repetition][exercise][::-1]]
-                        if len(new_d) != 0:
-                            df = pd.DataFrame(dict([(k, pd.Series(v)) for k, v in new_d.items()]))
-                            cols = df.columns.tolist()
-                            cols.sort()
-                            df = df[cols]
-                            print(df)
-                            st.dataframe(df)
-                        else:
-                            st.error("Sorry, no results found!")
+                file = f"/Weights{user}.pickle"
+                if dropbox_file_exists(dbx, "", file[1:]):
+                    d = dropbox_download_file(dbx, file)
+                    new_d = {}
+                    for repetition in d.keys():
+                        if exercise in d[repetition].keys():
+                            new_d[str(repetition) + " reps"] = [str(weight) + " Kg" for time, weight in
+                                                                d[repetition][exercise][::-1]]
+                    if len(new_d) != 0:
+                        df = pd.DataFrame(dict([(k, pd.Series(v)) for k, v in new_d.items()]))
+                        cols = df.columns.tolist()
+                        cols.sort()
+                        df = df[cols]
+                        print(df)
+                        st.dataframe(df)
+                    else:
+                        st.error("Sorry, no results found!")
                 else:
                     st.error("Sorry, a database file does not exist!")
 
