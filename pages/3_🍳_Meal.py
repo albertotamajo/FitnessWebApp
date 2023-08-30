@@ -642,7 +642,9 @@ if authentication_status:
                         "Cals(kcal)": ["",""],
                         "Carbs(gr)": ["",""],
                         "Proteins(gr)": ["",""],
-                        "Fats(gr)": ["",""]}
+                        "Fats(gr)": ["",""],
+                        "Min(gr)": ["",""],
+                        "Max(gr)": ["",""]}
 
                 empty_df = pd.DataFrame(dict, index=["",""])
                 dfs.append(empty_df)
