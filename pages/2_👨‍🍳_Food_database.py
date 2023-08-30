@@ -139,22 +139,23 @@ if authentication_status:
             st.error("There is no food database at the moment")
 
     with st.expander("""### Remove food"""):
-        if st.button("Start remove food"):
-            st.divider()
-            if dropbox_file_exists(dbx, "", file[1:]):
-                d = dropbox_download_file(dbx, file)
-                food_list = list(d.keys())
-                food_list.sort()
-                food = st.selectbox("Select the food to be removed", ["<select>"] + food_list)
-                if st.button('Remove food'):
-                    if food is not "<select>":
-                        d.pop(food)
-                        dropbox_upload_file(dbx, d, file)
-                        st.success("Food removed successfully!")
-                    else:
-                        st.error("You need to select a food!")
-            else:
-                st.error("There is no food database at the moment")
+        if dropbox_file_exists(dbx, "", file[1:]):
+            d = fetch_food()
+            d = dropbox_download_file(dbx, file)
+            food_list = list(d.keys())
+            food_list.sort()
+            food = st.selectbox("Select the food to be removed", ["<select>"] + food_list)
+            if st.button('Remove food'):
+                if food is not "<select>":
+                    fetch_food.clear()
+                    d = fetch_food()
+                    d.pop(food)
+                    dropbox_upload_file(dbx, d, file)
+                    st.success("Food removed successfully!")
+                else:
+                    st.error("You need to select a food!")
+        else:
+            st.error("There is no food database at the moment")
 
 elif authentication_status == False:
     st.error('Username/password is incorrect')
