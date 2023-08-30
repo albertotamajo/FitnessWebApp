@@ -61,10 +61,10 @@ if authentication_status:
                                    return_value="index", use_container_width=True)
                 product = products[ind]
                 product_name = " ".join((product["url"].split("/")[-1]).split("-"))
-                calories = product["nutriments"]['energy-kcal_100g']
-                carbs = product["nutriments"]['carbohydrates_100g']
-                proteins = product["nutriments"]['proteins_100g']
-                fats = product["nutriments"]['fat_100g']
+                calories = float(product["nutriments"]['energy-kcal_100g'])
+                carbs = float(product["nutriments"]['carbohydrates_100g'])
+                proteins = float(product["nutriments"]['proteins_100g'])
+                fats = float(product["nutriments"]['fat_100g'])
                 st.markdown(f"""## Food name """)
                 food_name = st.text_input("", value=product_name)
                 st.markdown(
