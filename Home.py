@@ -35,6 +35,10 @@ if authentication_status:
 
     st.sidebar.success("Select one of these functionalities.")
 
+    with st.sidebar:
+        if st.button("Clear cache"):
+            st.cache_data.clear()
+
 elif authentication_status == False:
     st.error('Username/password is incorrect')
 elif authentication_status == None:
