@@ -2,7 +2,6 @@ import pandas as pd
 import streamlit as st
 import requests
 from streamlit_image_select import image_select
-import pickle
 from utils import dropbox_connect, dropbox_download_file, dropbox_upload_file, dropbox_file_exists
 import streamlit_authenticator as stauth
 import yaml
@@ -37,7 +36,6 @@ name, authentication_status, username = authenticator.login('Login', 'main')
 
 if authentication_status:
     authenticator.logout('Logout', 'sidebar')
-    AWS_BUCKET = "fitnessmanagement/"
     file = "/Food.pickle"
     dbx = dropbox_connect()
 
