@@ -625,13 +625,15 @@ if authentication_status:
                         "Proteins(gr)": [food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Proteins"] * v.varValue
                                          for v in model.variables()],
                         "Fats(gr)": [food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Fats"] * v.varValue
-                                     for v in model.variables()]}
+                                     for v in model.variables()],
+                        "Min(gr)": [v.lowBound for v in model.variables()],
+                        "Max(gr)": [v.upBound for v in model.variables()]}
                 df = pd.DataFrame(dict)
                 df["Meal"] = pd.Categorical(df["Meal"], meals)
                 df = df.sort_values("Meal")
                 df.reset_index(inplace=True, drop=True)
                 df.loc['Total'] = df.sum(numeric_only=True)
-                df.loc['% kcal'] = (df.loc['Total'] / df.loc['Total']["Cals(kcal)"]) * np.asarray([0,0,0,0,4,4,9]) * 100
+                df.loc['% kcal'] = (df.loc['Total'] / df.loc['Total']["Cals(kcal)"]) * np.asarray([0,0,0,0,4,4,9,0,0]) * 100
                 dfs.append(df.round(2))
 
                 dict = {"Food": ["",""],
@@ -658,11 +660,14 @@ if authentication_status:
                                 food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Proteins"] * v.varValue
                                 for v in model.variables() if "Breakfast" in v.name],
                             "Fats(gr)": [food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Fats"] * v.varValue
-                                         for v in model.variables() if "Breakfast" in v.name]}
+                                         for v in model.variables() if "Breakfast" in v.name],
+                            "Min(gr)": [v.lowBound for v in model.variables() if "Breakfast" in v.name],
+                            "Max(gr)": [v.upBound for v in model.variables() if "Breakfast" in v.name]
+                            }
                     df_breakfast = pd.DataFrame(dict)
                     df_breakfast.loc['Total'] = df_breakfast.sum(numeric_only=True)
                     df_breakfast.loc['% kcal'] = (df_breakfast.loc['Total'] / df_breakfast.loc['Total']["Cals(kcal)"]) * np.asarray(
-                        [0, 0, 0, 0, 4, 4, 9]) * 100
+                        [0, 0, 0, 0, 4, 4, 9, 0, 0]) * 100
                     dfs.append(df_breakfast.round(2))
                     dfs.append(empty_df)
 
@@ -683,11 +688,14 @@ if authentication_status:
                                 for v in model.variables() if "Snack1" in v.name],
                             "Fats(gr)": [
                                 food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Fats"] * v.varValue
-                                for v in model.variables() if "Snack1" in v.name]}
+                                for v in model.variables() if "Snack1" in v.name],
+                            "Min(gr)": [v.lowBound for v in model.variables() if "Breakfast" in v.name if "Snack1" in v.name],
+                            "Max(gr)": [v.upBound for v in model.variables() if "Breakfast" in v.name if "Snack1" in v.name]
+                            }
                     df_snack1 = pd.DataFrame(dict)
                     df_snack1.loc['Total'] = df_snack1.sum(numeric_only=True)
                     df_snack1.loc['% kcal'] = (df_snack1.loc['Total'] / df_snack1.loc['Total']["Cals(kcal)"]) * np.asarray(
-                        [0, 0, 0, 0, 4, 4, 9]) * 100
+                        [0, 0, 0, 0, 4, 4, 9, 0, 0]) * 100
                     dfs.append(df_snack1.round(2))
                     dfs.append(empty_df)
 
@@ -708,11 +716,14 @@ if authentication_status:
                                 for v in model.variables() if "Lunch" in v.name],
                             "Fats(gr)": [
                                 food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Fats"] * v.varValue
-                                for v in model.variables() if "Lunch" in v.name]}
+                                for v in model.variables() if "Lunch" in v.name],
+                            "Min(gr)": [v.lowBound for v in model.variables() if "Breakfast" in v.name if "Lunch" in v.name],
+                            "Max(gr)": [v.upBound for v in model.variables() if "Breakfast" in v.name if "Lunch" in v.name]
+                            }
                     df_lunch = pd.DataFrame(dict)
                     df_lunch.loc['Total'] = df_lunch.sum(numeric_only=True)
                     df_lunch.loc['% kcal'] = (df_lunch.loc['Total'] / df_lunch.loc['Total']["Cals(kcal)"]) * np.asarray(
-                        [0, 0, 0, 0, 4, 4, 9]) * 100
+                        [0, 0, 0, 0, 4, 4, 9, 0, 0]) * 100
                     dfs.append(df_lunch.round(2))
                     dfs.append(empty_df)
 
@@ -733,11 +744,14 @@ if authentication_status:
                                 for v in model.variables() if "Snack2" in v.name],
                             "Fats(gr)": [
                                 food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Fats"] * v.varValue
-                                for v in model.variables() if "Snack2" in v.name]}
+                                for v in model.variables() if "Snack2" in v.name],
+                            "Min(gr)": [v.lowBound for v in model.variables() if "Breakfast" in v.name if "Snack2" in v.name],
+                            "Max(gr)": [v.upBound for v in model.variables() if "Breakfast" in v.name if "Snack2" in v.name]
+                            }
                     df_snack2 = pd.DataFrame(dict)
                     df_snack2.loc['Total'] = df_snack2.sum(numeric_only=True)
                     df_snack2.loc['% kcal'] = (df_snack2.loc['Total'] / df_snack2.loc['Total']["Cals(kcal)"]) * np.asarray(
-                        [0, 0, 0, 0, 4, 4, 9]) * 100
+                        [0, 0, 0, 0, 4, 4, 9, 0, 0]) * 100
                     dfs.append(df_snack2.round(2))
                     dfs.append(empty_df)
 
@@ -758,11 +772,14 @@ if authentication_status:
                                 for v in model.variables() if "Dinner" in v.name],
                             "Fats(gr)": [
                                 food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Fats"] * v.varValue
-                                for v in model.variables() if "Dinner" in v.name]}
+                                for v in model.variables() if "Dinner" in v.name],
+                            "Min(gr)": [v.lowBound for v in model.variables() if "Breakfast" in v.name if "Dinner" in v.name],
+                            "Max(gr)": [v.upBound for v in model.variables() if "Breakfast" in v.name if "Dinner" in v.name]
+                            }
                     df_dinner = pd.DataFrame(dict)
                     df_dinner.loc['Total'] = df_dinner.sum(numeric_only=True)
                     df_dinner.loc['% kcal'] = (df_dinner.loc['Total'] / df_dinner.loc['Total']["Cals(kcal)"]) * np.asarray(
-                        [0, 0, 0, 0, 4, 4, 9]) * 100
+                        [0, 0, 0, 0, 4, 4, 9, 0, 0]) * 100
                     dfs.append(df_dinner.round(2))
                     dfs.append(empty_df)
 
@@ -783,11 +800,14 @@ if authentication_status:
                                 for v in model.variables() if "Snack3" in v.name],
                             "Fats(gr)": [
                                 food_dict[" ".join(v.name.replace("_", " ").split()[:-1])]["Fats"] * v.varValue
-                                for v in model.variables() if "Snack3" in v.name]}
+                                for v in model.variables() if "Snack3" in v.name],
+                            "Min(gr)": [v.lowBound for v in model.variables() if "Breakfast" in v.name if "Snack3" in v.name],
+                            "Max(gr)": [v.upBound for v in model.variables() if "Breakfast" in v.name if "Snack3" in v.name]
+                            }
                     df_snack3 = pd.DataFrame(dict)
                     df_snack3.loc['Total'] = df_snack3.sum(numeric_only=True)
                     df_snack3.loc['% kcal'] = (df_snack3.loc['Total'] / df_snack3.loc['Total']["Cals(kcal)"]) * np.asarray(
-                        [0, 0, 0, 0, 4, 4, 9]) * 100
+                        [0, 0, 0, 0, 4, 4, 9, 0, 0]) * 100
                     dfs.append(df_snack3.round(2))
 
                 dfs = pd.concat(dfs, axis=0)
