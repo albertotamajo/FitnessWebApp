@@ -35,6 +35,9 @@ authenticator = stauth.Authenticate(
 name, authentication_status, username = authenticator.login('Login', 'main')
 
 if authentication_status:
+    with st.sidebar:
+        if st.button("Clear cache"):
+            st.cache_data.clear()
     authenticator.logout('Logout', 'sidebar')
     file = "/Food.pickle"
     dbx = dropbox_connect()

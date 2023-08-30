@@ -29,11 +29,11 @@ authenticator = stauth.Authenticate(
 name, authentication_status, username = authenticator.login('Login', 'main')
 
 if authentication_status:
-    authenticator.logout('Logout', 'sidebar')
 
     st.write("# Welcome to the Fitness Management Web App! 👋")
 
     st.sidebar.success("Select one of these functionalities.")
+    authenticator.logout('Logout', 'sidebar')
 
     with st.sidebar:
         if st.button("Clear cache"):
