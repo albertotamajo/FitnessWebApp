@@ -4,6 +4,8 @@ import dropbox
 from dropbox.exceptions import AuthError
 import pandas as pd
 import pickle
+import requests
+from ast import literal_eval
 
 
 @st.cache_resource
@@ -11,11 +13,19 @@ def s3fs_file_system():
     return s3fs.S3FileSystem(anon=False)
 
 
-@st.cache_resource
+@st.cache_resource(ttl="15m")
 def dropbox_connect():
     """Create a connection to Dropbox."""
     try:
-        dbx = dropbox.Dropbox(st.secrets["DROPBOX_TOKEN"])
+        data = {
+            'refresh_token': st.secrets["DROPBOX_REFRESH_TOKEN"],
+            'grant_type': 'refresh_token',
+            'client_id': st.secrets['DROPBOX_CLIENT_ID'],
+            'client_secret': st.secrets['DROPBOX_CLIENT_SECRET']
+        }
+        dict_string = bytes.decode(requests.post('https://api.dropbox.com/oauth2/token', data=data).content)
+        dict = literal_eval(dict_string)
+        dbx = dropbox.Dropbox(dict["access_token"])
         print("Connected to dropbox")
     except AuthError as e:
         print('Error connecting to Dropbox with access token: ' + str(e))
@@ -69,8 +79,8 @@ def dropbox_upload_file(dbx, obj, dropbox_file_path):
         print('Error uploading file to Dropbox: ' + str(e))
         return []
 
-# dbx = dropbox_connect()
-# print(dropbox_file_exists(dbx, "", "Food.pickle"))
+#dbx = dropbox_connect()
+#print(dropbox_file_exists(dbx, "", "Food.pickle"))
 # obj = dropbox_download_file(dbx, "/Food.pickle")
 # obj["Cia"] = "hello"
 # dropbox_upload_file(dbx, obj, "/Food.pickle")
