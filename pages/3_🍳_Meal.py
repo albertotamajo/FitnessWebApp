@@ -35,7 +35,7 @@ authenticator = stauth.Authenticate(
 name, authentication_status, username = authenticator.login('Login', 'main')
 
 if authentication_status:
-    @st.cache_data
+    @st.cache_data(ttl="15m")
     def fetch_food():
         # Fetch data from URL here, and then clean it up.
         if dropbox_file_exists(dbx, "", file[1:]):
