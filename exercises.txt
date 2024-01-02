@@ -103,3 +103,5 @@ Prone Leg Curl
 Abdominal Machine
 One-leg leg extension
 One-leg leg curl
+Barbell palms-up wrist curl
+Barbell palms-down wrist curl
